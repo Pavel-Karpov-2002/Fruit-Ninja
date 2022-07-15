@@ -383,6 +383,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2802207064313673773, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}
   m_PrefabInstance: {fileID: 1786309520}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1300233116 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2802207064313673763, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}
+  m_PrefabInstance: {fileID: 1786309520}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300233115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2f0dd231209b844b497e7d66d21e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1300233118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +408,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
   comboSeriesUI: {fileID: 1542213520}
+--- !u!114 &1300233119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300233115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f570947d7377b547acd62dc33b38c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1300233116}
+--- !u!114 &1300233120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300233115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da58ca64794608349b8f957c7ebf9fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1429562149 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3456054205451764472, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
@@ -767,7 +803,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7359497038301937746, guid: 5afc79c39100bd446b0ade33bf4ff357, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5afc79c39100bd446b0ade33bf4ff357, type: 3}

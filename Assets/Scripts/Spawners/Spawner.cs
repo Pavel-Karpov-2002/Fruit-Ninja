@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public class Spawner
 {
+
     [SerializeField][Range(0, 100)] private float bottomStartPosition;
     [SerializeField][Range(0, 100)] private float bottomEndPosition;
 
@@ -19,10 +20,14 @@ public class Spawner
     [SerializeField][Min(0)] private float minImpuls;
     [SerializeField][Min(0)] private float maxImpuls;
 
+    [SerializeField][Min(0)] private float maxProcentCountBombInPull;
+
     [SerializeField][Min(0)] private int priority;
 
     [SerializeField] private bool isLeft;
 
+
+    public float MaxProcentCountBombInPull => maxProcentCountBombInPull;
 
     public float BottomStartPosition => bottomStartPosition;
     public float BottomEndPosition => bottomEndPosition;

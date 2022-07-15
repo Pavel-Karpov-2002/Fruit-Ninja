@@ -6,6 +6,7 @@ using UnityEngine;
 public class SpawnerFruits : MonoBehaviour
 {
     [SerializeField] private GameObject fruit;
+    [SerializeField] private GameObject bomb;
     [SerializeField] private float timerInterval;
     [SerializeField] private GameSettings settings;
 
@@ -17,7 +18,7 @@ public class SpawnerFruits : MonoBehaviour
     {
         if (settings.Spawners.Count == 0)
         {
-            Debug.Log("Spawners is 0");
+            Debug.Log("Spawners count is 0");
         }
         else
         {
@@ -30,7 +31,7 @@ public class SpawnerFruits : MonoBehaviour
     {
         if (settings.Spawners.Count == 0)
         {
-            Debug.Log("Spawners is 0");
+            Debug.Log("Spawners count is 0");
         }
         else
         {
@@ -61,6 +62,8 @@ public class SpawnerFruits : MonoBehaviour
     
     private void CreateMultipleFruits(Spawner spawner)
     {
+        int bombInPull = 0;
+
         if(increase < settings.MaxFriutsAdd)
             increase = Random.Range(0, CoreValues.NumberOfPoints / settings.AddingFruitsForPoints);
 
@@ -68,19 +71,44 @@ public class SpawnerFruits : MonoBehaviour
 
         for (int j = 0; j < countFruits; j++)
         {
-            CreateFruit(spawner);
+            if(bombInPull < (countFruits * (spawner.MaxProcentCountBombInPull / 100)) - 1)
+            {
+                bombInPull++;
+                int chance = Random.Range(0, 100);
+
+                if (chance <= settings.BombSettings.MaxChanceConvertBombIntoFruits + settings.BombSettings.MinChanceConvertBombIntoFruits)
+                {
+                    CreateFruit(spawner, bomb);
+                }
+                else
+                {
+                    CreateFruit(spawner, fruit);
+                }
+            }
+            else
+            {
+                CreateFruit(spawner, fruit);
+            }
         }
     }
 
-    private void CreateFruit(Spawner spawner)
+    private void CreateFruit(Spawner spawner, GameObject typeObject)
     {
         float halfWidth = WorldSizeCamera.HalfWidth;
         float halfHeight = WorldSizeCamera.HalfHeight;
 
-        Vector3 position = new Vector3(Random.Range(halfWidth * (spawner.BottomStartPosition / 100), halfWidth * (spawner.BottomEndPosition / 100)),
-                                                                              Random.Range(halfHeight * (spawner.HeightStartPosition / 100), halfHeight * (spawner.HeightEndPosition / 100)), 0);
+        Vector3 position = new Vector3(Random.Range(halfWidth * 
+            (spawner.BottomStartPosition / 100), halfWidth * (spawner.BottomEndPosition / 100)),
+            Random.Range(halfHeight * (spawner.HeightStartPosition / 100), halfHeight * (spawner.HeightEndPosition / 100)), 
+            0);
 
-        GameObject newFruit = Instantiate(fruit, position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+        if(position.y < 0)
+            position -= new Vector3(0, 1, 0);
+
+        if(position.y > 0)
+            position -= new Vector3(1, 0, 0);
+
+        GameObject newObject = Instantiate(typeObject, position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
 
         float angle = 0;
 
@@ -93,6 +121,6 @@ public class SpawnerFruits : MonoBehaviour
                 angle += 360;
         }
 
-        newFruit.GetComponent<FruitScript>().Trow(angle, Random.Range(spawner.MinImpuls, spawner.MaxImpuls), settings.Gravity, position);
+        newObject.GetComponent<Entity>().Trow(angle, Random.Range(spawner.MinImpuls, spawner.MaxImpuls), settings.Gravity, position);
     }
 }

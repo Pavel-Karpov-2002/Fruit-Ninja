@@ -3,17 +3,35 @@ using UnityEngine;
 public abstract class Entity : MonoBehaviour
 {
     protected GamePlayEvents player;
+    private ColliderSphere colliderSphere;
+    private SliceRange slice;
+    private float radiusCollider;
 
-    private void OnBecameInvisible()
+    public float RadiusCollider
     {
-        float halfHeight = WorldSizeCamera.HalfHeight;
+        get { return radiusCollider; }
+        set { radiusCollider = value; }
+    }
 
-        if (gameObject.activeSelf && transform.position.y < halfHeight)
-        {
-            if (player != null)
-                player.SubstractHealth(1);
+    public ColliderSphere ColliderSphere
+    {
+        get { return colliderSphere; }
+        set { colliderSphere = value; }
+    }
 
-            Destroy(gameObject);
-        }
+    public SliceRange Slice
+    {
+        get { return slice; }
+        set { slice = value; }
+    }
+
+    public abstract void Destruction();
+
+    public void Trow(float angle, float impuls, float g, Vector3 startPosition)
+    {
+        if (gameObject.GetComponent<Physics>() != null)
+            gameObject.GetComponent<Physics>().AddImpulse(angle, impuls, g, startPosition);
+        else
+            Debug.Log($"{gameObject.name} does not have a Physics class");
     }
 }

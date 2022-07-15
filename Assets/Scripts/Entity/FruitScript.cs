@@ -1,6 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
-using TMPro;
+using System.Collections.Generic;
 
 public class FruitScript : Entity
 {
@@ -8,45 +8,35 @@ public class FruitScript : Entity
 
     [SerializeField] private float speedRotate = 1.5f;
 
-    private float halfHeight;
-    private float radiusCollider;
-    private ColliderSphere colliderSphere;
-    private SliceRange slice;
     private Transform scaleShadow;
     private int numFruit;
+    private FruitSettings fruitSettings;
+
+    public FruitSettings FruitSettings => fruitSettings;
 
     private void Awake()
     {
-        player = FindObjectOfType<GamePlayEvents>();
-
-        numFruit = Random.Range(0, settings.FruitSprites.Count);
-
-        FruitSprite fruit = settings.FruitSprites[numFruit];
-        gameObject.GetComponent<SpriteRenderer>().sprite = fruit.FruitsSprite;
-
-        colliderSphere = GetComponent<ColliderSphere>();
-
-        slice = GetComponent<SliceRange>();
-
         CreateShadowScript.CreateShadow(gameObject);
+        scaleShadow = gameObject.GetComponentInChildren<CreateShadowScript>().transform;
 
-        if (colliderSphere == null)
-        {
-            Debug.Log("Object don't have a collider");
-        }
+        player = FindObjectOfType<GamePlayEvents>();
+        ColliderSphere = GetComponent<ColliderSphere>();
+        Slice = GetComponent<SliceRange>();
 
-        if (slice == null)
-        {
-            Debug.Log("Object don't have a slice script");
-        }
+        if (ColliderSphere == null)
+            Debug.Log($"{gameObject.name} don't have a collider");
+
+        if (Slice == null)
+            Debug.Log($"{gameObject.name} don't have a slice script");
+
+        numFruit = Random.Range(0, settings.FruitSettings.Count);
+        fruitSettings = settings.FruitSettings[numFruit];
+        gameObject.GetComponent<SpriteRenderer>().sprite = fruitSettings.FruitsSprite;
     }
 
     private void Start()
     {
-        CreateShadowScript shadow = gameObject.GetComponentInChildren<CreateShadowScript>();
-        scaleShadow = shadow.transform;
-
-        halfHeight = WorldSizeCamera.HalfHeight;
+        player.Entitys.Add(this);
 
         transform.DORotate(new Vector3(0, 0, 180), speedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
 
@@ -58,90 +48,59 @@ public class FruitScript : Entity
         NormalizeObject();
     }
 
-    private void Update()
-    {
-        /* for (int i = 0; i < Input.touchCount; ++i)
-         {
-             if ((Input.GetTouch(i).phase == TouchPhase.Began || Input.GetMouseButton(0)) && CoreValues.HealthCount > 0)
-                 OnTriggerCollider();
-         }*/
-
-        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0)
-            OnTriggerCollider();
-    }
-
     private void NormalizeObject()
     {
-        ChangeScale();
+        ScaleChangeScript.ChangeOnWindow(transform);
+
+        scaleShadow.transform.localScale += new Vector3(0.3f, 0.3f);
+        ScaleChangeScript.ChangeOnWindow(scaleShadow.transform);
 
         ChageRadius();
     }
 
-
-    private void ChangeScale()
-    {
-        float normalScale = ((transform.position.y) / halfHeight);
-
-        if(normalScale > 0.86f)
-        {
-            normalScale = 0.86f;
-        }else if (normalScale < 0.5f)
-        {
-            normalScale = 0.5f;
-        }
-
-        ScaleChangeScript.Change(transform, normalScale, 0);
-
-        ScaleChangeScript.Change(scaleShadow, normalScale + 0.3f, 0);
-    }
-
     private void ChageRadius()
     {
-        radiusCollider = (transform.localScale.y / GetComponent<SpriteRenderer>().bounds.size.y) * 1.3f;
+        if (fruitSettings.RadiusCollider == 0)
+            RadiusCollider = (transform.localScale.y / GetComponent<SpriteRenderer>().bounds.size.y) * 1.3f;
+        else
+            RadiusCollider = fruitSettings.RadiusCollider;
     }
 
-    public void Trow(float angle, float impuls, float g, Vector3 startPosition)
+    public override void Destruction()
     {
-        if (gameObject.GetComponent<Physics>() != null)
-            gameObject.GetComponent<Physics>().AddImpulse(angle, impuls, g, startPosition);
-        else
-            Debug.Log("Object does not have a Physics class");
-    }
+        player.AddPoint(settings.NumberOfPointsPerFruit, gameObject, fruitSettings.ColorFruit);
+        CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
 
-    private void OnTriggerCollider()
+        BlobSettings blobSetting = settings.BlobSettings;
+
+        CreateBlobScript.CreateMoreBlub(gameObject,
+            fruitSettings.BlobSprite,
+            settings);
+
+        CreateBlobScript.CreateOneBlob(
+            gameObject,
+            fruitSettings.BlobSprite,
+            blobSetting.MinBlobScale,
+            blobSetting.MaxBlobScale,
+            blobSetting.BlobSpeed,
+            blobSetting.BlobDelayTime,
+            blobSetting.LayerBlob);
+
+        player.Entitys.Remove(this);
+
+        Destroy(gameObject);
+    } 
+
+    private void OnBecameInvisible()
     {
-        if (colliderSphere.HittingCollider(radiusCollider))
-            slice.StartEntry = colliderSphere.GetLengthVector();
-        else if(slice.StartEntry != 0 && slice.EndEntry == 0)
+        float halfHeight = WorldSizeCamera.HalfHeight;
+
+        if (gameObject.activeSelf && transform.position.y < halfHeight)
         {
-            slice.EndEntry = colliderSphere.GetLengthVector();
-            if (slice.FruitIsCut(radiusCollider))
-            {
-                player.AddPoint(settings.NumberOfPointsPerFruit, gameObject, settings.FruitSprites[numFruit].ColorFruit);
-                CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
+            if (player != null)
+                player.SubstractHealth(1);
 
-                BlobSettings blobSetting = settings.BlobSettings;
-
-                CreateBlobScript.CreateMoreBlub(gameObject, 
-                    settings.FruitSprites[numFruit].BlobSprite, 
-                    settings);
-                
-                CreateBlobScript.CreateOneBlob(
-                    gameObject, 
-                    settings.FruitSprites[numFruit].BlobSprite, 
-                    blobSetting.MinBlobScale, 
-                    blobSetting.MaxBlobScale, 
-                    blobSetting.BlobSpeed, 
-                    blobSetting.BlobDelayTime,
-                    blobSetting.LayerBlob);
-
-                Destroy(gameObject);
-            }
-        }
-        else
-        {
-            slice.StartEntry = 0;
-            slice.EndEntry = 0;
+            Destroy(gameObject);
         }
     }
 }

@@ -27,7 +27,6 @@ public class ComboSeriesUI : MonoBehaviour
         mySequence.Kill();
         DOTween.Kill(mySequence);
         mySequence = DOTween.Sequence();
-        //ChangeFade(1);
 
         comboSeries.text = "X" + countSeries.ToString();
         countFruits.text = countSeries.ToString() + " фруктов";
@@ -39,7 +38,7 @@ public class ComboSeriesUI : MonoBehaviour
     private IEnumerator Dissapera()
     {
         yield return new WaitForSeconds(settings.ComboSettings.TimeDisappearanceComboText);
-        Debug.Log(GetComponent<CanvasGroup>().alpha);
+
         if(GetComponent<CanvasGroup>().alpha == 1)
             ChangeFade(0);
     }

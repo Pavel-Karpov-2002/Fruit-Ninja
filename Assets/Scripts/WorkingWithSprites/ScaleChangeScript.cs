@@ -1,6 +1,5 @@
 using UnityEngine;
 using DG.Tweening;
-using System.Collections;
 using System.Threading.Tasks;
 
 public class ScaleChangeScript : MonoBehaviour
@@ -16,5 +15,21 @@ public class ScaleChangeScript : MonoBehaviour
         await Task.Delay((int)(timeDelay * 1000));
 
         objectChange.DOScale(toScale, timeChange).SetEase(Ease.Linear);
+    }
+
+    public static void ChangeOnWindow(Transform transform)
+    {
+        float normalScale = ((transform.position.y) / WorldSizeCamera.HalfHeight);
+
+        if (normalScale > 0.86f)
+        {
+            normalScale = 0.86f;
+        }
+        else if (normalScale < 0.5f)
+        {
+            normalScale = 0.5f;
+        }
+
+        Change(transform, normalScale, 0);
     }
 }

@@ -17,7 +17,7 @@ public class SliceRange : MonoBehaviour
         set { endEntry = value; }
     }
 
-    public bool FruitIsCut(float radius)
+    public bool IsCut(float radius)
     {
         if (startEntry + endEntry >= radius / 2)
         {

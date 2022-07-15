@@ -15,6 +15,14 @@ public class GamePlayEvents : MonoBehaviour
 
     [SerializeField] private GameObject[] spawners;
 
+    private List<Entity> _entitys;
+
+    public List<Entity> Entitys
+    {
+        get { return _entitys; }
+        set { _entitys = value; }
+    }
+
     private void Awake()
     {
         spriteAttenuation.SetActive(true);
@@ -30,6 +38,7 @@ public class GamePlayEvents : MonoBehaviour
     {
         ChangeFade.AddAttenuation(spriteAttenuation, settings.TimeAttenuation, 0);
         UpdateRecord();
+        _entitys = new List<Entity>();
 
         StartCoroutine(TimeAttenuation());
     }

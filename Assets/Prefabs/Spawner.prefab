@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fruit: {fileID: 2008021283385391793, guid: 07ac74b5e4cc47c4b97fb412abb42b4a, type: 3}
+  bomb: {fileID: 4602890417527582765, guid: bca2d180d7a48da49bfca88598e0dd76, type: 3}
   timerInterval: 5
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
-  minImpuls: 30
-  maxImpuls: 45

@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Settings", fileName = "GameSettings")]
 public class GameSettings : ScriptableObject
 {
-    [SerializeField] private List<FruitSprite> fruitSprites;
+    [SerializeField] private List<FruitSettings> fruitSettings;
 
     [SerializeField] private List<Spawner> spawners;
 
@@ -17,6 +17,8 @@ public class GameSettings : ScriptableObject
     [SerializeField] private ComboSettings comboSettings;
 
     [SerializeField] private TextMeshProSettings textMeshProSettings;
+
+    [SerializeField] private BombSettigns bombSettings;
 
     [SerializeField] private int numberOfPointsPerFruit;
 
@@ -31,7 +33,7 @@ public class GameSettings : ScriptableObject
 
     public HealthSettings Health => health;
 
-    public List<FruitSprite> FruitSprites => fruitSprites;
+    public List<FruitSettings> FruitSettings => fruitSettings;
 
     public List<Spawner> Spawners => spawners;
 
@@ -40,6 +42,8 @@ public class GameSettings : ScriptableObject
     public ComboSettings ComboSettings => comboSettings;
 
     public TextMeshProSettings TextMeshProSettings => textMeshProSettings;
+
+    public BombSettigns BombSettings => bombSettings;
 
     public int NumberOfPointsPerFruit => numberOfPointsPerFruit;
 

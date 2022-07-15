@@ -3,11 +3,28 @@ using System.Collections;
 
 public class Physics : MonoBehaviour
 {
-    private float timeStart;
+    private float _timeStart;
+
+    private float _impuls;
+
+    private float _gravity;
+    private float downtime;
+
+    public float Impuls
+    {
+        get { return _impuls; }
+        set { _impuls = value; }
+    }
+
+    public float Gravity
+    {
+        get { return _gravity; }
+        set { _gravity = value; }
+    }
 
     private void Start()
-    { 
-        timeStart = Time.realtimeSinceStartup;
+    {
+        _timeStart = Time.realtimeSinceStartup;
     }
 
     static float ConvertToRadian(float angle)
@@ -15,36 +32,41 @@ public class Physics : MonoBehaviour
         return (angle * Mathf.PI) / 180;
     }
 
-    private static float CountingPositionX(float angle, float impuls, float t)
+    private float CountingPositionX(float angle, float t)
     {
-        return impuls * Mathf.Cos(angle) * t;
+        return _impuls * Mathf.Cos(angle) * t;
     }
 
-    private static float CountingPositionY(float angle, float impuls, float g, float t)
+    private float CountingPositionY(float angle, float t)
     {
-        return impuls * Mathf.Sin(angle) * t - ((g * t * t) / 2);
+        return _impuls * Mathf.Sin(angle) * t - ((_gravity * t * t) / 2);
     }
 
-    private static Vector3 CalculateVector(GameObject objectGame, float angle, float impuls, float g, float t)
+    private Vector3 CalculateVector(GameObject objectGame, float angle, float t)
     {
-        float x = CountingPositionX(ConvertToRadian(angle), impuls, t);
-        float y = CountingPositionY(ConvertToRadian(angle), impuls, g, t);
+        float x = CountingPositionX(ConvertToRadian(angle), t);
+        float y = CountingPositionY(ConvertToRadian(angle), t);
 
         return new Vector3(x, y, 0);
     }
 
-    private IEnumerator Cast(float angle, float impuls, float g, Vector3 startPosition)
+    private IEnumerator Cast(float angle, Vector3 startPosition)
     {
-        float t = Time.realtimeSinceStartup - timeStart;
-        transform.position = Physics.CalculateVector(gameObject, angle, impuls, g, t) + startPosition;
+        yield return null;
 
-        yield return new WaitForFixedUpdate();
+        float t = Time.realtimeSinceStartup - _timeStart - downtime;
+        if(_gravity != 0)
+            transform.position = CalculateVector(gameObject, angle, t) + startPosition;
+        else
+            downtime += Time.deltaTime;
 
-        StartCoroutine(Cast(angle, impuls, g, startPosition));
+        StartCoroutine(Cast(angle, startPosition));
     }
 
-    public void AddImpulse(float angle, float impuls, float g, Vector3 startPosition)
+    public void AddImpulse(float angle, float impuls, float gravity, Vector3 startPosition)
     {
-        StartCoroutine(Cast(angle, impuls, g, startPosition));
+        _gravity = gravity;
+        _impuls = impuls;
+        StartCoroutine(Cast(angle, startPosition));
     }
 }
