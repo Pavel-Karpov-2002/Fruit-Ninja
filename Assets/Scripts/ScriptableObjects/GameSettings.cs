@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 [CreateAssetMenu(menuName ="Settings", fileName = "GameSettings")]
 public class GameSettings : ScriptableObject
@@ -18,6 +16,8 @@ public class GameSettings : ScriptableObject
 
     [SerializeField] private ComboSettings comboSettings;
 
+    [SerializeField] private TextMeshProSettings textMeshProSettings;
+
     [SerializeField] private int numberOfPointsPerFruit;
 
     [SerializeField] private int maxFriutsAdd;
@@ -25,8 +25,6 @@ public class GameSettings : ScriptableObject
     [SerializeField] private int addingFruitsForPoints;
 
     [SerializeField] private float gravity;
-
-    [SerializeField] private GameObject textPointsStile;
 
     [SerializeField] private float timeAttenuation;
 
@@ -41,6 +39,8 @@ public class GameSettings : ScriptableObject
 
     public ComboSettings ComboSettings => comboSettings;
 
+    public TextMeshProSettings TextMeshProSettings => textMeshProSettings;
+
     public int NumberOfPointsPerFruit => numberOfPointsPerFruit;
 
     public int MaxFriutsAdd => maxFriutsAdd;
@@ -48,8 +48,6 @@ public class GameSettings : ScriptableObject
     public int AddingFruitsForPoints => addingFruitsForPoints;
 
     public float Gravity => gravity;
-
-    public GameObject TextPointsStyle => textPointsStile;
 
     public ScaleSettings ScaleSettings => scaleSettings;
 

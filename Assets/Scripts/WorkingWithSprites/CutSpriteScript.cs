@@ -20,7 +20,7 @@ public class CutSpriteScript : MonoBehaviour
 
         for(int i = 0; i < helves.Length; i++)
         {
-            GameObject halve = new GameObject();
+            GameObject halve = new GameObject() { name = "Halve " + i };
             Transform transformObj = gameObject.transform;
             Transform transformHalve = halve.transform;
 
@@ -31,6 +31,8 @@ public class CutSpriteScript : MonoBehaviour
             halve.AddComponent<SpriteRenderer>();
             halve.GetComponent<SpriteRenderer>().sprite = helves[i];
 
+            CreateShadowScript.CreateShadow(halve);
+            ScaleChangeScript.Change(halve.GetComponentInChildren<CreateShadowScript>().transform, 1f, 0);
 
             halve.AddComponent<Physics>();
             halve.GetComponent<Physics>().AddImpulse(Random.Range(40, 120), 1.8f, 1.2f, halve.transform.position);

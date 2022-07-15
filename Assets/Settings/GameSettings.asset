@@ -76,10 +76,12 @@ MonoBehaviour:
   comboSettings:
     timeDisappearanceComboText: 5
     maxCombo: 5
-    timeTransformComboText: 0.8
+    timeFadeComboText: 2
+  textMeshProSettings:
+    textPointsStile: {fileID: 2667768214004378815, guid: d8bdaa63eafb1cb47ad62ff9e54ebea1, type: 3}
+    textPointsMaterial: {fileID: -4324890024673075643, guid: 9d40128aedd1aa54cb33da2f96e7c102, type: 2}
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
   addingFruitsForPoints: 10
   gravity: 0.8
-  textPointsStile: {fileID: 8953764198207648136, guid: 7218e605310a58148b0079f909cf900d, type: 3}
   timeAttenuation: 3

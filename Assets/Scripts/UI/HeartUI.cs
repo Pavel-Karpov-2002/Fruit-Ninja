@@ -52,7 +52,6 @@ public class HeartUI : MonoBehaviour
     {
         GameObject newHealth = Instantiate(heart);
         newHealth.transform.SetParent(gameObject.transform);
-
         newHealth.GetComponent<HeartChange>().ChangePosition(heart.transform);
     }
 

@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
-using System.Linq;
 
 public class ComboSeriesUI : MonoBehaviour
 {
@@ -10,14 +9,11 @@ public class ComboSeriesUI : MonoBehaviour
     [SerializeField] private Text comboSeries;
     [SerializeField] private GameSettings settings;
 
-
-    private Vector3 soursePosition;
     Sequence mySequence;
 
     private void Start()
     {
         mySequence = DOTween.Sequence();
-        soursePosition = transform.position;
 
         if (GetComponent<CanvasGroup>() != null)
             GetComponent<CanvasGroup>().alpha = 0;
@@ -28,27 +24,28 @@ public class ComboSeriesUI : MonoBehaviour
     public void ChangeSeriesText(int countSeries)
     {
         GetComponent<CanvasGroup>().alpha = 1;
-
-        Debug.Log(soursePosition);
-
         mySequence.Kill();
-
-        GetComponent<CanvasGroup>().DOFade(1, settings.ComboSettings.TimeFadeComboText).SetEase(Ease.Linear);
+        DOTween.Kill(mySequence);
+        mySequence = DOTween.Sequence();
+        //ChangeFade(1);
 
         comboSeries.text = "X" + countSeries.ToString();
-
         countFruits.text = countSeries.ToString() + " фруктов";
 
         StopCoroutine(Dissapera());
-
         StartCoroutine(Dissapera());
     }
 
     private IEnumerator Dissapera()
     {
         yield return new WaitForSeconds(settings.ComboSettings.TimeDisappearanceComboText);
+        Debug.Log(GetComponent<CanvasGroup>().alpha);
+        if(GetComponent<CanvasGroup>().alpha == 1)
+            ChangeFade(0);
+    }
 
-        GetComponent<CanvasGroup>().DOFade(0, settings.ComboSettings.TimeFadeComboText).SetEase(Ease.Linear);
-
+    private void ChangeFade(float endValue)
+    {
+        mySequence.Append(GetComponent<CanvasGroup>().DOFade(endValue, settings.ComboSettings.TimeFadeComboText).SetEase(Ease.Linear));
     }
 }

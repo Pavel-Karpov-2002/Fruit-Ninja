@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class GamePlayEvents : MonoBehaviour
 {
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private GameSettings settings;
     [SerializeField] private GameObject loseCanvas;
     [SerializeField] private GameObject spriteAttenuation;
 
@@ -23,19 +23,20 @@ public class GamePlayEvents : MonoBehaviour
             spawner.SetActive(false);
         }
 
-        CoreValues.HealthCount = gameSettings.Health.StartHealth;
+        CoreValues.HealthCount = settings.Health.StartHealth;
     }
 
     private void Start()
     {
-        ChangeFade.AddAttenuation(spriteAttenuation, gameSettings.TimeAttenuation, 0);
+        ChangeFade.AddAttenuation(spriteAttenuation, settings.TimeAttenuation, 0);
+        UpdateRecord();
 
         StartCoroutine(TimeAttenuation());
     }
 
     private IEnumerator TimeAttenuation()
     {
-        yield return new WaitForSeconds(gameSettings.TimeAttenuation);
+        yield return new WaitForSeconds(settings.TimeAttenuation);
 
         spriteAttenuation.SetActive(false);
         foreach (GameObject spawner in spawners)
@@ -101,10 +102,18 @@ public class GamePlayEvents : MonoBehaviour
         loseCanvas.GetComponent<CanvasGroup>().alpha = alpha;
     }
 
-    public void AddPoint(int countPoints)
+    public void AddPoint(int countPoints, GameObject fruit)
     {
         if (GetComponent<StrikeSeriesScript>() != null)
-            CoreValues.NumberOfPoints += GetComponent<StrikeSeriesScript>().CountSeries(countPoints);
+        {
+            int count = GetComponent<StrikeSeriesScript>().CountSeries(countPoints);
+            CoreValues.NumberOfPoints += count;
+
+            DemonstrationPoints.Demonstration(fruit,
+                count,
+                settings.TextMeshProSettings.TextPointsStyle,
+                settings.TextMeshProSettings.TextPointsMaterial);
+        }
         else
             CoreValues.NumberOfPoints += countPoints;
 
@@ -116,18 +125,26 @@ public class GamePlayEvents : MonoBehaviour
                 Debug.Log("Points Text not found!");
         }
 
-
         if (CoreValues.NumberOfPoints > CoreValues.Record)
         {
             CoreValues.Record = CoreValues.NumberOfPoints;
+            SavingValues.SaveGame();
 
             foreach (var text in recordText)
             {
-                if (text.GetComponent<RecordUI>() != null)
-                    text.GetComponent<RecordUI>().UpdateTextRecord();
-                else
-                    Debug.Log("Points Text not found!");
+                UpdateRecord();
             }
+        }
+    }
+
+    private void UpdateRecord()
+    {
+        foreach (var text in recordText)
+        {
+            if (text.GetComponent<RecordUI>() != null)
+                text.GetComponent<RecordUI>().UpdateTextRecord();
+            else
+                Debug.Log("Points Text not found!");
         }
     }
 }

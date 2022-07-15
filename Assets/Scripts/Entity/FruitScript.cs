@@ -117,16 +117,23 @@ public class FruitScript : Entity
             slice.EndEntry = colliderSphere.GetLengthVector();
             if (slice.FruitIsCut(radiusCollider))
             {
-                player.AddPoint(settings.NumberOfPointsPerFruit);
+                player.AddPoint(settings.NumberOfPointsPerFruit, gameObject);
                 CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
 
                 BlobSettings blobSetting = settings.BlobSettings;
 
-                CreateBlobScript.CreateMoreBlub(gameObject, settings.FruitSprites[numFruit].BlobSprite, settings);
-                CreateBlobScript.CreateOneBlob(gameObject, settings.FruitSprites[numFruit].BlobSprite, blobSetting.MinBlobScale, blobSetting.MaxBlobScale, blobSetting.BlobSpeed, blobSetting.BlobDelayTime, blobSetting.LayerBlob);
-                /*        Debug.Log(fruits.TextPointsStyle.GetComponent<TextMeshPro>().fontSize);
-                        Debug.Log(fruits.TextPointsStyle.GetComponent<TextMeshPro>().fontMaterial);
-                        DemonstrationPoints.Demonstration(gameObject, fruits.NumberOfPointsPerFruit, fruits.TextPointsStyle);*/
+                CreateBlobScript.CreateMoreBlub(gameObject, 
+                    settings.FruitSprites[numFruit].BlobSprite, 
+                    settings);
+                
+                CreateBlobScript.CreateOneBlob(
+                    gameObject, 
+                    settings.FruitSprites[numFruit].BlobSprite, 
+                    blobSetting.MinBlobScale, 
+                    blobSetting.MaxBlobScale, 
+                    blobSetting.BlobSpeed, 
+                    blobSetting.BlobDelayTime,
+                    blobSetting.LayerBlob);
 
                 Destroy(gameObject);
             }

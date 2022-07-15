@@ -4,24 +4,22 @@ using TMPro;
 public class DemonstrationPoints : MonoBehaviour
 {
 
-    public static void Demonstration(GameObject gameObject, int count, GameObject textStyle)
+    public static void Demonstration(GameObject gameObject, int count, GameObject textStyle, Material material)
     {
-        GameObject points = new GameObject() { name = "Points" };
+        GameObject points = Instantiate(textStyle);
 
-        points.AddComponent<TextMeshPro>();
 
         var bounds = gameObject.GetComponent<SpriteRenderer>().sprite.bounds;
 
-        TextMeshPro textPoints = points.GetComponent<TextMeshPro>();
-        textPoints = textStyle.GetComponent<TextMeshPro>();
+        points.GetComponent<MeshRenderer>().material = material;
 
         Vector2 posObject = gameObject.transform.position;
 
         float width = (bounds.min.x - bounds.max.x) / 2;
         float height = (bounds.min.y - bounds.max.y) / 2;
 
-        textPoints.transform.position = new Vector3(Random.Range(posObject.x - width, posObject.x + width), Random.Range(posObject.y, posObject.y - height),0);
-        textPoints.text = count.ToString();
+        points.transform.position = new Vector3(Random.Range(posObject.x - width, posObject.x + width), Random.Range(posObject.y, posObject.y - height),0);
+        points.GetComponent<TextMeshPro>().text = count.ToString();
 
         ScaleChangeScript.Change(points.transform, 0f, 4);
         Destroy(points, 4);

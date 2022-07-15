@@ -8,11 +8,11 @@ public class ComboSettings
 
     [SerializeField] private int maxCombo;
 
-    [SerializeField] private float timeTransformComboText;
+    [SerializeField] private float timeFadeComboText;
 
     public int MaxCombo => maxCombo;
 
     public float TimeDisappearanceComboText => timeDisappearanceComboText;
 
-    public float TimeFadeComboText => timeTransformComboText;
+    public float TimeFadeComboText => timeFadeComboText;
 }
