@@ -102,7 +102,7 @@ public class GamePlayEvents : MonoBehaviour
         loseCanvas.GetComponent<CanvasGroup>().alpha = alpha;
     }
 
-    public void AddPoint(int countPoints, GameObject fruit)
+    public void AddPoint(int countPoints, GameObject fruit, Color colorPoints)
     {
         if (GetComponent<StrikeSeriesScript>() != null)
         {
@@ -112,7 +112,9 @@ public class GamePlayEvents : MonoBehaviour
             DemonstrationPoints.Demonstration(fruit,
                 count,
                 settings.TextMeshProSettings.TextPointsStyle,
-                settings.TextMeshProSettings.TextPointsMaterial);
+                settings.TextMeshProSettings,
+                colorPoints
+                );
         }
         else
             CoreValues.NumberOfPoints += countPoints;

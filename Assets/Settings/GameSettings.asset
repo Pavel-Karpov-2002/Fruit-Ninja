@@ -15,20 +15,28 @@ MonoBehaviour:
   fruitSprites:
   - fruitsSprite: {fileID: 21300000, guid: 5700468ff7032294cb82397e633699b0, type: 3}
     blobSprite: {fileID: 21300000, guid: b41df772b5ec59f40af87ba837042d35, type: 3}
+    colorPoints: {r: 0.9294118, g: 0.80392164, b: 0.21960786, a: 1}
   - fruitsSprite: {fileID: 21300000, guid: 609b056da8b119742b9e5e4d4c7a9e60, type: 3}
     blobSprite: {fileID: 21300000, guid: e7cdf6f9d3c3c3148b855c98cb25da63, type: 3}
+    colorPoints: {r: 0.4431373, g: 0.18039216, b: 0.87843144, a: 1}
   - fruitsSprite: {fileID: 21300000, guid: 4f6512da18c81394a9524e3ceab70909, type: 3}
     blobSprite: {fileID: 21300000, guid: 568a0853881361d42b6298e18aefd148, type: 3}
+    colorPoints: {r: 0.21568629, g: 0.7686275, b: 0.1254902, a: 1}
   - fruitsSprite: {fileID: 21300000, guid: b7d75bb817924f8489a068ee309bc3e4, type: 3}
     blobSprite: {fileID: 21300000, guid: b41df772b5ec59f40af87ba837042d35, type: 3}
+    colorPoints: {r: 0.9176471, g: 0.79215693, b: 0.20784315, a: 1}
   - fruitsSprite: {fileID: 21300000, guid: 52be2d078fc08f14683463e545c8f7e6, type: 3}
     blobSprite: {fileID: 21300000, guid: b41df772b5ec59f40af87ba837042d35, type: 3}
+    colorPoints: {r: 0.9176471, g: 0.79215693, b: 0.20784315, a: 1}
   - fruitsSprite: {fileID: 21300000, guid: b457925db565258489d8f256761c6748, type: 3}
     blobSprite: {fileID: 21300000, guid: b41df772b5ec59f40af87ba837042d35, type: 3}
+    colorPoints: {r: 0.9176471, g: 0.79215693, b: 0.20784315, a: 1}
   - fruitsSprite: {fileID: 21300000, guid: 67f26c1a34f40644e9635f30adc2f1d7, type: 3}
     blobSprite: {fileID: 21300000, guid: 687f3f194826f6340a3959cdb9c2a192, type: 3}
+    colorPoints: {r: 0.7686275, g: 0.1254902, b: 0.1254902, a: 1}
   - fruitsSprite: {fileID: 21300000, guid: ed60f418896fc364d8cbe91e855d5613, type: 3}
     blobSprite: {fileID: 21300000, guid: 687f3f194826f6340a3959cdb9c2a192, type: 3}
+    colorPoints: {r: 0.7686275, g: 0.1254902, b: 0.1254902, a: 1}
   spawners:
   - bottomStartPosition: 31
     bottomEndPosition: 84.3
@@ -80,6 +88,7 @@ MonoBehaviour:
   textMeshProSettings:
     textPointsStile: {fileID: 2667768214004378815, guid: d8bdaa63eafb1cb47ad62ff9e54ebea1, type: 3}
     textPointsMaterial: {fileID: -4324890024673075643, guid: 9d40128aedd1aa54cb33da2f96e7c102, type: 2}
+    pointsLiveTime: 0
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
   addingFruitsForPoints: 10

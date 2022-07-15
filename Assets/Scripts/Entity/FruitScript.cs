@@ -117,7 +117,7 @@ public class FruitScript : Entity
             slice.EndEntry = colliderSphere.GetLengthVector();
             if (slice.FruitIsCut(radiusCollider))
             {
-                player.AddPoint(settings.NumberOfPointsPerFruit, gameObject);
+                player.AddPoint(settings.NumberOfPointsPerFruit, gameObject, settings.FruitSprites[numFruit].ColorFruit);
                 CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
 
                 BlobSettings blobSetting = settings.BlobSettings;
