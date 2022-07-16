@@ -3,12 +3,11 @@ using System.Collections;
 
 public class Physics : MonoBehaviour
 {
-    private float _timeStart;
+    private float _timeLive;
 
     private float _impuls;
 
     private float _gravity;
-    private float downtime;
 
     public float Impuls
     {
@@ -22,17 +21,24 @@ public class Physics : MonoBehaviour
         set { _gravity = value; }
     }
 
+    public float TimeLive
+    {
+        get { return _timeLive; }
+        set { _timeLive = value; }
+    }
+
     private void Start()
     {
-        _timeStart = Time.realtimeSinceStartup;
+        _timeLive = 0;
+        
     }
 
     static float ConvertToRadian(float angle)
     {
         return (angle * Mathf.PI) / 180;
     }
-
-    private float CountingPositionX(float angle, float t)
+    
+   private float CountingPositionX(float angle, float t)
     {
         return _impuls * Mathf.Cos(angle) * t;
     }
@@ -54,11 +60,11 @@ public class Physics : MonoBehaviour
     {
         yield return null;
 
-        float t = Time.realtimeSinceStartup - _timeStart - downtime;
         if(_gravity != 0)
-            transform.position = CalculateVector(gameObject, angle, t) + startPosition;
-        else
-            downtime += Time.deltaTime;
+        {
+            _timeLive += Time.deltaTime;
+            transform.position = CalculateVector(gameObject, angle, _timeLive) + startPosition;
+        }
 
         StartCoroutine(Cast(angle, startPosition));
     }
@@ -67,6 +73,7 @@ public class Physics : MonoBehaviour
     {
         _gravity = gravity;
         _impuls = impuls;
+
         StartCoroutine(Cast(angle, startPosition));
     }
 }

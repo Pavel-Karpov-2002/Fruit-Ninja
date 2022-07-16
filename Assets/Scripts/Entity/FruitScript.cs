@@ -61,7 +61,7 @@ public class FruitScript : Entity
     private void ChageRadius()
     {
         if (fruitSettings.RadiusCollider == 0)
-            RadiusCollider = (transform.localScale.y / GetComponent<SpriteRenderer>().bounds.size.y) * 1.3f;
+            RadiusCollider = (transform.localScale.y / GetComponent<SpriteRenderer>().bounds.size.y) * 2f;
         else
             RadiusCollider = fruitSettings.RadiusCollider;
     }

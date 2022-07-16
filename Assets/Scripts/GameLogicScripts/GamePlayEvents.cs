@@ -25,7 +25,9 @@ public class GamePlayEvents : MonoBehaviour
 
     private void Awake()
     {
+        _entitys = new List<Entity>();
         spriteAttenuation.SetActive(true);
+
         foreach (GameObject spawner in spawners)
         {
             spawner.SetActive(false);
@@ -38,7 +40,6 @@ public class GamePlayEvents : MonoBehaviour
     {
         ChangeFade.AddAttenuation(spriteAttenuation, settings.TimeAttenuation, 0);
         UpdateRecord();
-        _entitys = new List<Entity>();
 
         StartCoroutine(TimeAttenuation());
     }
@@ -103,7 +104,7 @@ public class GamePlayEvents : MonoBehaviour
     private void AnimationUILose()
     {
         loseCanvas.SetActive(true);
-        DOTween.To(ChangingOpasityLoseCanvas, 0, 1, 1.5f).SetEase(Ease.Linear);
+        DOTween.To(ChangingOpasityLoseCanvas, 0, 1, settings.TimeAttenuation).SetEase(Ease.Linear);
     }
 
     private void ChangingOpasityLoseCanvas(float alpha)

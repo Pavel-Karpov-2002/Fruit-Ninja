@@ -30,6 +30,9 @@ public class GameSettings : ScriptableObject
 
     [SerializeField] private float timeAttenuation;
 
+    [SerializeField] private float timeChangeScaleButton;
+
+    [SerializeField] private float changeScaleButton;
 
     public HealthSettings Health => health;
 
@@ -56,4 +59,8 @@ public class GameSettings : ScriptableObject
     public ScaleSettings ScaleSettings => scaleSettings;
 
     public float TimeAttenuation => timeAttenuation;
+
+    public float TimeChangeScaleButton => timeChangeScaleButton;
+
+    public float ChangeScaleButton => changeScaleButton;
 }

@@ -39,6 +39,18 @@ public class SpawnerFruits : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (settings.Spawners.Count == 0)
+        {
+            Debug.Log("Spawners count is 0");
+        }
+        else
+        {
+            StartCoroutine(StartCreateFruits());
+        }
+    }
+
     private IEnumerator StartCreateFruits()
     {
         int priority = Random.Range(minPriority, maxPriority + 1);

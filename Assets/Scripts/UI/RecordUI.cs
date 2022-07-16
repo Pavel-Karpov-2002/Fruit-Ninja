@@ -9,8 +9,6 @@ public class RecordUI : MonoBehaviour
 
     private void Awake()
     {
-        SavingValues.LoadGame();
-
         record = GetComponent<Text>();
         if (record == null)
             Debug.Log("The counter does not have access to the text");

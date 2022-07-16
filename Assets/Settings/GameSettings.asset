@@ -52,8 +52,8 @@ MonoBehaviour:
     heightEndPosition: 0
     minAngle: 47
     maxAngle: 114
-    minObjects: 4
-    maxObjects: 5
+    minObjects: 1
+    maxObjects: 4
     minImpuls: 3.5
     maxImpuls: 4
     maxProcentCountBombInPull: 50
@@ -65,8 +65,8 @@ MonoBehaviour:
     heightEndPosition: 74.6
     minAngle: 52
     maxAngle: 315
-    minObjects: 2
-    maxObjects: 4
+    minObjects: 1
+    maxObjects: 3
     minImpuls: 3.5
     maxImpuls: 4
     maxProcentCountBombInPull: 50
@@ -101,16 +101,18 @@ MonoBehaviour:
     pointsLiveTime: 1
   bombSettings:
     explosionRadius: 4
-    centerExplosionImpuls: 4
-    radiusCollider: 1
+    centerExplosionImpuls: 3
+    radiusCollider: 0
     damage: 1
     minChanceConvertBombIntoFruits: 30
     maxChanceConvertBombIntoFruits: 50
-    timeBeforeExplosion: 4
+    timeBeforeExplosion: 2
     explosionSprites: {fileID: 4602890417527582765, guid: bca2d180d7a48da49bfca88598e0dd76, type: 3}
-    maxScaleExplosion: 2
+    maxScaleExplosion: 1
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
   addingFruitsForPoints: 10
   gravity: 0.8
   timeAttenuation: 3
+  timeChangeScaleButton: 1
+  changeScaleButton: 0

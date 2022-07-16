@@ -12,6 +12,7 @@ public class WorldSizeCamera : MonoBehaviour
 
     private void Awake()
     {
+        SavingValues.LoadGame();
         halfHeight = mainCamera.orthographicSize * 2;
         halfWidth = mainCamera.aspect * halfHeight;
     }

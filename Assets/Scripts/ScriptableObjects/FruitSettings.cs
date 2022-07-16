@@ -5,8 +5,11 @@ using UnityEngine;
 public class FruitSettings
 {
     [SerializeField] private Sprite fruitsSprite;
+
     [SerializeField] private Sprite blobSprite;
+
     [SerializeField] private Color colorPoints;
+
     [SerializeField][Min(0)] private float radiusCollider;
 
     public Sprite FruitsSprite => fruitsSprite;

@@ -41,7 +41,7 @@ public class BombScript : Entity
     private void ChageRadius()
     {
         if (bombSettings.RadiusCollider == 0)
-            RadiusCollider = (transform.localScale.y / GetComponent<SpriteRenderer>().bounds.size.y) * 1.3f;
+            RadiusCollider = (transform.localScale.y / GetComponent<SpriteRenderer>().bounds.size.y) * 2f;
         else
             RadiusCollider = bombSettings.RadiusCollider;
     }
@@ -56,7 +56,9 @@ public class BombScript : Entity
     private IEnumerator Explosion()
     {
         SliceCheckScript.BlockSlice = true;
-        ScaleChangeScript.Change(bombSettings.ExplosionSprites.transform.GetChild(0), bombSettings.MaxScaleExplosion, bombSettings.TimeBeforeExplosion);
+        transform.GetChild(0).localScale = new Vector2(0, 0);
+
+        ScaleChangeScript.Change(transform.GetChild(0), bombSettings.MaxScaleExplosion, bombSettings.TimeBeforeExplosion);
 
         int countEntitys = player.Entitys.Count;
 
@@ -67,10 +69,7 @@ public class BombScript : Entity
         for(int i = 0; i < countEntitys; i++)
         {
             if (player.Entitys[i] == null)
-            {
-                StartCoroutine(Explosion());
-                break;
-            }
+                continue;
 
             var physics = player.Entitys[i].GetComponent<Physics>();
 
@@ -91,11 +90,15 @@ public class BombScript : Entity
 
         for (int i = 0; i < countEntitys; i++)
         {
+            if (player.Entitys[i] == null)
+                continue;
+
             if (player.Entitys[i] != this)
             {
                 if (GetDistance(player.Entitys[i].transform.position) <= gameSettings.BombSettings.ExplosionRadius)
                 {
-                    Debug.Log("Asd");
+                    player.Entitys[i].GetComponent<Physics>().TimeLive = 0;
+
                     player.Entitys[i].Trow(GetAngel(player.Entitys[i].transform.position),
                         bombSettings.CenterExplosionImpuls / GetDistance(player.Entitys[i].transform.position),
                         gameSettings.Gravity,
@@ -111,22 +114,21 @@ public class BombScript : Entity
 
         foreach (SpawnerFruits spawner in spawners)
         {
-            spawner.gameObject.SetActive(true);
+            if(spawner != null)
+                spawner.gameObject.SetActive(true);
         }
 
         player.Entitys.Remove(this);
         Destroy(gameObject);
     }
 
-    private float GetAngel(Vector2 pos)
+    private float GetAngel(Vector3 pos)
     {
-        Debug.Log(Vector2.Angle(Vector2.down, pos));
-        return Vector2.Angle(Vector2.down, pos);
+        return Vector3.Angle (pos, (pos - transform.position));
     }
 
     private float GetDistance(Vector2 pos)
     {
-        Debug.Log(Mathf.Abs(Vector2.Distance(pos, transform.position)));
         return Mathf.Abs(Vector2.Distance(pos, transform.position));
     }
 
