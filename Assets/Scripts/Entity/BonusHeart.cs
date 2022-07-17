@@ -115,12 +115,13 @@ public class BonusHeart : Entity
         newBlob.GetComponent<SpriteRenderer>().sprite = _healthSettings.BlobSprite;
 
         ScaleChangeScript.Change(newBlob.transform, _healthSettings.MinBlobSize, _healthSettings.TimeMoveHeartToHeartPanel);
-
     }
 
     private void OnBecameInvisible()
     {
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf && transform.position.y < WorldSizeCamera.HalfHeight)
+        {
             Destroy(gameObject);
+        }
     }
 }

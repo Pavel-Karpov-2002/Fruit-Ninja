@@ -6,8 +6,6 @@ public class FruitScript : Entity
 {
     [SerializeField] private GameSettings settings;
 
-    [SerializeField] private float speedRotate = 1.5f;
-
     private Transform scaleShadow;
     private int numFruit;
     private FruitSettings fruitSettings;
@@ -42,7 +40,7 @@ public class FruitScript : Entity
         heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
         player.Entitys.Add(this);
 
-        transform.DORotate(new Vector3(0, 0, 180), speedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
+        transform.DORotate(new Vector3(0, 0, 180), settings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
 
         NormalizeObject();
     }

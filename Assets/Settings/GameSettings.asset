@@ -61,6 +61,7 @@ MonoBehaviour:
     maxImpuls: 4
     maxProcentCountBombInPull: 20
     maxProcentCountHeartInPull: 20
+    maxProcentCountFruitBagInPull: 0
     priority: 0
     isLeft: 0
   - bottomStartPosition: 0
@@ -75,6 +76,7 @@ MonoBehaviour:
     maxImpuls: 4
     maxProcentCountBombInPull: 20
     maxProcentCountHeartInPull: 20
+    maxProcentCountFruitBagInPull: 0
     priority: 1
     isLeft: 1
   healthSettings:
@@ -131,6 +133,16 @@ MonoBehaviour:
     minFruitsInBag: 2
     maxFruitsInBag: 4
     radiusCollider: 3
+    maxChanceConvertFruitBagIntoFruits: 20
+  freezingSettings:
+    blobSprite: {fileID: 21300000, guid: 759c3d09b155cc9469355a6d319532f6, type: 3}
+    radiusCollider: 0
+    maxChanceConvertFreezingIntoFruits: 20
+    timeScale: 0.5
+    timeReduction: 5
+    maxBlobSize: 0.8
+    minBlobSize: 0
+    timeLiveBlob: 1
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
   minFriutsAdd: 1
@@ -141,3 +153,4 @@ MonoBehaviour:
   minIntervalBetweenEntitysLoss: 3
   redusingInInterval: 0.1
   speedSlice: 0.1
+  speedRotate: 1.5

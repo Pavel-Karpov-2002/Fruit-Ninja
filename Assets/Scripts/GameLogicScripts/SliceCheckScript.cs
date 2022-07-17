@@ -66,7 +66,6 @@ public class SliceCheckScript : MonoBehaviour
         {
             if (entity.ColliderSphere.HittingCollider(entity.RadiusCollider))
             {
-                Debug.Log(entity.GetType());
                 entity.Slice.StartEntry = entity.ColliderSphere.GetLengthVector();
             }
             else if (entity.Slice.StartEntry != 0 && entity.Slice.EndEntry == 0)

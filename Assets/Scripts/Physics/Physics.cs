@@ -9,6 +9,8 @@ public class Physics : MonoBehaviour
 
     private float _gravity;
 
+    private Vector3 _startPosition;
+
     public float Impuls
     {
         get { return _impuls; }
@@ -25,6 +27,12 @@ public class Physics : MonoBehaviour
     {
         get { return _timeLive; }
         set { _timeLive = value; }
+    }
+
+    public Vector3 StartPosition
+    {
+        get { return _startPosition; }
+        set { _startPosition = value; }
     }
 
     private void Start()
@@ -56,24 +64,25 @@ public class Physics : MonoBehaviour
         return new Vector3(x, y, 0);
     }
 
-    private IEnumerator Cast(float angle, Vector3 startPosition)
+    private IEnumerator Cast(float angle)
     {
         yield return null;
 
         if(_gravity != 0)
         {
             _timeLive += Time.deltaTime;
-            transform.position = CalculateVector(gameObject, angle, _timeLive) + startPosition;
+            transform.position = CalculateVector(gameObject, angle, _timeLive) + _startPosition;
         }
 
-        StartCoroutine(Cast(angle, startPosition));
+        StartCoroutine(Cast(angle));
     }
 
     public void AddImpulse(float angle, float impuls, float gravity, Vector3 startPosition)
     {
         _gravity = gravity;
         _impuls = impuls;
+        _startPosition = startPosition;
 
-        StartCoroutine(Cast(angle, startPosition));
+        StartCoroutine(Cast(angle));
     }
 }

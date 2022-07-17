@@ -25,14 +25,6 @@ public class FruitBag : Entity
         _fruitBagSettings = gameSettings.FruitBagSettings;
     }
 
-    private void Start()
-    {
-        if(GetComponent<SpriteRenderer>() != null)
-            heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
-
-        player.Entitys.Add(this);
-    }
-
 
     private void FixedUpdate()
     {

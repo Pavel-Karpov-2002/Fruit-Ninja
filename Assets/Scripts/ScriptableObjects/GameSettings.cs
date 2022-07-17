@@ -21,6 +21,8 @@ public class GameSettings : ScriptableObject
     [SerializeField] private BombSettigns bombSettings;
 
     [SerializeField] private FruitBagSettings fruitBagSettings;
+    
+    [SerializeField] private FreezingSettings freezingSettings;
 
     [SerializeField] private int numberOfPointsPerFruit;
 
@@ -42,6 +44,7 @@ public class GameSettings : ScriptableObject
 
     [SerializeField][Min(0)] private float speedSlice;
 
+    [SerializeField][Min(0)] private float speedRotate;
 
     public ScaleOnWindowSettings ScaleSettings => scaleSettings;
 
@@ -50,6 +53,8 @@ public class GameSettings : ScriptableObject
     public List<FruitSettings> FruitSettings => fruitSettings;
 
     public FruitBagSettings FruitBagSettings => fruitBagSettings;
+
+    public FreezingSettings FreezingSettings => freezingSettings;
 
     public List<Spawner> Spawners => spawners;
 
@@ -80,4 +85,5 @@ public class GameSettings : ScriptableObject
     public float RedusingInInterval => redusingInInterval;
 
     public float SpeedSlice => speedSlice;
+    public float SpeedRotate => speedRotate;
 }

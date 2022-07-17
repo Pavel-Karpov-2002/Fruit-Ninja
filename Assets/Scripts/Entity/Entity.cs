@@ -34,6 +34,14 @@ public abstract class Entity : MonoBehaviour
         spawners = FindObjectsOfType<SpawnerEntitys>();
     }
 
+    private void Start()
+    {
+        if (GetComponent<SpriteRenderer>() != null)
+            heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
+
+        player.Entitys.Add(this);
+    }
+
     public abstract void Destruction();
 
     public void Trow(float angle, float impuls, float g, Vector3 startPosition)

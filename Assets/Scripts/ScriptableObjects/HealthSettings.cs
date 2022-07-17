@@ -24,14 +24,14 @@ public class HealthSettings
 
     [SerializeField][Min(0)] private float timeBeat;
 
-    [SerializeField] private float minHeartBeatScale;
-    [SerializeField] private float maxHeartBeatScale;
+    [SerializeField][Min(0)] private float minHeartBeatScale;
+    [SerializeField][Min(0)] private float maxHeartBeatScale;
 
-    [SerializeField] private float heartBeatSpeed;
+    [SerializeField][Min(0)] private float heartBeatSpeed;
 
     [SerializeField] private float increaseImpuls;
 
-    [SerializeField] private int maxChanceConvertHeartIntoFruits;
+    [SerializeField][Range(0, 100)] private int maxChanceConvertHeartIntoFruits;
 
     public Sprite BlobSprite => blobSprite;
 

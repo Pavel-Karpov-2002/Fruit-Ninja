@@ -4,9 +4,9 @@ using System;
 [Serializable]
 public class FruitBagSettings
 {
-    [SerializeField][Min(0)] private int minAngleImpulseFruit;
+    [SerializeField][Range(0, 360)] private int minAngleImpulseFruit;
 
-    [SerializeField][Min(0)] private int maxAngleImpulseFruit;
+    [SerializeField][Range(0, 360)] private int maxAngleImpulseFruit;
 
     [SerializeField][Min(0)] private float minImpulsFruit;
 
@@ -18,7 +18,7 @@ public class FruitBagSettings
 
     [SerializeField][Min(0)] private float radiusCollider;
 
-    [SerializeField] private int maxChanceConvertHeartIntoFruits;
+    [SerializeField][Range(0, 100)] private int maxChanceConvertFruitBagIntoFruits;
 
     public int MinAngleImpulseFruit => minAngleImpulseFruit;
     public int MaxAngleImpulseFruit => maxAngleImpulseFruit;
@@ -31,5 +31,5 @@ public class FruitBagSettings
 
     public float RadiusCollider => radiusCollider;
 
-    public int MaxChanceConvertHeartIntoFruits => maxChanceConvertHeartIntoFruits;
+    public int MaxChanceConvertFruitBagIntoFruits => maxChanceConvertFruitBagIntoFruits;
 }

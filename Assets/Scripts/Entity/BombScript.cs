@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class BombScript : Entity
 {
@@ -20,15 +21,10 @@ public class BombScript : Entity
 
         if (Slice == null)
             Debug.Log($"{gameObject.name} don't have a slice script");
-    }
-
-    private void Start()
-    {
-        heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
-        player = FindObjectOfType<GamePlayEvents>();
-        player.Entitys.Add(this);
 
         bombSettings = gameSettings.BombSettings;
+
+        transform.DORotate(new Vector3(0, 0, 180), gameSettings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
     }
 
     private void FixedUpdate()
@@ -53,6 +49,7 @@ public class BombScript : Entity
 
 
         StopAllPhysicsEntity();
+        CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
 
         yield return new WaitForSeconds(bombSettings.TimeBeforeExplosion);
 
