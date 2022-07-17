@@ -114,7 +114,7 @@ MonoBehaviour:
     timeFadeComboText: 2
   textMeshProSettings:
     textPointsStile: {fileID: 2667768214004378815, guid: d8bdaa63eafb1cb47ad62ff9e54ebea1, type: 3}
-    textPointsMaterial: {fileID: -4324890024673075643, guid: 9d40128aedd1aa54cb33da2f96e7c102, type: 2}
+    textPointsMaterial: {fileID: 2100000, guid: 7c71c9e8a70259849a1c2300483b6073, type: 2}
     pointsLiveTime: 1
   bombSettings:
     explosionRadius: 4

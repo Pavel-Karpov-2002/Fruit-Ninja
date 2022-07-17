@@ -23,8 +23,6 @@ public class BombScript : Entity
             Debug.Log($"{gameObject.name} don't have a slice script");
 
         bombSettings = gameSettings.BombSettings;
-
-        transform.DORotate(new Vector3(0, 0, 180), gameSettings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
     }
 
     private void FixedUpdate()
@@ -47,13 +45,20 @@ public class BombScript : Entity
 
         ScaleChangeScript.Change(transform.GetChild(0), bombSettings.MaxScaleExplosion, bombSettings.TimeBeforeExplosion);
 
+        DemonstrationPoints.Demonstration(gameObject,
+            "¡ÛÏ!",
+            gameSettings.TextMeshProSettings.TextPointsStyle,
+            gameSettings.TextMeshProSettings,
+            true,
+            new Color(255, 255, 255)    
+            );
 
         StopAllPhysicsEntity();
-        CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
 
         yield return new WaitForSeconds(bombSettings.TimeBeforeExplosion);
 
         StartAllPhysics();
+        CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
 
         blade.Entitys.Remove(this);
         Destroy(gameObject);

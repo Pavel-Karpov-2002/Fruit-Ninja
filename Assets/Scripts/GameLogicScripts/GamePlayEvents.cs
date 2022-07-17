@@ -148,9 +148,10 @@ public class GamePlayEvents : MonoBehaviour
             AddPoints.Add(count);
 
             DemonstrationPoints.Demonstration(fruit,
-                count,
+                count.ToString(),
                 settings.TextMeshProSettings.TextPointsStyle,
                 settings.TextMeshProSettings,
+                false,
                 colorPoints
                 );
         }
