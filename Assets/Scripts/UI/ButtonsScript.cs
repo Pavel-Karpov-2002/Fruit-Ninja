@@ -2,7 +2,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using DG.Tweening;
 using TMPro;
 
 public class ButtonsScript : MonoBehaviour
@@ -48,14 +47,6 @@ public class ButtonsScript : MonoBehaviour
         yield return new WaitForSeconds(gameSettings.TimeAttenuation);
 
         SceneManager.LoadScene(loadSceneNumber);
-    }
-
-    public void ChangeScaleButtonUp(GameObject objectButton)
-    {
-        Transform buttonTransform = objectButton.transform;
-        Vector2 effectScale = new Vector2(buttonTransform.localScale.x - gameSettings.ChangeScaleButton, buttonTransform.localScale.y - gameSettings.ChangeScaleButton);
-
-        buttonTransform.DOScale(effectScale, gameSettings.TimeChangeScaleButton);
     }
 
     private void GetRecords()

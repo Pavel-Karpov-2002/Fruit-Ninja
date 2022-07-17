@@ -1,18 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SpawnerFruits : MonoBehaviour
+public class SpawnerEntitys : MonoBehaviour
 {
     [SerializeField] private GameObject fruit;
     [SerializeField] private GameObject bomb;
-    [SerializeField] private float timerInterval;
     [SerializeField] private GameSettings settings;
 
-    private int minPriority;
-    private int maxPriority;
-    private int increase;
+    private int _minPriority;
+    private int _maxPriority;
+    private int _increase;
 
     private void Awake()
     {
@@ -22,8 +20,8 @@ public class SpawnerFruits : MonoBehaviour
         }
         else
         {
-            minPriority = settings.Spawners.Min(s => s.Priority);
-            maxPriority = settings.Spawners.Max(s => s.Priority);
+            _minPriority = settings.Spawners.Min(s => s.Priority);
+            _maxPriority = settings.Spawners.Max(s => s.Priority);
         }
     }
 
@@ -53,7 +51,7 @@ public class SpawnerFruits : MonoBehaviour
 
     private IEnumerator StartCreateFruits()
     {
-        int priority = Random.Range(minPriority, maxPriority + 1);
+        int priority = Random.Range(_minPriority, _maxPriority + 1);
 
         foreach(Spawner spawner in settings.Spawners)
         {
@@ -63,10 +61,7 @@ public class SpawnerFruits : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(timerInterval);
-
-        if (timerInterval > 0.4f)
-            timerInterval -= 0.1f;
+        yield return new WaitForSeconds(settings.IntervalBetweenEntitysLoss);
 
 
         StartCoroutine(StartCreateFruits());
@@ -76,10 +71,10 @@ public class SpawnerFruits : MonoBehaviour
     {
         int bombInPull = 0;
 
-        if(increase < settings.MaxFriutsAdd)
-            increase = Random.Range(0, CoreValues.NumberOfPoints / settings.AddingFruitsForPoints);
+        if(_increase < settings.MaxFriutsAdd)
+            _increase = Random.Range(0, CoreValues.NumberOfPoints / settings.AddingFruitsForPoints);
 
-        int countFruits = Random.Range(spawner.MinObjects, spawner.MaxObjects + increase);
+        int countFruits = Random.Range(spawner.MinObjects, spawner.MaxObjects + _increase);
 
         for (int j = 0; j < countFruits; j++)
         {

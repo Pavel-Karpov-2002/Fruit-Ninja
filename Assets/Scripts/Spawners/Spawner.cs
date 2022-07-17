@@ -26,7 +26,6 @@ public class Spawner
 
     [SerializeField] private bool isLeft;
 
-
     public float MaxProcentCountBombInPull => maxProcentCountBombInPull;
 
     public float BottomStartPosition => bottomStartPosition;

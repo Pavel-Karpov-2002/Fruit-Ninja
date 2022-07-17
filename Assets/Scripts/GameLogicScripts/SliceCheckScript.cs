@@ -1,10 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class SliceCheckScript : MonoBehaviour
 {
     [SerializeField] private GamePlayEvents player;
+    [SerializeField] private GameSettings gameSettings;
 
     private static bool blockSlice;
+    private Vector2 lastMousePos;
+    private float AxisX;
+    private float AxisY;
 
     public static bool BlockSlice
     {
@@ -14,14 +19,36 @@ public class SliceCheckScript : MonoBehaviour
 
     public void Update()
     {
-        /* for (int i = 0; i < Input.touchCount; ++i)
-         {
-             if ((Input.GetTouch(i).phase == TouchPhase.Began || Input.GetMouseButton(0)) && CoreValues.HealthCount > 0)
-                 OnTriggerCollider();
-         }*/
+        /*for (int i = 0; i < Input.touchCount; ++i)
+        {            
+            if ((Input.GetTouch(i).phase == TouchPhase.Began || Input.GetMouseButton(0)) && CoreValues.HealthCount > 0)
+            {
+                float speed = Input.GetTouch(i).deltaPosition.x / Time.deltaTime;
+                if(speed >= gameSettings.SpeedSlice)
+                {
+                    OnTriggerCollider();
+                }
+            }
+        }*/
 
-        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && !blockSlice)
+        GetSpeedMouse();
+
+        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && !blockSlice && (AxisX > gameSettings.SpeedSlice || AxisY > gameSettings.SpeedSlice))
             OnTriggerCollider();
+    }
+
+    private void GetSpeedMouse()
+    {
+        if (lastMousePos == Vector2.zero)
+        {
+            lastMousePos = Input.mousePosition;
+        }
+        else
+        {
+            AxisX = ((Input.mousePosition.x - lastMousePos.x) / Time.deltaTime) / Screen.width;
+            AxisY = ((Input.mousePosition.y - lastMousePos.y) / Time.deltaTime) / Screen.height;
+            lastMousePos = Input.mousePosition;
+        }
     }
 
     private void OnTriggerCollider()

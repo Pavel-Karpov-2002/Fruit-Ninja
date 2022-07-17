@@ -37,6 +37,8 @@ public class CutSpriteScript : MonoBehaviour
             halve.AddComponent<Physics>();
             halve.GetComponent<Physics>().AddImpulse(Random.Range(40, 120), 1.8f, 1.2f, halve.transform.position);
 
+            halve.AddComponent<Halve>();
+
             Destroy(halve, 5);
         }
 

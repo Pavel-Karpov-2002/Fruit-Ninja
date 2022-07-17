@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class HeartUI : MonoBehaviour
 {
@@ -10,42 +11,50 @@ public class HeartUI : MonoBehaviour
 
     private HeartChange[] hearts;
 
+    private Sequence changeScale;
+    private HealthSettings healthSettings;
+    private int numberHeartChange;
+
     private void Awake()
     {
-        for (int i = 0; i < settings.Health.StartHealth; i++)
+        healthSettings = settings.HealthSettings;
+
+        for (int i = 0; i < healthSettings.StartHealth; i++)
         {
             CreateHeartImage();
         }
+
+        hearts = gameObject.GetComponentsInChildren<HeartChange>();
+        numberHeartChange = hearts.Length;
     }
     
     private void Start()
     {
-        StartCoroutine(GetAllHearts());
+        changeScale = DOTween.Sequence();
+
+        StartCoroutine(Heartbeat());
     }
 
-    public IEnumerator GetAllHearts()
+    public void GetAllHearts()
     {
-        StopCoroutine(Heartbeat(0));
-
-        yield return new WaitForSeconds(0.1f);
         hearts = gameObject.GetComponentsInChildren<HeartChange>();
-
-        if (hearts.Length > CoreValues.HealthCount)
-            DestroyHeartImage();
-        else if (hearts.Length > 0 && hearts[0] != null )
-            StartCoroutine(Heartbeat(hearts.Length));
-
+        numberHeartChange = hearts.Length;
     }
 
     public void DestroyHeartImage()
     {
+        GetAllHearts();
         if (hearts.Length > CoreValues.HealthCount)
         {
-            StopCoroutine(Heartbeat(0));
-            hearts = gameObject.GetComponentsInChildren<HeartChange>();
             Destroy(hearts[0].gameObject);
-            StartCoroutine(GetAllHearts());
+            GetAllHearts();
         }
+    }
+
+    public void AddHeart()
+    {
+        CreateHeartImage();
+        GetAllHearts();
     }
 
     public void CreateHeartImage()
@@ -55,34 +64,58 @@ public class HeartUI : MonoBehaviour
         newHealth.GetComponent<HeartChange>().ChangePosition(heart.transform);
     }
 
-    private IEnumerator Heartbeat(int numberHeart)
+    private IEnumerator Heartbeat()
     {
         if (hearts.Length > 0)
         {
-            numberHeart -= 1;
-            if (numberHeart < 0)
-                numberHeart = hearts.Length - 1;
+            numberHeartChange -= 1;
+            if (numberHeartChange < 0)
+                numberHeartChange = hearts.Length - 1;
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(healthSettings.HeartBeatSpeed);
 
-            Beat(numberHeart, settings.ScaleSettings.HeartBeatScale, settings.ScaleSettings.HeartBeatSpeed);
+            Beat(healthSettings.MaxHeartBeatScale, healthSettings.HeartBeatSpeed);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(healthSettings.HeartBeatSpeed);
 
-            Beat(numberHeart, 1, settings.ScaleSettings.HeartBeatSpeed);
+            Beat(healthSettings.MinHeartBeatScale, healthSettings.HeartBeatSpeed);
 
-            StartCoroutine(Heartbeat(numberHeart));
-        }
-        else
-        {
-            StopCoroutine(Heartbeat(0));
+            StartCoroutine(Heartbeat());
         }
     }
 
-    private void Beat(int numberHeart, float to, float speed)
+    private void Beat(float to, float speed)
     {
-        if (numberHeart < hearts.Length && hearts[numberHeart] != null)
-            ScaleChangeScript.Change(hearts[numberHeart].transform, to, speed);
+        if (numberHeartChange < hearts.Length && hearts[numberHeartChange] != null)
+        {
+            DOTween.Kill(changeScale, false);
 
+            changeScale.Append(hearts[numberHeartChange].transform.DOScale(to, speed).SetEase(Ease.Linear));
+        }
+        else
+        {
+            foreach(var heart in hearts)
+            {
+                if(heart != null)
+                    changeScale.Append(heart.transform.DOScale(healthSettings.MinHeartBeatScale, 0.2f).SetEase(Ease.Linear));
+            }
+        }
+    }
+
+    public void ChangeAlphaColorHeart(int numberHeart, float alpha)
+    {
+        hearts[numberHeart].GetComponent<CanvasGroup>().alpha = alpha;
+    }
+
+    public Vector2 GetScaleHeart(int numberHeart)
+    {
+        return hearts[numberHeart].GetComponent<RectTransform>().sizeDelta;
+    }
+
+    public Vector3 GetPositionHeartInWorldCoordinates(int numberHeart)
+    {
+        RectTransform lastHeartPosition = hearts[numberHeart].GetComponent<RectTransform>();
+
+        return lastHeartPosition.TransformPoint(lastHeartPosition.transform.position);
     }
 }

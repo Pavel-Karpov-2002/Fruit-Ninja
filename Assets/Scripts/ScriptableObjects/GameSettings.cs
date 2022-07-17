@@ -4,13 +4,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Settings", fileName = "GameSettings")]
 public class GameSettings : ScriptableObject
 {
+    [SerializeField] private ScaleOnWindowSettings scaleSettings;
+
     [SerializeField] private List<FruitSettings> fruitSettings;
 
     [SerializeField] private List<Spawner> spawners;
 
-    [SerializeField] private HealthSettings health;
-
-    [SerializeField] private ScaleSettings scaleSettings;
+    [SerializeField] private HealthSettings healthSettings;
 
     [SerializeField] private BlobSettings blobSettings;
 
@@ -22,19 +22,22 @@ public class GameSettings : ScriptableObject
 
     [SerializeField] private int numberOfPointsPerFruit;
 
-    [SerializeField] private int maxFriutsAdd;
+    [SerializeField][Min(0)] private int maxFriutsAdd;
 
-    [SerializeField] private int addingFruitsForPoints;
+    [SerializeField][Min(0)] private int addingFruitsForPoints;
 
     [SerializeField] private float gravity;
 
-    [SerializeField] private float timeAttenuation;
+    [SerializeField][Min(0)] private float timeAttenuation;
 
-    [SerializeField] private float timeChangeScaleButton;
+    [SerializeField][Min(0)] private float intervalBetweenEntitysLoss;
 
-    [SerializeField] private float changeScaleButton;
+    [SerializeField][Min(0)] private float speedSlice;
 
-    public HealthSettings Health => health;
+
+    public ScaleOnWindowSettings ScaleSettings => scaleSettings;
+
+    public HealthSettings HealthSettings => healthSettings;
 
     public List<FruitSettings> FruitSettings => fruitSettings;
 
@@ -55,12 +58,10 @@ public class GameSettings : ScriptableObject
     public int AddingFruitsForPoints => addingFruitsForPoints;
 
     public float Gravity => gravity;
-
-    public ScaleSettings ScaleSettings => scaleSettings;
-
+    
     public float TimeAttenuation => timeAttenuation;
 
-    public float TimeChangeScaleButton => timeChangeScaleButton;
+    public float IntervalBetweenEntitysLoss => intervalBetweenEntitysLoss;
 
-    public float ChangeScaleButton => changeScaleButton;
+    public float SpeedSlice => speedSlice;
 }

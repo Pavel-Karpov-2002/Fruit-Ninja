@@ -36,6 +36,7 @@ public class FruitScript : Entity
 
     private void Start()
     {
+        heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
         player.Entitys.Add(this);
 
         transform.DORotate(new Vector3(0, 0, 180), speedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
@@ -50,20 +51,12 @@ public class FruitScript : Entity
 
     private void NormalizeObject()
     {
-        ScaleChangeScript.ChangeOnWindow(transform);
+        ScaleChangeScript.ChangeOnWindow(transform, settings.ScaleSettings.MinScaleOnWindow, settings.ScaleSettings.MaxScaleOnWindow);
 
         scaleShadow.transform.localScale += new Vector3(0.3f, 0.3f);
-        ScaleChangeScript.ChangeOnWindow(scaleShadow.transform);
+        ScaleChangeScript.ChangeOnWindow(scaleShadow.transform, settings.ScaleSettings.MinScaleOnWindow, settings.ScaleSettings.MaxScaleOnWindow);
 
-        ChageRadius();
-    }
-
-    private void ChageRadius()
-    {
-        if (fruitSettings.RadiusCollider == 0)
-            RadiusCollider = (transform.localScale.y / GetComponent<SpriteRenderer>().bounds.size.y) * 2f;
-        else
-            RadiusCollider = fruitSettings.RadiusCollider;
+        ChageRadiusCollider(fruitSettings.RadiusCollider);
     }
 
     public override void Destruction()

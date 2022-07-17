@@ -9,11 +9,13 @@ public class ComboSeriesUI : MonoBehaviour
     [SerializeField] private Text comboSeries;
     [SerializeField] private GameSettings settings;
 
-    Sequence mySequence;
+    private float timeToFade;
+    private float fade;
+    private float alphaCanvasGroup;
 
     private void Start()
     {
-        mySequence = DOTween.Sequence();
+        alphaCanvasGroup = GetComponent<CanvasGroup>().alpha;
 
         if (GetComponent<CanvasGroup>() != null)
             GetComponent<CanvasGroup>().alpha = 0;
@@ -21,30 +23,31 @@ public class ComboSeriesUI : MonoBehaviour
             Debug.Log("CanvasGroup not found! Add canvasGroup.");
     }
 
+    private void Update()
+    {
+        if (timeToFade < settings.ComboSettings.TimeDisappearanceComboText)
+        {
+            timeToFade += Time.deltaTime;
+        }else if(alphaCanvasGroup > 0)
+        {
+            ChangeFade();
+        }
+    }
+
     public void ChangeSeriesText(int countSeries)
     {
         GetComponent<CanvasGroup>().alpha = 1;
-        mySequence.Kill();
-        DOTween.Kill(mySequence);
-        mySequence = DOTween.Sequence();
 
         comboSeries.text = "X" + countSeries.ToString();
         countFruits.text = countSeries.ToString() + " фруктов";
 
-        StopCoroutine(Dissapera());
-        StartCoroutine(Dissapera());
+        timeToFade = 0;
+        fade = 1;
     }
 
-    private IEnumerator Dissapera()
+    private void ChangeFade()
     {
-        yield return new WaitForSeconds(settings.ComboSettings.TimeDisappearanceComboText);
-
-        if(GetComponent<CanvasGroup>().alpha == 1)
-            ChangeFade(0);
-    }
-
-    private void ChangeFade(float endValue)
-    {
-        mySequence.Append(GetComponent<CanvasGroup>().DOFade(endValue, settings.ComboSettings.TimeFadeComboText).SetEase(Ease.Linear));
-    }
+        fade -= Time.deltaTime;
+        GetComponent<CanvasGroup>().alpha = fade;
+     }
 }

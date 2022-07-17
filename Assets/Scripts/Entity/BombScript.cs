@@ -6,12 +6,11 @@ public class BombScript : Entity
     [SerializeField] private GameSettings gameSettings;
 
     private BombSettigns bombSettings;
-    private SpawnerFruits[] spawners;
 
     private void Awake()
     {
         player = FindObjectOfType<GamePlayEvents>();
-        spawners = FindObjectsOfType<SpawnerFruits>(); 
+        spawners = FindObjectsOfType<SpawnerEntitys>(); 
 
         ColliderSphere = GetComponent<ColliderSphere>();
         Slice = GetComponent<SliceRange>();
@@ -25,6 +24,7 @@ public class BombScript : Entity
 
     private void Start()
     {
+        heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
         player = FindObjectOfType<GamePlayEvents>();
         player.Entitys.Add(this);
 
@@ -33,17 +33,9 @@ public class BombScript : Entity
 
     private void FixedUpdate()
     {
-        ScaleChangeScript.ChangeOnWindow(transform);
+        ScaleChangeScript.ChangeOnWindow(transform, gameSettings.ScaleSettings.MinScaleOnWindow, gameSettings.ScaleSettings.MaxScaleOnWindow);
 
-        ChageRadius();
-    }
-
-    private void ChageRadius()
-    {
-        if (bombSettings.RadiusCollider == 0)
-            RadiusCollider = (transform.localScale.y / GetComponent<SpriteRenderer>().bounds.size.y) * 2f;
-        else
-            RadiusCollider = bombSettings.RadiusCollider;
+        ChageRadiusCollider(bombSettings.RadiusCollider);
     }
 
     public override void Destruction()
@@ -55,40 +47,26 @@ public class BombScript : Entity
 
     private IEnumerator Explosion()
     {
-        SliceCheckScript.BlockSlice = true;
         transform.GetChild(0).localScale = new Vector2(0, 0);
 
         ScaleChangeScript.Change(transform.GetChild(0), bombSettings.MaxScaleExplosion, bombSettings.TimeBeforeExplosion);
 
-        int countEntitys = player.Entitys.Count;
 
-        float[] impuls = new float[countEntitys];
-        float[] gravity = new float[countEntitys];
-
-
-        for(int i = 0; i < countEntitys; i++)
-        {
-            if (player.Entitys[i] == null)
-                continue;
-
-            var physics = player.Entitys[i].GetComponent<Physics>();
-
-            impuls[i] = physics.Impuls;
-            gravity[i] = physics.Gravity;
-
-            physics.Impuls = 0;
-            physics.Gravity = 0;
-        }
-
-        foreach(SpawnerFruits spawner in spawners)
-        {
-            spawner.gameObject.SetActive(false);
-        }
+        StopAllPhysicsEntity();
 
         yield return new WaitForSeconds(bombSettings.TimeBeforeExplosion);
+
+        StartAllPhysics();
+
+        player.Entitys.Remove(this);
+        Destroy(gameObject);
+    }
+
+    protected override void StartAllPhysics()
+    {
         SliceCheckScript.BlockSlice = false;
 
-        for (int i = 0; i < countEntitys; i++)
+        for (int i = 0; i < player.Entitys.Count; i++)
         {
             if (player.Entitys[i] == null)
                 continue;
@@ -99,6 +77,8 @@ public class BombScript : Entity
                 {
                     player.Entitys[i].GetComponent<Physics>().TimeLive = 0;
 
+                    Debug.Log(GetAngel(player.Entitys[i].transform.position));
+
                     player.Entitys[i].Trow(GetAngel(player.Entitys[i].transform.position),
                         bombSettings.CenterExplosionImpuls / GetDistance(player.Entitys[i].transform.position),
                         gameSettings.Gravity,
@@ -106,25 +86,29 @@ public class BombScript : Entity
                 }
                 else
                 {
-                    player.Entitys[i].GetComponent<Physics>().Impuls = impuls[i];
                     player.Entitys[i].GetComponent<Physics>().Gravity = gravity[i];
                 }
             }
         }
 
-        foreach (SpawnerFruits spawner in spawners)
+        foreach (SpawnerEntitys spawner in spawners)
         {
-            if(spawner != null)
+            if (spawner != null)
                 spawner.gameObject.SetActive(true);
         }
-
-        player.Entitys.Remove(this);
-        Destroy(gameObject);
     }
 
     private float GetAngel(Vector3 pos)
     {
-        return Vector3.Angle (pos, (pos - transform.position));
+        if(pos.y > transform.position.y)
+        {
+            return Vector3.Angle(pos, (pos - transform.position));
+        }
+        else
+        {
+            return 360 - Vector3.Angle(pos, (pos - transform.position));
+        }
+
     }
 
     private float GetDistance(Vector2 pos)

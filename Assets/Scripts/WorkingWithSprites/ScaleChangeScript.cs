@@ -9,6 +9,11 @@ public class ScaleChangeScript : MonoBehaviour
         objectChange.DOScale(toScale, timeChange).SetEase(Ease.Linear);
     }
 
+    public static void ChangeRectangleSize(RectTransform objectChange, Vector2 toScale, float timeChange)
+    {
+        objectChange.DOSizeDelta(new Vector2(toScale.x, toScale.y), timeChange);
+    }
+
     public async static void DelayedChange(Transform objectChange, float toScale, float timeChange, float timeDelay)
     {
 
@@ -17,17 +22,17 @@ public class ScaleChangeScript : MonoBehaviour
         objectChange.DOScale(toScale, timeChange).SetEase(Ease.Linear);
     }
 
-    public static void ChangeOnWindow(Transform transform)
+    public static void ChangeOnWindow(Transform transform, float minScale, float maxScale)
     {
         float normalScale = ((transform.position.y) / WorldSizeCamera.HalfHeight);
 
-        if (normalScale > 0.86f)
+        if (normalScale > maxScale)
         {
-            normalScale = 0.86f;
+            normalScale = maxScale;
         }
-        else if (normalScale < 0.5f)
+        else if (normalScale < minScale)
         {
-            normalScale = 0.5f;
+            normalScale = minScale;
         }
 
         Change(transform, normalScale, 0);

@@ -7,6 +7,7 @@ public class GamePlayEvents : MonoBehaviour
 {
     [SerializeField] private GameSettings settings;
     [SerializeField] private GameObject loseCanvas;
+    [SerializeField] private GameObject mainCanvas;
     [SerializeField] private GameObject spriteAttenuation;
 
     [SerializeField] private GameObject healthPanel;
@@ -16,11 +17,30 @@ public class GamePlayEvents : MonoBehaviour
     [SerializeField] private GameObject[] spawners;
 
     private List<Entity> _entitys;
+    private List<GameObject> _halves;
+
+    public GameObject MainCanvas
+    {
+        get { return mainCanvas; }
+        set { mainCanvas = value; }
+    }
+
+    public List<GameObject> Halves
+    {
+        get { return _halves; }
+        set { _halves = value; }
+    }
 
     public List<Entity> Entitys
     {
         get { return _entitys; }
         set { _entitys = value; }
+    }
+
+    public GameObject HealthPanel
+    {
+        get { return healthPanel; }
+        set { healthPanel = value; }
     }
 
     private void Awake()
@@ -33,7 +53,7 @@ public class GamePlayEvents : MonoBehaviour
             spawner.SetActive(false);
         }
 
-        CoreValues.HealthCount = settings.Health.StartHealth;
+        CoreValues.HealthCount = settings.HealthSettings.StartHealth;
     }
 
     private void Start()
@@ -73,6 +93,11 @@ public class GamePlayEvents : MonoBehaviour
                 StartCoroutine(RemoveUnnecessaryObjects());
             }
         }
+    }
+
+    public void AddHealth(int count)
+    {
+        CoreValues.HealthCount += count;
     }
     
     private IEnumerator RemoveUnnecessaryObjects()
@@ -117,7 +142,7 @@ public class GamePlayEvents : MonoBehaviour
         if (GetComponent<StrikeSeriesScript>() != null)
         {
             int count = GetComponent<StrikeSeriesScript>().CountSeries(countPoints);
-            CoreValues.NumberOfPoints += count;
+            AddPoints.Add(count);
 
             DemonstrationPoints.Demonstration(fruit,
                 count,
@@ -127,7 +152,7 @@ public class GamePlayEvents : MonoBehaviour
                 );
         }
         else
-            CoreValues.NumberOfPoints += countPoints;
+            AddPoints.Add(countPoints);
 
         foreach (var text in countPointsText)
         {
@@ -139,9 +164,6 @@ public class GamePlayEvents : MonoBehaviour
 
         if (CoreValues.NumberOfPoints > CoreValues.Record)
         {
-            CoreValues.Record = CoreValues.NumberOfPoints;
-            SavingValues.SaveGame();
-
             foreach (var text in recordText)
             {
                 UpdateRecord();

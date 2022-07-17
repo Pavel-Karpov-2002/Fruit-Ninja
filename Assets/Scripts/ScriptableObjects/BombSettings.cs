@@ -20,7 +20,6 @@ public class BombSettigns
 
     [SerializeField] private GameObject explosionSprites;
 
-
     [SerializeField] private float maxScaleExplosion;
 
     public int MinChanceConvertBombIntoFruits => minChanceConvertBombIntoFruits;
