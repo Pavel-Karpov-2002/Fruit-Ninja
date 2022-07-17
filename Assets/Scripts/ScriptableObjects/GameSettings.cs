@@ -20,6 +20,8 @@ public class GameSettings : ScriptableObject
 
     [SerializeField] private BombSettigns bombSettings;
 
+    [SerializeField] private FruitBagSettings fruitBagSettings;
+
     [SerializeField] private int numberOfPointsPerFruit;
 
     [SerializeField][Min(0)] private int maxFriutsAdd;
@@ -46,6 +48,8 @@ public class GameSettings : ScriptableObject
     public HealthSettings HealthSettings => healthSettings;
 
     public List<FruitSettings> FruitSettings => fruitSettings;
+
+    public FruitBagSettings FruitBagSettings => fruitBagSettings;
 
     public List<Spawner> Spawners => spawners;
 

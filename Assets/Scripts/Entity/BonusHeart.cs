@@ -65,9 +65,9 @@ public class BonusHeart : Entity
 
         player.AddHealth(_healthSettings.CountHealthAdd);
 
-
         yield return new WaitForSeconds(0.1f);
 
+        transform.rotation = Quaternion.Euler(0, 0, 0);
 
         AddBlob();
 
@@ -92,15 +92,14 @@ public class BonusHeart : Entity
 
         GetComponent<Image>().sprite = _healthSettings.HeartSpriteOnPanel;
 
-        gameObject.transform.SetParent(player.MainCanvas.transform);
-        gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.SetParent(player.MainCanvas.transform);
 
         isFly = true;
-        gameObject.transform.localScale = new Vector3(1, 1, 1);
+        transform.localScale = new Vector3(1, 1, 1);
 
         ScaleChangeScript.ChangeRectangleSize(GetComponent<RectTransform>(), panel.GetScaleHeart(0), _healthSettings.TimeMoveHeartToHeartPanel);
 
-        gameObject.transform.DOMove(new Vector2(panel.GetPositionHeartInWorldCoordinates(0).x - 0.2f, panel.GetPositionHeartInWorldCoordinates(0).y - 0.2f), 
+        transform.DOMove(new Vector2(panel.GetPositionHeartInWorldCoordinates(0).x - 0.2f, panel.GetPositionHeartInWorldCoordinates(0).y - 0.2f), 
             _healthSettings.TimeMoveHeartToHeartPanel);
     }
 

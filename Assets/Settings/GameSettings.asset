@@ -123,6 +123,14 @@ MonoBehaviour:
     timeBeforeExplosion: 2
     explosionSprites: {fileID: 4602890417527582765, guid: bca2d180d7a48da49bfca88598e0dd76, type: 3}
     maxScaleExplosion: 1
+  fruitBagSettings:
+    minAngleImpulseFruit: 30
+    maxAngleImpulseFruit: 150
+    minImpulsFruit: 1
+    maxImpulsFruit: 3
+    minFruitsInBag: 2
+    maxFruitsInBag: 4
+    radiusCollider: 3
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
   minFriutsAdd: 1

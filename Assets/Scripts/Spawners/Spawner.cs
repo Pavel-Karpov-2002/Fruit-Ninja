@@ -24,9 +24,14 @@ public class Spawner
 
     [SerializeField][Min(0)] private float maxProcentCountHeartInPull;
 
+    [SerializeField][Min(0)] private float maxProcentCountFruitBagInPull;
+
     [SerializeField][Min(0)] private int priority;
 
     [SerializeField] private bool isLeft;
+
+
+    public float MaxProcentCountFruitBagInPull => maxProcentCountFruitBagInPull;
 
     public float MaxProcentCountBombInPull => maxProcentCountBombInPull;
 

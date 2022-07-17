@@ -68,6 +68,7 @@ public class SpawnerEntitys : MonoBehaviour
     {
         int bombInPull = 0;
         int bonutsInPull = 0;
+        int fruitInPull = 0;
 
         if (settings.MaxFriutsAdd > CoreValues.NumberOfPoints / settings.AddingFruitsForPoints)
             _increase = Random.Range(settings.MinFriutsAdd, CoreValues.NumberOfPoints / settings.AddingFruitsForPoints);
@@ -85,7 +86,12 @@ public class SpawnerEntitys : MonoBehaviour
                 CreateFruit(spawner, bomb);
                 bombInPull++;
             }
-            if(CalculateChance(chance, countFruits, settings.HealthSettings.MaxChanceConvertHeartIntoFruits, spawner.MaxProcentCountHeartInPull, bonutsInPull))
+            if (CalculateChance(chance, countFruits, settings.HealthSettings.MaxChanceConvertHeartIntoFruits, spawner.MaxProcentCountHeartInPull, bonutsInPull))
+            {
+                CreateFruit(spawner, heartBonus);
+                bonutsInPull++;
+            }
+            if (CalculateChance(chance, countFruits, settings.HealthSettings.MaxChanceConvertHeartIntoFruits, spawner.MaxProcentCountHeartInPull, bonutsInPull))
             {
                 CreateFruit(spawner, heartBonus);
                 bonutsInPull++;

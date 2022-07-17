@@ -14,11 +14,6 @@ public abstract class Collider : MonoBehaviour
         Vector3 pos = transform.position;
         Vector3 mouse = GetPositionMouse();
 
-        return Mathf.Sqrt(GetDiffOfSquares(mouse.x, pos.x) + GetDiffOfSquares(mouse.y, pos.y) + GetDiffOfSquares(mouse.z, pos.z));
-    }
-
-    private float GetDiffOfSquares(float p1, float p2)
-    {
-        return Mathf.Pow(p1 - p2, 2);
+        return Vector2.Distance(pos, mouse);
     }
 }

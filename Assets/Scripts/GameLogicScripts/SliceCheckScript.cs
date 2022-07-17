@@ -5,20 +5,19 @@ public class SliceCheckScript : MonoBehaviour
 {
     [SerializeField] private GamePlayEvents player;
     [SerializeField] private GameSettings gameSettings;
-    [SerializeField] private GameObject fruit;
 
-    private static bool blockSlice;
-    private Vector2 lastMousePos;
-    private float AxisX;
-    private float AxisY;
+    private static bool _blockSlice;
+    private Vector2 _lastMousePos;
+    private float _AxisX;
+    private float _AxisY;
 
     public static bool BlockSlice
     {
-        get { return blockSlice; }
-        set { blockSlice = value; }
+        get { return _blockSlice; }
+        set { _blockSlice = value; }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         /*for (int i = 0; i < Input.touchCount; ++i)
         {            
@@ -32,32 +31,23 @@ public class SliceCheckScript : MonoBehaviour
             }
         }*/
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            GameObject gameObject = Instantiate(fruit);
-            gameObject.GetComponent<Physics>().AddImpulse(0, 3.5f, 0.8f, transform.position);
-        }
-
-        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && !blockSlice && (AxisX > gameSettings.SpeedSlice || AxisY > gameSettings.SpeedSlice))
-            OnTriggerCollider();
-    }
-
-    private void Update()
-    {
         GetSpeedMouse();
+
+        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && !_blockSlice && (_AxisX > gameSettings.SpeedSlice || _AxisY > gameSettings.SpeedSlice))
+            OnTriggerCollider();
     }
 
     private void GetSpeedMouse()
     {
-        if (lastMousePos == Vector2.zero)
+        if (_lastMousePos == Vector2.zero)
         {
-            lastMousePos = Input.mousePosition;
+            _lastMousePos = Input.mousePosition;
         }
         else
         {
-            AxisX = ((Input.mousePosition.x - lastMousePos.x) / Time.deltaTime) / Screen.width;
-            AxisY = ((Input.mousePosition.y - lastMousePos.y) / Time.deltaTime) / Screen.height;
-            lastMousePos = Input.mousePosition;
+            _AxisX = ((Input.mousePosition.x - _lastMousePos.x) / Time.deltaTime) / Screen.width;
+            _AxisY = ((Input.mousePosition.y - _lastMousePos.y) / Time.deltaTime) / Screen.height;
+            _lastMousePos = Input.mousePosition;
         }
     }
 
@@ -76,6 +66,7 @@ public class SliceCheckScript : MonoBehaviour
         {
             if (entity.ColliderSphere.HittingCollider(entity.RadiusCollider))
             {
+                Debug.Log(entity.GetType());
                 entity.Slice.StartEntry = entity.ColliderSphere.GetLengthVector();
             }
             else if (entity.Slice.StartEntry != 0 && entity.Slice.EndEntry == 0)
