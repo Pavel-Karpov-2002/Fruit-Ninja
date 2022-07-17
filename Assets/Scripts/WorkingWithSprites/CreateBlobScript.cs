@@ -47,6 +47,6 @@ public class CreateBlobScript : MonoBehaviour
                 z);
 
         child.transform.localScale = gameObject.transform.localScale;
-        child.transform.rotation = gameObject.transform.rotation;
+        child.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }

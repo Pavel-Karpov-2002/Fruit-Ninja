@@ -10,7 +10,7 @@ public class BombScript : Entity
 
     private void Awake()
     {
-        player = FindObjectOfType<GamePlayEvents>();
+        blade = FindObjectOfType<GamePlayEvents>();
         spawners = FindObjectsOfType<SpawnerEntitys>(); 
 
         ColliderSphere = GetComponent<ColliderSphere>();
@@ -36,7 +36,7 @@ public class BombScript : Entity
 
     public override void Destruction()
     {
-        player.SubstractHealth(bombSettings.Damage);
+        blade.SubstractHealth(bombSettings.Damage);
 
         StartCoroutine(Explosion());
     }
@@ -55,7 +55,7 @@ public class BombScript : Entity
 
         StartAllPhysics();
 
-        player.Entitys.Remove(this);
+        blade.Entitys.Remove(this);
         Destroy(gameObject);
     }
 
@@ -63,25 +63,25 @@ public class BombScript : Entity
     {
         SliceCheckScript.BlockSlice = false;
 
-        for (int i = 0; i < player.Entitys.Count; i++)
+        for (int i = 0; i < blade.Entitys.Count; i++)
         {
-            if (player.Entitys[i] == null)
+            if (blade.Entitys[i] == null)
                 continue;
 
-            if (player.Entitys[i] != this)
+            if (blade.Entitys[i] != this)
             {
-                if (GetDistance(player.Entitys[i].transform.position) <= gameSettings.BombSettings.ExplosionRadius)
+                if (GetDistance(blade.Entitys[i].transform.position) <= gameSettings.BombSettings.ExplosionRadius)
                 {
-                    player.Entitys[i].GetComponent<Physics>().TimeLive = 0;
+                    blade.Entitys[i].GetComponent<Physics>().TimeLive = 0;
 
-                    player.Entitys[i].Trow(GetAngel(player.Entitys[i].transform.position),
-                        bombSettings.CenterExplosionImpuls / GetDistance(player.Entitys[i].transform.position),
+                    blade.Entitys[i].Trow(GetAngel(blade.Entitys[i].transform.position),
+                        bombSettings.CenterExplosionImpuls / GetDistance(blade.Entitys[i].transform.position),
                         gameSettings.Gravity,
-                        player.Entitys[i].transform.position);
+                        blade.Entitys[i].transform.position);
                 }
                 else
                 {
-                    player.Entitys[i].GetComponent<Physics>().Gravity = gravity[i];
+                    blade.Entitys[i].GetComponent<Physics>().Gravity = gravity[i];
                 }
             }
         }

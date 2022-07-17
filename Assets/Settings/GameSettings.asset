@@ -143,6 +143,15 @@ MonoBehaviour:
     maxBlobSize: 0.8
     minBlobSize: 0
     timeLiveBlob: 1
+  magnetSettings:
+    blobSprite: {fileID: 21300000, guid: 012cc231f607e23488cd5429c0b1cd3d, type: 3}
+    radiusCollider: 0
+    attractionTime: 3
+    speedAttraction: 1
+    maxBlobSize: 0.8
+    minBlobSize: 0
+    timeLiveBlob: 1
+    radiusAttraction: 8
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
   minFriutsAdd: 1

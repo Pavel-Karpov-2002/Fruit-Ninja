@@ -13,13 +13,13 @@ public class BonusHeart : Entity
 
     private void Awake()
     {
-        player = FindObjectOfType<GamePlayEvents>();
+        blade = FindObjectOfType<GamePlayEvents>();
         spawners = FindObjectsOfType<SpawnerEntitys>();
 
         ColliderSphere = GetComponent<ColliderSphere>();
         Slice = GetComponent<SliceRange>();
 
-        panel = player.HealthPanel.GetComponent<HeartUI>();
+        panel = blade.HealthPanel.GetComponent<HeartUI>();
 
         if (panel == null)
             Debug.Log($"{gameObject.name} --> {panel.name} don't have a HeartUI script!");
@@ -36,7 +36,7 @@ public class BonusHeart : Entity
     private void Start()
     {
         heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
-        player.Entitys.Add(this);
+        blade.Entitys.Add(this);
         GetComponent<Physics>().Impuls += _healthSettings.IncreaseImpuls;
     }
 
@@ -63,13 +63,13 @@ public class BonusHeart : Entity
         panel.AddHeart();
         panel.ChangeAlphaColorHeart(0, 0);
 
-        player.AddHealth(_healthSettings.CountHealthAdd);
+        blade.AddHealth(_healthSettings.CountHealthAdd);
 
         yield return new WaitForSeconds(0.1f);
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        AddBlob();
+        AddBlob(_healthSettings.MinBlobSize, _healthSettings.MaxBlobSize, _healthSettings.TimeMoveHeartToHeartPanel, _healthSettings.BlobSprite, gameSettings.BlobSettings);
 
         HeartFly();
 
@@ -79,7 +79,7 @@ public class BonusHeart : Entity
         panel.ChangeAlphaColorHeart(0, 1);
         StartAllPhysics();
 
-        player.Entitys.Remove(this);
+        blade.Entitys.Remove(this);
         Destroy(gameObject);
     }
 
@@ -92,7 +92,7 @@ public class BonusHeart : Entity
 
         GetComponent<Image>().sprite = _healthSettings.HeartSpriteOnPanel;
 
-        transform.SetParent(player.MainCanvas.transform);
+        transform.SetParent(blade.MainCanvas.transform);
 
         isFly = true;
         transform.localScale = new Vector3(1, 1, 1);
@@ -101,20 +101,6 @@ public class BonusHeart : Entity
 
         transform.DOMove(new Vector2(panel.GetPositionHeartInWorldCoordinates(0).x - 0.2f, panel.GetPositionHeartInWorldCoordinates(0).y - 0.2f), 
             _healthSettings.TimeMoveHeartToHeartPanel);
-    }
-
-    private void AddBlob()
-    {
-        GameObject newBlob = new GameObject() { name = "BlobHeart" };
-
-        newBlob.transform.position = gameObject.transform.position;
-        newBlob.transform.localScale = new Vector2(_healthSettings.MaxBlobSize, _healthSettings.MaxBlobSize);
-
-        newBlob.AddComponent<SpriteRenderer>();
-
-        newBlob.GetComponent<SpriteRenderer>().sprite = _healthSettings.BlobSprite;
-
-        ScaleChangeScript.Change(newBlob.transform, _healthSettings.MinBlobSize, _healthSettings.TimeMoveHeartToHeartPanel);
     }
 
     private void OnBecameInvisible()

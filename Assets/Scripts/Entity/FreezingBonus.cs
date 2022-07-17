@@ -7,10 +7,11 @@ public class FreezingBonus : Entity
     [SerializeField] private GameSettings gameSettings;
 
     private FreezingSettings _freezingSettings;
+    private float timeFreezing;
 
     private void Awake()
     {
-        player = FindObjectOfType<GamePlayEvents>();
+        blade = FindObjectOfType<GamePlayEvents>();
         spawners = FindObjectsOfType<SpawnerEntitys>();
 
         ColliderSphere = GetComponent<ColliderSphere>();
@@ -23,18 +24,11 @@ public class FreezingBonus : Entity
             Debug.Log($"{gameObject.name} don't have a slice script!");
 
         _freezingSettings = gameSettings.FreezingSettings;
-    }
 
-    private void Start()
-    {
-        if (GetComponent<SpriteRenderer>() != null)
-            heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
-
-        player.Entitys.Add(this);
+        timeFreezing = _freezingSettings.TimeReduction;
 
         transform.DORotate(new Vector3(0, 0, 180), gameSettings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
     }
-
 
     private void FixedUpdate()
     {
@@ -43,6 +37,11 @@ public class FreezingBonus : Entity
         ChageRadiusCollider(_freezingSettings.RadiusCollider);
     }
 
+    private void Update()
+    {
+        if (SliceCheckScript.BlockSlice)
+            timeFreezing -= Time.deltaTime;
+    }
 
     public override void Destruction()
     {
@@ -53,28 +52,16 @@ public class FreezingBonus : Entity
 
     private IEnumerator Freezing()
     {
-        AddBlob();
+        AddBlob(_freezingSettings.MinBlobSize, _freezingSettings.MaxBlobSize, _freezingSettings.TimeLiveBlob, _freezingSettings.BlobSprite, gameSettings.BlobSettings);
+
         CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
 
         Time.timeScale = _freezingSettings.TimeScale;
 
-        yield return new WaitForSeconds(_freezingSettings.TimeReduction);
-
-        Time.timeScale = 1;
-    }
-
-    private void AddBlob()
-    {
-        GameObject newBlob = new GameObject() { name = "BlobFreezing" };
-
-        newBlob.transform.position = gameObject.transform.position;
-        newBlob.transform.localScale = new Vector2(_freezingSettings.MaxBlobSize, _freezingSettings.MaxBlobSize);
-
-        newBlob.AddComponent<SpriteRenderer>();
-
-        newBlob.GetComponent<SpriteRenderer>().sprite = _freezingSettings.BlobSprite;
-
-        ScaleChangeScript.Change(newBlob.transform, _freezingSettings.MinBlobSize, _freezingSettings.TimeLiveBlob);
+        yield return null;
+        
+        if(timeFreezing <= 0)
+            Time.timeScale = 1;
     }
 
     private void OnBecameInvisible()

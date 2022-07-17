@@ -24,6 +24,8 @@ public class GameSettings : ScriptableObject
     
     [SerializeField] private FreezingSettings freezingSettings;
 
+    [SerializeField] private MagnetSettings magnetSettings;
+
     [SerializeField] private int numberOfPointsPerFruit;
 
     [SerializeField][Min(0)] private int maxFriutsAdd;
@@ -65,6 +67,8 @@ public class GameSettings : ScriptableObject
     public TextMeshProSettings TextMeshProSettings => textMeshProSettings;
 
     public BombSettigns BombSettings => bombSettings;
+
+    public MagnetSettings MagnetSettings => magnetSettings;
 
     public int NumberOfPointsPerFruit => numberOfPointsPerFruit;
 

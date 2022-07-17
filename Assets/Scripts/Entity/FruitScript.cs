@@ -19,7 +19,7 @@ public class FruitScript : Entity
         CreateShadowScript.CreateShadow(gameObject);
         scaleShadow = gameObject.GetComponentInChildren<CreateShadowScript>().transform;
 
-        player = FindObjectOfType<GamePlayEvents>();
+        blade = FindObjectOfType<GamePlayEvents>();
         ColliderSphere = GetComponent<ColliderSphere>();
         Slice = GetComponent<SliceRange>();
 
@@ -38,7 +38,7 @@ public class FruitScript : Entity
     {
         start = transform.position;
         heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
-        player.Entitys.Add(this);
+        blade.Entitys.Add(this);
 
         transform.DORotate(new Vector3(0, 0, 180), settings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
 
@@ -64,7 +64,7 @@ public class FruitScript : Entity
 
     public override void Destruction()
     {
-        player.AddPoint(settings.NumberOfPointsPerFruit, gameObject, fruitSettings.ColorFruit);
+        blade.AddPoint(settings.NumberOfPointsPerFruit, gameObject, fruitSettings.ColorFruit);
         CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
 
         BlobSettings blobSetting = settings.BlobSettings;
@@ -82,7 +82,7 @@ public class FruitScript : Entity
             blobSetting.BlobDelayTime,
             blobSetting.LayerBlob);
 
-        player.Entitys.Remove(this);
+        blade.Entitys.Remove(this);
 
         Destroy(gameObject);
     }
@@ -92,8 +92,8 @@ public class FruitScript : Entity
         float halfHeight = WorldSizeCamera.HalfHeight;
         if (gameObject.activeSelf && transform.position.y < halfHeight && onVisible)
         {
-            if (player != null)
-                player.SubstractHealth(1);
+            if (blade != null)
+                blade.SubstractHealth(1);
             Destroy(gameObject);
         }
 

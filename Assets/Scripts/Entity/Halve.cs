@@ -3,7 +3,7 @@ public class Halve : Entity
 {
     private void Start()
     {
-        player.Entitys.Add(this);
+        blade.Entitys.Add(this);
     }
 
     public override void Destruction()
@@ -13,6 +13,6 @@ public class Halve : Entity
 
     private void OnDestroy()
     {
-        player.Entitys.Remove(this);
+        blade.Entitys.Remove(this);
     }
 }

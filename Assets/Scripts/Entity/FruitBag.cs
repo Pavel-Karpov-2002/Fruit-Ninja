@@ -10,7 +10,7 @@ public class FruitBag : Entity
 
     private void Awake()
     {
-        player = FindObjectOfType<GamePlayEvents>();
+        blade = FindObjectOfType<GamePlayEvents>();
         spawners = FindObjectsOfType<SpawnerEntitys>();
 
         ColliderSphere = GetComponent<ColliderSphere>();
@@ -43,7 +43,7 @@ public class FruitBag : Entity
         }
 
         RemoveFruitsInBag();
-        player.Entitys.Remove(this);
+        blade.Entitys.Remove(this);
     }
 
     private void RemoveFruitsInBag()

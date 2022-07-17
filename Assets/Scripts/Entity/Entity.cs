@@ -2,13 +2,16 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    protected GamePlayEvents player;
+    protected GamePlayEvents blade;
     protected SpawnerEntitys[] spawners;
-    private ColliderSphere _colliderSphere;
-    private SliceRange _slice;
-    private float _radiusCollider;
+
     protected float[] gravity;
     protected float heightSprite;
+
+    private ColliderSphere _colliderSphere;
+    private SliceRange _slice;
+
+    private float _radiusCollider;
 
     public float RadiusCollider
     {
@@ -30,7 +33,7 @@ public abstract class Entity : MonoBehaviour
 
     private void Awake()
     {
-        player = FindObjectOfType<GamePlayEvents>();
+        blade = FindObjectOfType<GamePlayEvents>();
         spawners = FindObjectsOfType<SpawnerEntitys>();
     }
 
@@ -39,7 +42,7 @@ public abstract class Entity : MonoBehaviour
         if (GetComponent<SpriteRenderer>() != null)
             heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
 
-        player.Entitys.Add(this);
+        blade.Entitys.Add(this);
     }
 
     public abstract void Destruction();
@@ -70,17 +73,17 @@ public abstract class Entity : MonoBehaviour
     {
         SliceCheckScript.BlockSlice = true;
 
-        int countEntitys = player.Entitys.Count;
+        int countEntitys = blade.Entitys.Count;
 
         gravity = new float[countEntitys];
 
 
         for (int i = 0; i < countEntitys; i++)
         {
-            if (player.Entitys[i] == null)
+            if (blade.Entitys[i] == null)
                 continue;
 
-            var physics = player.Entitys[i].GetComponent<Physics>();
+            var physics = blade.Entitys[i].GetComponent<Physics>();
 
             gravity[i] = physics.Gravity;
 
@@ -94,18 +97,32 @@ public abstract class Entity : MonoBehaviour
     {
         SliceCheckScript.BlockSlice = false;
 
-        for (int i = 0; i < player.Entitys.Count; i++)
+        for (int i = 0; i < blade.Entitys.Count; i++)
         {
-            if (player.Entitys[i] == null)
+            if (blade.Entitys[i] == null)
                 continue;
 
-            if (player.Entitys[i] != this)
+            if (blade.Entitys[i] != this)
             {
-                player.Entitys[i].GetComponent<Physics>().Gravity = gravity[i];
+                blade.Entitys[i].GetComponent<Physics>().Gravity = gravity[i];
             }
         }
 
         SpawnerActive(true);
+    }
+
+    protected virtual void AddBlob(float minSize, float maxSize, float timeScale, Sprite spriteBlob, BlobSettings blobSettings)
+    {
+
+        Debug.Log(gameObject);
+        CreateBlobScript.CreateOneBlob(
+            gameObject,
+            spriteBlob,
+            minSize,
+            maxSize,
+            timeScale,
+            blobSettings.BlobDelayTime,
+            blobSettings.LayerBlob);
     }
 
     private void SpawnerActive(bool set)
