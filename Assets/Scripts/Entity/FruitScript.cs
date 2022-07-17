@@ -11,6 +11,8 @@ public class FruitScript : Entity
     private Transform scaleShadow;
     private int numFruit;
     private FruitSettings fruitSettings;
+    private bool onVisible;
+    private Vector3 start;
 
     public FruitSettings FruitSettings => fruitSettings;
 
@@ -36,6 +38,7 @@ public class FruitScript : Entity
 
     private void Start()
     {
+        start = transform.position;
         heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
         player.Entitys.Add(this);
 
@@ -47,6 +50,8 @@ public class FruitScript : Entity
     private void FixedUpdate()
     {
         NormalizeObject();
+        if (transform.position.y > 0 && transform.position.x > 0)
+            onVisible = true;
     }
 
     private void NormalizeObject()
@@ -82,18 +87,19 @@ public class FruitScript : Entity
         player.Entitys.Remove(this);
 
         Destroy(gameObject);
-    } 
+    }
 
     private void OnBecameInvisible()
     {
         float halfHeight = WorldSizeCamera.HalfHeight;
-
-        if (gameObject.activeSelf && transform.position.y < halfHeight)
+        if (gameObject.activeSelf && transform.position.y < halfHeight && onVisible)
         {
             if (player != null)
                 player.SubstractHealth(1);
-
             Destroy(gameObject);
         }
+
+        if (transform.position.y < 5)
+            Destroy(gameObject);
     }
 }

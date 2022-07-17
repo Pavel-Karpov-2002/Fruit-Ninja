@@ -35,6 +35,12 @@ public class HeartUI : MonoBehaviour
         StartCoroutine(Heartbeat());
     }
 
+    private void Update()
+    {
+        if(hearts.Length > CoreValues.HealthCount)
+            GetAllHearts();
+    }
+
     public void GetAllHearts()
     {
         hearts = gameObject.GetComponentsInChildren<HeartChange>();
@@ -44,6 +50,7 @@ public class HeartUI : MonoBehaviour
     public void DestroyHeartImage()
     {
         GetAllHearts();
+
         if (hearts.Length > CoreValues.HealthCount)
         {
             Destroy(hearts[0].gameObject);
@@ -104,7 +111,8 @@ public class HeartUI : MonoBehaviour
 
     public void ChangeAlphaColorHeart(int numberHeart, float alpha)
     {
-        hearts[numberHeart].GetComponent<CanvasGroup>().alpha = alpha;
+        if(hearts[numberHeart] != null)
+            hearts[numberHeart].GetComponent<CanvasGroup>().alpha = alpha;
     }
 
     public Vector2 GetScaleHeart(int numberHeart)

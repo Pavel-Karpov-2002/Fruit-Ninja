@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using DG.Tweening;
+using TMPro;
 
 public class ComboSeriesUI : MonoBehaviour
 {
-    [SerializeField] private Text countFruits;
-    [SerializeField] private Text comboSeries;
+    [SerializeField] private TextMeshProUGUI countFruits;
+    [SerializeField] private TextMeshProUGUI comboSeries;
     [SerializeField] private GameSettings settings;
 
     private float timeToFade;

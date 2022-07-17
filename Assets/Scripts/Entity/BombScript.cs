@@ -77,8 +77,6 @@ public class BombScript : Entity
                 {
                     player.Entitys[i].GetComponent<Physics>().TimeLive = 0;
 
-                    Debug.Log(GetAngel(player.Entitys[i].transform.position));
-
                     player.Entitys[i].Trow(GetAngel(player.Entitys[i].transform.position),
                         bombSettings.CenterExplosionImpuls / GetDistance(player.Entitys[i].transform.position),
                         gameSettings.Gravity,

@@ -12,8 +12,6 @@ public class BombSettigns
 
     [SerializeField][Min(0)] private int damage;
 
-    [SerializeField][Min(0)] private int minChanceConvertBombIntoFruits;
-
     [SerializeField][Min(0)] private int maxChanceConvertBombIntoFruits;
 
     [SerializeField][Min(0)] private float timeBeforeExplosion;
@@ -22,7 +20,6 @@ public class BombSettigns
 
     [SerializeField] private float maxScaleExplosion;
 
-    public int MinChanceConvertBombIntoFruits => minChanceConvertBombIntoFruits;
     public int MaxChanceConvertBombIntoFruits => maxChanceConvertBombIntoFruits;
 
     public float ExplosionRadius => explosionRadius;

@@ -6,7 +6,6 @@ public class SavingValues : MonoBehaviour
     {
         PlayerPrefs.SetInt("Record", CoreValues.Record);
         PlayerPrefs.Save();
-        Debug.Log("Game data saved!" + " " + CoreValues.Record);
     } 
 
     public static void LoadGame()

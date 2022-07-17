@@ -46,6 +46,7 @@ public class GamePlayEvents : MonoBehaviour
     private void Awake()
     {
         _entitys = new List<Entity>();
+        if(spriteAttenuation != null)
         spriteAttenuation.SetActive(true);
 
         foreach (GameObject spawner in spawners)
@@ -58,7 +59,9 @@ public class GamePlayEvents : MonoBehaviour
 
     private void Start()
     {
-        ChangeFade.AddAttenuation(spriteAttenuation, settings.TimeAttenuation, 0);
+        if(spriteAttenuation != null)
+            ChangeFade.AddAttenuation(spriteAttenuation, settings.TimeAttenuation, 0);
+
         UpdateRecord();
 
         StartCoroutine(TimeAttenuation());

@@ -1,13 +1,13 @@
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
 using DG.Tweening;
 
 public class PointsTextUI : MonoBehaviour
 {
-    private Text numberOfPoints;
+    private TextMeshProUGUI numberOfPoints;
     private void Awake()
     {
-        numberOfPoints = GetComponent<Text>();
+        numberOfPoints = GetComponent<TextMeshProUGUI>();
         if (numberOfPoints == null)
             Debug.Log("The counter does not have access to the text");
     }

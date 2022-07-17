@@ -59,7 +59,8 @@ MonoBehaviour:
     maxObjects: 4
     minImpuls: 3.5
     maxImpuls: 4
-    maxProcentCountBombInPull: 50
+    maxProcentCountBombInPull: 20
+    maxProcentCountHeartInPull: 20
     priority: 0
     isLeft: 0
   - bottomStartPosition: 0
@@ -72,7 +73,8 @@ MonoBehaviour:
     maxObjects: 3
     minImpuls: 3.5
     maxImpuls: 4
-    maxProcentCountBombInPull: 50
+    maxProcentCountBombInPull: 20
+    maxProcentCountHeartInPull: 20
     priority: 1
     isLeft: 1
   healthSettings:
@@ -89,6 +91,8 @@ MonoBehaviour:
     minHeartBeatScale: 1
     maxHeartBeatScale: 1.2
     heartBeatSpeed: 1
+    increaseImpuls: 0.5
+    maxChanceConvertHeartIntoFruits: 50
   blobSettings:
     minblobScale: 0
     maxBlobScale: 0.7
@@ -115,15 +119,17 @@ MonoBehaviour:
     centerExplosionImpuls: 3
     radiusCollider: 1
     damage: 1
-    minChanceConvertBombIntoFruits: 30
     maxChanceConvertBombIntoFruits: 50
     timeBeforeExplosion: 2
     explosionSprites: {fileID: 4602890417527582765, guid: bca2d180d7a48da49bfca88598e0dd76, type: 3}
     maxScaleExplosion: 1
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
+  minFriutsAdd: 1
   addingFruitsForPoints: 10
   gravity: 0.8
   timeAttenuation: 3
   intervalBetweenEntitysLoss: 4
+  minIntervalBetweenEntitysLoss: 3
+  redusingInInterval: 0.1
   speedSlice: 0.1

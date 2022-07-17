@@ -37,6 +37,7 @@ public class BonusHeart : Entity
     {
         heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
         player.Entitys.Add(this);
+        GetComponent<Physics>().Impuls += _healthSettings.IncreaseImpuls;
     }
 
     private void FixedUpdate()
@@ -92,6 +93,7 @@ public class BonusHeart : Entity
         GetComponent<Image>().sprite = _healthSettings.HeartSpriteOnPanel;
 
         gameObject.transform.SetParent(player.MainCanvas.transform);
+        gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
 
         isFly = true;
         gameObject.transform.localScale = new Vector3(1, 1, 1);
@@ -115,5 +117,11 @@ public class BonusHeart : Entity
 
         ScaleChangeScript.Change(newBlob.transform, _healthSettings.MinBlobSize, _healthSettings.TimeMoveHeartToHeartPanel);
 
+    }
+
+    private void OnBecameInvisible()
+    {
+        if(gameObject.activeSelf)
+            Destroy(gameObject);
     }
 }

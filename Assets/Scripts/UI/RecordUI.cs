@@ -6,11 +6,7 @@ using TMPro;
 
 public class RecordUI : MonoBehaviour
 {
-    private MaskableGraphic _record;
-
-    private string _recordStr;
-    private TextMeshProUGUI _recordMeshPro;
-    private Text _recordTextUI;
+    private TextMeshProUGUI _record;
 
     private void Awake()
     {
@@ -18,39 +14,23 @@ public class RecordUI : MonoBehaviour
 
         if (_record == null)
         {
-            _record = GetComponent<Text>();
-            if (_record == null)
-                Debug.Log($"{gameObject.name} does not have access to the text");
-            else
-            {
-                _recordTextUI = _record.GetComponent<Text>();
-                _recordStr = _recordTextUI.text;
-            }
-        }
-        else
-        {
-            _recordMeshPro = _record.GetComponent<TextMeshProUGUI>();
-            _recordStr = _recordMeshPro.text;
+            Debug.Log($"{gameObject.name} does not have access to the text");
         }
     }
 
     private void Start()
     {
+        _record.text = "Лучший: " + CoreValues.Record;
         UpdateTextRecord();
     }
 
     public void UpdateTextRecord()
     {
-        DOTween.To(ScoringPoints, float.Parse(string.Join("", _recordStr.Where(c => char.IsDigit(c)))), CoreValues.Record, 0.3f).SetEase(Ease.Linear);
+        DOTween.To(ScoringPoints, float.Parse(string.Join("", _record.text.Where(c => char.IsDigit(c)))), CoreValues.Record, 0.3f).SetEase(Ease.Linear);
     }
 
     private void ScoringPoints(float point)
     {
-        _recordStr = "Лучший: " + ((int)point).ToString();
-
-        if (_recordTextUI == null)
-            _recordMeshPro.text = _recordStr;
-        else
-            _recordTextUI.text = _recordStr;
+        _record.text = "Лучший: " + ((int)point).ToString();
     }
 }

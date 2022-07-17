@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1300233120}
   - component: {fileID: 1300233122}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -49,9 +49,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
-  loseCanvas: {fileID: 0}
+  loseCanvas: {fileID: 3456054205451764472, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
+  mainCanvas: {fileID: 8504792680445707066, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
   spriteAttenuation: {fileID: 0}
-  healthPanel: {fileID: 0}
+  healthPanel: {fileID: 1860540330354281661, guid: 5f69dce56d21a414e875abe75d94c13f, type: 3}
   countPointsText:
   - {fileID: 0}
   - {fileID: 0}
@@ -194,6 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2802207064313673763}
+  gameSettings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
 --- !u!114 &1300233120
 MonoBehaviour:
   m_ObjectHideFlags: 0

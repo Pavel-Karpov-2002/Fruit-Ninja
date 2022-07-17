@@ -78,6 +78,8 @@ public abstract class Entity : MonoBehaviour
 
             physics.Gravity = 0;
         }
+
+        SpawnerActive(false);
     }
 
     protected virtual void StartAllPhysics()
@@ -95,10 +97,15 @@ public abstract class Entity : MonoBehaviour
             }
         }
 
+        SpawnerActive(true);
+    }
+
+    private void SpawnerActive(bool set)
+    {
         foreach (SpawnerEntitys spawner in spawners)
         {
             if (spawner != null)
-                spawner.gameObject.SetActive(true);
+                spawner.gameObject.SetActive(set);
         }
     }
 }

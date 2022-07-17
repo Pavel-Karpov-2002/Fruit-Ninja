@@ -24,6 +24,8 @@ public class GameSettings : ScriptableObject
 
     [SerializeField][Min(0)] private int maxFriutsAdd;
 
+    [SerializeField][Min(0)] private int minFriutsAdd;
+
     [SerializeField][Min(0)] private int addingFruitsForPoints;
 
     [SerializeField] private float gravity;
@@ -31,6 +33,10 @@ public class GameSettings : ScriptableObject
     [SerializeField][Min(0)] private float timeAttenuation;
 
     [SerializeField][Min(0)] private float intervalBetweenEntitysLoss;
+
+    [SerializeField][Min(0)] private float minIntervalBetweenEntitysLoss;
+
+    [SerializeField][Min(0)] private float redusingInInterval;
 
     [SerializeField][Min(0)] private float speedSlice;
 
@@ -55,6 +61,8 @@ public class GameSettings : ScriptableObject
 
     public int MaxFriutsAdd => maxFriutsAdd;
 
+    public int MinFriutsAdd => minFriutsAdd;
+
     public int AddingFruitsForPoints => addingFruitsForPoints;
 
     public float Gravity => gravity;
@@ -62,6 +70,10 @@ public class GameSettings : ScriptableObject
     public float TimeAttenuation => timeAttenuation;
 
     public float IntervalBetweenEntitysLoss => intervalBetweenEntitysLoss;
+
+    public float MinIntervalBetweenEntitysLoss => minIntervalBetweenEntitysLoss;
+
+    public float RedusingInInterval => redusingInInterval;
 
     public float SpeedSlice => speedSlice;
 }

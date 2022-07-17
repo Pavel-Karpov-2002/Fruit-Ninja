@@ -5,6 +5,7 @@ public class SliceCheckScript : MonoBehaviour
 {
     [SerializeField] private GamePlayEvents player;
     [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private GameObject fruit;
 
     private static bool blockSlice;
     private Vector2 lastMousePos;
@@ -17,7 +18,7 @@ public class SliceCheckScript : MonoBehaviour
         set { blockSlice = value; }
     }
 
-    public void Update()
+    private void FixedUpdate()
     {
         /*for (int i = 0; i < Input.touchCount; ++i)
         {            
@@ -31,10 +32,19 @@ public class SliceCheckScript : MonoBehaviour
             }
         }*/
 
-        GetSpeedMouse();
+        if(Input.GetMouseButtonDown(0))
+        {
+            GameObject gameObject = Instantiate(fruit);
+            gameObject.GetComponent<Physics>().AddImpulse(0, 3.5f, 0.8f, transform.position);
+        }
 
         if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && !blockSlice && (AxisX > gameSettings.SpeedSlice || AxisY > gameSettings.SpeedSlice))
             OnTriggerCollider();
+    }
+
+    private void Update()
+    {
+        GetSpeedMouse();
     }
 
     private void GetSpeedMouse()
@@ -55,7 +65,7 @@ public class SliceCheckScript : MonoBehaviour
     {
         foreach (Entity entity in player.Entitys)
         {
-            if (CheckSliceCollider(entity))
+            if (!(entity is Halve) && CheckSliceCollider(entity))
                 break;
         }
     }
