@@ -8,23 +8,19 @@ public class FreezingSettings
 
     [SerializeField][Min(0)] private float radiusCollider;
 
-    [SerializeField][Range(0, 100)] private int maxChanceConvertFreezingIntoFruits;
+    [SerializeField][Min(0)] private float timeScale;
 
-    [SerializeField] private float timeScale;
+    [SerializeField][Min(0)] private float timeReduction;
 
-    [SerializeField] private float timeReduction;
+    [SerializeField][Min(0)] private float maxBlobSize;
 
-    [SerializeField] private float maxBlobSize;
+    [SerializeField][Min(0)] private float minBlobSize;
 
-    [SerializeField] private float minBlobSize;
-
-    [SerializeField] private float timeLiveBlob;
+    [SerializeField][Min(0)] private float timeLiveBlob;
 
     public Sprite BlobSprite => blobSprite;
 
     public float RadiusCollider => radiusCollider;
-
-    public int MaxChanceConvertFreezingIntoFruits => maxChanceConvertFreezingIntoFruits;
 
     public float TimeScale => timeScale;
 

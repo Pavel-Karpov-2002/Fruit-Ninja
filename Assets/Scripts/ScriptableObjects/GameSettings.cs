@@ -8,7 +8,9 @@ public class GameSettings : ScriptableObject
 
     [SerializeField] private List<FruitSettings> fruitSettings;
 
-    [SerializeField] private List<Spawner> spawners;
+    [SerializeField] private List<SpawnerSettings> spawners;
+
+    [SerializeField] private List<ChancesOfSpawn> chancesOfSpawn;
 
     [SerializeField] private HealthSettings healthSettings;
 
@@ -26,7 +28,7 @@ public class GameSettings : ScriptableObject
 
     [SerializeField] private MagnetSettings magnetSettings;
 
-    [SerializeField] private int numberOfPointsPerFruit;
+    [SerializeField][Min(0)] private int numberOfPointsPerFruit;
 
     [SerializeField][Min(0)] private int maxFriutsAdd;
 
@@ -58,7 +60,9 @@ public class GameSettings : ScriptableObject
 
     public FreezingSettings FreezingSettings => freezingSettings;
 
-    public List<Spawner> Spawners => spawners;
+    public List<SpawnerSettings> Spawners => spawners;
+
+    public List<ChancesOfSpawn> ChancesOfSpawn => chancesOfSpawn;
 
     public BlobSettings BlobSettings => blobSettings;
 
@@ -89,5 +93,6 @@ public class GameSettings : ScriptableObject
     public float RedusingInInterval => redusingInInterval;
 
     public float SpeedSlice => speedSlice;
+
     public float SpeedRotate => speedRotate;
 }

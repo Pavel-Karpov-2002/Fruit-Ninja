@@ -1,12 +1,10 @@
+using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 public class SpawnerEntitys : MonoBehaviour
 {
-    [SerializeField] private GameObject fruit;
-    [SerializeField] private GameObject bomb;
-    [SerializeField] private GameObject heartBonus;
     [SerializeField] private GameSettings settings;
 
     private int _minPriority;
@@ -48,11 +46,11 @@ public class SpawnerEntitys : MonoBehaviour
     {
         int priority = Random.Range(_minPriority, _maxPriority + 1);
 
-        foreach(Spawner spawner in settings.Spawners)
+        foreach(SpawnerSettings spawner in settings.Spawners)
         {
             if(spawner.Priority == priority)
             {
-                CreateMultipleFruits(spawner);
+                CreateMultipleFruits(spawner, settings.ChancesOfSpawn);
             }
         }
 
@@ -63,52 +61,48 @@ public class SpawnerEntitys : MonoBehaviour
 
         StartCoroutine(StartCreateFruits());
     }
-    
-    private void CreateMultipleFruits(Spawner spawner)
+
+    private void CreateMultipleFruits(SpawnerSettings spawner, List<ChancesOfSpawn> chancesOfSpawn)
     {
-        int bombInPull = 0;
-        int bonutsInPull = 0;
-        int fruitInPull = 0;
+        int[] countObject = new int[chancesOfSpawn.Count + 1];
+
+        int countFruits = Random.Range(spawner.MinObjects, spawner.MaxObjects + _increase);
+        bool isCreateObject;
 
         if (settings.MaxFriutsAdd > CoreValues.NumberOfPoints / settings.AddingFruitsForPoints)
             _increase = Random.Range(settings.MinFriutsAdd, CoreValues.NumberOfPoints / settings.AddingFruitsForPoints);
         else
             _increase = Random.Range(settings.MinFriutsAdd, settings.MaxFriutsAdd + 1);
 
-        int countFruits = Random.Range(spawner.MinObjects, spawner.MaxObjects + _increase);
-
-        for (int j = 0; j < countFruits; j++)
+        for (int i = 0; i < countFruits; i++)
         {
-            int chance = Random.Range(0, 101);
+            isCreateObject = false;
+            for (int j = 0; j < chancesOfSpawn.Count; j++)
+            {
+                if (chancesOfSpawn[j].MinPointsForSpawn <= CoreValues.NumberOfPoints && Random.Range(0, 101) <= chancesOfSpawn[j].MaxChanceOfSpawn)
+                {
+                    if (CoreValues.HealthCount >= settings.HealthSettings.MaxHealth && chancesOfSpawn[j].SpawnObject.GetComponent<BonusHeart>() != null)
+                    {
+                        continue;
+                    }
 
-            if(CalculateChance(chance, countFruits, settings.BombSettings.MaxChanceConvertBombIntoFruits, spawner.MaxProcentCountBombInPull, bombInPull))
-            {
-                CreateFruit(spawner, bomb);
-                bombInPull++;
+                    if (countFruits * (chancesOfSpawn[j].MaxPercentageInPool / 100) - 1 > countObject[j])
+                    {
+                        countObject[j]++;
+
+                        CreateObject(spawner, chancesOfSpawn[j].SpawnObject);
+                        isCreateObject = true;
+                        break;
+                    }
+                }
             }
-            if (CalculateChance(chance, countFruits, settings.HealthSettings.MaxChanceConvertHeartIntoFruits, spawner.MaxProcentCountHeartInPull, bonutsInPull))
-            {
-                CreateFruit(spawner, heartBonus);
-                bonutsInPull++;
-            }
-            if (CalculateChance(chance, countFruits, settings.HealthSettings.MaxChanceConvertHeartIntoFruits, spawner.MaxProcentCountHeartInPull, bonutsInPull))
-            {
-                CreateFruit(spawner, heartBonus);
-                bonutsInPull++;
-            }
-            else
-            {
-                CreateFruit(spawner, fruit);
-            }
+
+            if(!isCreateObject)
+                CreateObject(spawner, chancesOfSpawn[0].SpawnObject);
         }
     }
 
-    private bool CalculateChance(float chance, int countFruits, int maxConvertFruits, float maxProcentCountInPull, int containPull)
-    {
-        return chance <= maxConvertFruits && containPull <= (countFruits * (maxProcentCountInPull / 100)) - 1;
-    }
-
-    private void CreateFruit(Spawner spawner, GameObject typeObject)
+    private void CreateObject(SpawnerSettings spawner, GameObject typeObject)
     {
         float halfWidth = WorldSizeCamera.HalfWidth;
         float halfHeight = WorldSizeCamera.HalfHeight;
@@ -124,7 +118,7 @@ public class SpawnerEntitys : MonoBehaviour
         if(position.y > 0)
             position -= new Vector3(1, 0, 0);
 
-        GameObject newObject = Instantiate(typeObject, position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+        GameObject newObject = Instantiate(typeObject, position, typeObject.transform.rotation);
 
         float angle = 0;
 

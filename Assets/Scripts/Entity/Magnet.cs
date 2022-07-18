@@ -25,6 +25,7 @@ public class Magnet : Entity
             Debug.Log($"{gameObject.name} don't have a slice script!");
 
         _magnetSettings = gameSettings.MagnetSettings;
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
 
         transform.DORotate(new Vector3(0, 0, 180), gameSettings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
     }

@@ -73,12 +73,10 @@ public class BonusHeart : Entity
 
         HeartFly();
 
-
         yield return new WaitForSeconds(_healthSettings.TimeMoveHeartToHeartPanel);
 
         panel.ChangeAlphaColorHeart(0, 1);
         StartAllPhysics();
-
         blade.Entitys.Remove(this);
         Destroy(gameObject);
     }
@@ -88,7 +86,7 @@ public class BonusHeart : Entity
         gameObject.AddComponent<RectTransform>();
         gameObject.AddComponent<Image>();
 
-        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
 
         GetComponent<Image>().sprite = _healthSettings.HeartSpriteOnPanel;
 

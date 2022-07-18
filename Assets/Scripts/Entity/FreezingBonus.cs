@@ -26,6 +26,7 @@ public class FreezingBonus : Entity
         _freezingSettings = gameSettings.FreezingSettings;
 
         timeFreezing = _freezingSettings.TimeReduction;
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
 
         transform.DORotate(new Vector3(0, 0, 180), gameSettings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
     }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Spawner
+public class SpawnerSettings
 {
 
     [SerializeField][Range(0, 100)] private float bottomStartPosition;
@@ -20,22 +20,10 @@ public class Spawner
     [SerializeField][Min(0)] private float minImpuls;
     [SerializeField][Min(0)] private float maxImpuls;
 
-    [SerializeField][Min(0)] private float maxProcentCountBombInPull;
-
-    [SerializeField][Min(0)] private float maxProcentCountHeartInPull;
-
-    [SerializeField][Min(0)] private float maxProcentCountFruitBagInPull;
-
     [SerializeField][Min(0)] private int priority;
 
     [SerializeField] private bool isLeft;
 
-
-    public float MaxProcentCountFruitBagInPull => maxProcentCountFruitBagInPull;
-
-    public float MaxProcentCountBombInPull => maxProcentCountBombInPull;
-
-    public float MaxProcentCountHeartInPull => maxProcentCountHeartInPull;
 
     public float BottomStartPosition => bottomStartPosition;
     public float BottomEndPosition => bottomEndPosition;

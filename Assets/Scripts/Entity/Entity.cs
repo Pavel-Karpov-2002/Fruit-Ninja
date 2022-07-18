@@ -113,8 +113,6 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void AddBlob(float minSize, float maxSize, float timeScale, Sprite spriteBlob, BlobSettings blobSettings)
     {
-
-        Debug.Log(gameObject);
         CreateBlobScript.CreateOneBlob(
             gameObject,
             spriteBlob,

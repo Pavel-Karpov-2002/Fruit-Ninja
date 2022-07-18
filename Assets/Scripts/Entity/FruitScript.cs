@@ -39,6 +39,7 @@ public class FruitScript : Entity
         start = transform.position;
         heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
         blade.Entitys.Add(this);
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
 
         transform.DORotate(new Vector3(0, 0, 180), settings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
 

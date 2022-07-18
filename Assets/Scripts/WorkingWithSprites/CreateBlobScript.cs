@@ -14,7 +14,7 @@ public class CreateBlobScript : MonoBehaviour
 
         ScaleChangeScript.DelayedChange(child.transform, minBlobScale, blobSpeed, blobDelay);
 
-        Destroy(child, blobDelay);
+        Destroy(child, blobDelay + blobSpeed);
     }
 
     public static void CreateMoreBlub(GameObject gameObject, Sprite blobSprite, GameSettings settings)

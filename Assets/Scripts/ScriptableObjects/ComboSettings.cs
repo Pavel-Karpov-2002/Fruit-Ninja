@@ -4,11 +4,11 @@ using System;
 [Serializable]
 public class ComboSettings
 {
-    [SerializeField] private float timeDisappearanceComboText;
+    [SerializeField][Min(0)] private float timeDisappearanceComboText;
 
-    [SerializeField] private int maxCombo;
+    [SerializeField][Min(0)] private int maxCombo;
 
-    [SerializeField] private float timeFadeComboText;
+    [SerializeField][Min(0)] private float timeFadeComboText;
 
     public int MaxCombo => maxCombo;
 

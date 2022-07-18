@@ -5,23 +5,23 @@ using UnityEngine;
 public class BlobSettings
 {
 
-    [SerializeField] private float minblobScale;
+    [SerializeField][Min(0)] private float minblobScale;
 
-    [SerializeField] private float maxBlobScale;
+    [SerializeField][Min(0)] private float maxBlobScale;
 
-    [SerializeField] private float blobSpeed;
+    [SerializeField][Min(0)] private float blobSpeed;
 
-    [SerializeField] private float blobDelayTime;
+    [SerializeField][Min(0)] private float blobDelayTime;
 
-    [SerializeField] private float minBlobBackgroundScale;
+    [SerializeField][Min(0)] private float minBlobBackgroundScale;
 
-    [SerializeField] private float maxBlobBackgroundScale;
+    [SerializeField][Min(0)] private float maxBlobBackgroundScale;
 
-    [SerializeField] private int minBlobBackground;
+    [SerializeField][Min(0)] private int minBlobBackground;
 
-    [SerializeField] private int maxBlobBackground;
+    [SerializeField][Min(0)] private int maxBlobBackground;
 
-    [SerializeField] private float blobBackgroundDelayTime;
+    [SerializeField][Min(0)] private float blobBackgroundDelayTime;
 
     [SerializeField] private float blobBackgroundSpeed;
 

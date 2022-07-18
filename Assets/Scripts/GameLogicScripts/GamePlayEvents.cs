@@ -47,7 +47,7 @@ public class GamePlayEvents : MonoBehaviour
     {
         _entitys = new List<Entity>();
         if(spriteAttenuation != null)
-        spriteAttenuation.SetActive(true);
+            spriteAttenuation.SetActive(true);
 
         foreach (GameObject spawner in spawners)
         {

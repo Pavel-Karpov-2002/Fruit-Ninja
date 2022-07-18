@@ -8,9 +8,9 @@ public class HealthSettings
 
     [SerializeField] private Sprite heartSpriteOnPanel;
 
-    [SerializeField] private float maxBlobSize;
+    [SerializeField][Min(0)] private float maxBlobSize;
 
-    [SerializeField] private float minBlobSize;
+    [SerializeField][Min(0)] private float minBlobSize;
 
     [SerializeField][Min(0)] private int startHealth;
 
@@ -30,8 +30,6 @@ public class HealthSettings
     [SerializeField][Min(0)] private float heartBeatSpeed;
 
     [SerializeField] private float increaseImpuls;
-
-    [SerializeField][Range(0, 100)] private int maxChanceConvertHeartIntoFruits;
 
     public Sprite BlobSprite => blobSprite;
 
@@ -59,6 +57,4 @@ public class HealthSettings
     public float HeartBeatSpeed => heartBeatSpeed;
 
     public float IncreaseImpuls => increaseImpuls;
-
-    public int MaxChanceConvertHeartIntoFruits => maxChanceConvertHeartIntoFruits;
 }

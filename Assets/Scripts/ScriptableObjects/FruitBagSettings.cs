@@ -18,8 +18,6 @@ public class FruitBagSettings
 
     [SerializeField][Min(0)] private float radiusCollider;
 
-    [SerializeField][Range(0, 100)] private int maxChanceConvertFruitBagIntoFruits;
-
     public int MinAngleImpulseFruit => minAngleImpulseFruit;
     public int MaxAngleImpulseFruit => maxAngleImpulseFruit;
 
@@ -30,6 +28,4 @@ public class FruitBagSettings
     public int MaxFruitsInBag => maxFruitsInBag;
 
     public float RadiusCollider => radiusCollider;
-
-    public int MaxChanceConvertFruitBagIntoFruits => maxChanceConvertFruitBagIntoFruits;
 }
