@@ -268,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 1802677388}
     - target: {fileID: 8504792680445707071, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
       propertyPath: m_SortingOrder
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8504792680536965000, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
       propertyPath: heart
@@ -381,7 +381,7 @@ PrefabInstance:
       objectReference: {fileID: 1802677388}
     - target: {fileID: 3456054205451764475, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_SortingOrder
-      value: 3
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3456054205451764476, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_Pivot.x

@@ -4,6 +4,7 @@ using UnityEngine;
 public class FruitScript : Unit
 {
     [SerializeField] private CutSpriteScript cutObject;
+    [SerializeField] private ParticleSystem juiceParticle;
 
     private int _numFruit;
     private FruitSettings _fruitSettings;
@@ -65,6 +66,12 @@ public class FruitScript : Unit
         BlobCreate(_fruitSettings.BlobSprite, Random.Range(Settings.BlobSettings.MinBlobCount, Settings.BlobSettings.MaxBlobCount));
 
         PullObjects.Units.Remove(this);
+
+        ParticleSystem newParticle = Instantiate(juiceParticle, transform.position, transform.rotation);
+
+        ParticleSystem.MainModule colorParticle = newParticle.main;
+
+        colorParticle.startColor = _fruitSettings.ColorFruit;
 
         _sequence.Kill();
         Destroy(gameObject);

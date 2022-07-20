@@ -56,6 +56,7 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
   colliderSphere: {fileID: -9207096234656972288}
   cutObject: {fileID: 3140069962598403398}
+  juiceParticle: {fileID: 7830727941812663186, guid: ad8dd19fbbd860a41aa48e772d04a499, type: 3}
 --- !u!114 &2008021283385391759
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public class RecordUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _record;
 
     private float points;
-    private const string recordStr = "Ћучший: ";
+    private const string recordStr = "Лучший: ";
 
     private Sequence _sequence;
 

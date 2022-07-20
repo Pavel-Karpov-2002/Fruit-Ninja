@@ -175,8 +175,8 @@ MonoBehaviour:
   addingFruitsForPoints: 10
   gravity: 0.8
   timeAttenuation: 3
-  intervalBetweenEntitysLoss: 4
-  minIntervalBetweenEntitysLoss: 3
+  intervalBetweenEntitysLoss: 6
+  minIntervalBetweenEntitysLoss: 5
   redusingInInterval: 0.1
   speedSlice: 0.1
   speedRotate: 1.5
