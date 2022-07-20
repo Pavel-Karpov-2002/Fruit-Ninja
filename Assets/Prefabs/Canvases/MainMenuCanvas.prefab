@@ -1052,7 +1052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSettings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
-  spriteAttenuation: {fileID: 60801645}
+  spriteAttenuation: {fileID: 60801646}
   record: {fileID: 2621950778163837713}
 --- !u!1 &2621950778733132745
 GameObject:

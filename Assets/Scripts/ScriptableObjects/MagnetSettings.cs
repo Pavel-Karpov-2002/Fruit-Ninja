@@ -12,23 +12,12 @@ public class MagnetSettings
 
     [SerializeField][Min(0)] private float speedAttraction;
 
-    [SerializeField][Min(0)] private float maxBlobSize;
-
-    [SerializeField][Min(0)] private float minBlobSize;
-
-    [SerializeField][Min(0)] private float timeLiveBlob;
-
     [SerializeField][Min(0)] private float radiusAttraction;
-
-    public float TimeLiveBlob => timeLiveBlob;
 
     public Sprite BlobSprite => blobSprite;
 
     public float RadiusCollider => radiusCollider;
     public float AttractionTime => attractionTime;
-
-    public float MaxBlobSize => maxBlobSize;
-    public float MinBlobSize => minBlobSize;
 
     public float SpeedAttraction => speedAttraction;
 

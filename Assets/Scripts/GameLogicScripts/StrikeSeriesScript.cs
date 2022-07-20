@@ -24,6 +24,7 @@ public class StrikeSeriesScript : MonoBehaviour
             timer += Time.deltaTime;
 
         yield return null;
+
         StartCoroutine(SeriesUpdate());
     }
 
@@ -42,9 +43,6 @@ public class StrikeSeriesScript : MonoBehaviour
 
     private void ChangeUI()
     {
-        if (comboSeriesUI != null)
-            comboSeriesUI.ChangeSeriesText(series);
-        else
-            Debug.Log("ComboUI not found!");
+        comboSeriesUI.ChangeSeriesText(series);
     }
 }

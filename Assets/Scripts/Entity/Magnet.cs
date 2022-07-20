@@ -1,98 +1,99 @@
-using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine;
 
-public class Magnet : Entity
+public class Magnet : Unit
 {
-    [SerializeField] private GameSettings gameSettings;
-
+    private float _timer;
+    private bool _isSlice;
+    private Coroutine _checkPosition;
+    private Sequence _sequence;
     private MagnetSettings _magnetSettings;
-    private float timer;
-    private bool isSlice;
 
     private void Awake()
     {
-        blade = FindObjectOfType<GamePlayEvents>();
-        spawners = FindObjectsOfType<SpawnerEntitys>();
-
-        ColliderSphere = GetComponent<ColliderSphere>();
-        Slice = GetComponent<SliceRange>();
-
-        if (ColliderSphere == null)
-            Debug.Log($"{gameObject.name} don't have a collider!");
-
-        if (Slice == null)
-            Debug.Log($"{gameObject.name} don't have a slice script!");
-
-        _magnetSettings = gameSettings.MagnetSettings;
+        _magnetSettings = Settings.MagnetSettings;
         transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
 
-        transform.DORotate(new Vector3(0, 0, 180), gameSettings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
+        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear));
     }
 
     private void Start()
     {
-        if (GetComponent<SpriteRenderer>() != null)
-            heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
+        StartCoroutine(OutOfBounds());
+        HeightSprite = (SourceSprite.sprite.bounds.size.y) / 2;
 
-        blade.Entitys.Add(this);
+        PullObjects.Units.Add(this);
 
-        timer = _magnetSettings.AttractionTime;
+        StartScale = transform.localScale.y;
+        _timer = _magnetSettings.AttractionTime;
     }
 
     private void FixedUpdate()
     {
-        ScaleChangeScript.ChangeOnWindow(transform, gameSettings.ScaleSettings.MinScaleOnWindow, gameSettings.ScaleSettings.MaxScaleOnWindow);
+        ChangeScaleOnWindow();
 
-        ChageRadiusCollider(_magnetSettings.RadiusCollider);
+        ChageRadiusCollider(Settings.MagnetSettings.RadiusCollider);
     }
 
     private void Update()
     {
-        if(isSlice && !SliceCheckScript.BlockSlice)
-            timer -= Time.deltaTime;
+        if(_isSlice)
+            _timer -= Time.deltaTime;
 
-        if (timer <= 0)
+        if (_timer <= 0)
         {
-            Physics physicsMagnet = GetComponent<Physics>();
-            physicsMagnet.Gravity = gameSettings.Gravity;
+            StopCoroutine(_checkPosition);
 
-            blade.Entitys.Remove(this);
+            SourcePhysics.TimeLive = 0;
+            Trow(0, 0, Settings.Gravity, transform.position);
         }
     }
 
     public override void Destruction()
     {
-        Physics physicsMagnet = GetComponent<Physics>();
+        SourcePhysics.Gravity = 0;
 
-        physicsMagnet.Gravity = 0;
-
-        if (!isSlice)
+        if (!_isSlice)
         {
-            AddBlob(_magnetSettings.MinBlobSize, 
-                _magnetSettings.MaxBlobSize, 
-                _magnetSettings.TimeLiveBlob, 
-                _magnetSettings.BlobSprite, 
-                gameSettings.BlobSettings);
+            BlobCreate(_magnetSettings.BlobSprite, 1);
 
-            isSlice = true;
+            _isSlice = true;
         }
 
-        foreach (var entity in blade.Entitys)
-        {
-            if (entity != null)
-            {
-                if(Distance(entity) <= _magnetSettings.RadiusAttraction)
-                {
-                    entity.GetComponent<Physics>().Gravity = 0;
+        _checkPosition = StartCoroutine(CheckFruitsPosition());
 
-                    StartCoroutine(Step(entity));
+        PullObjects.Units.Remove(this);
+    }
+
+    private IEnumerator CheckFruitsPosition()
+    {
+        yield return null;
+
+        SearchNear(PullObjects.Units.ToArray());
+
+        _checkPosition = StartCoroutine(CheckFruitsPosition());
+    }
+
+    private void SearchNear(Entity[] entities)
+    {
+        for (int i = 0; i < entities.Length; i++)
+        {
+            if (entities[i] == null)
+                continue;
+
+            if (entities[i] != this)
+            {
+                if (entities[i].SourcePhysics.Gravity != 0 && GetDistance(entities[i]) <= _magnetSettings.RadiusAttraction)
+                {
+                    entities[i].SourcePhysics.Gravity = 0;
+                    StartCoroutine(Step(entities[i]));
                 }
             }
         }
     }
 
-    private float Distance(Entity entity)
+    private float GetDistance(Entity entity)
     {
         return Vector3.Distance(transform.position, entity.transform.position);
     }
@@ -106,21 +107,24 @@ public class Magnet : Entity
             Vector3 delta = entity.transform.position - transform.position;
             delta.Normalize();
 
-            float moveSpeed = _magnetSettings.SpeedAttraction * Time.deltaTime;
+            float moveSpeed = _magnetSettings.SpeedAttraction * Time.deltaTime * SpeedObject.Speed;
 
             entity.transform.position = entity.transform.position - (delta * moveSpeed);
 
-            if (timer > 0)
+            if (_timer > 0)
                 StartCoroutine(Step(entity));
             else
             {
-                Physics entityPhyics = entity.GetComponent<Physics>();
-
-                entityPhyics.TimeLive = 0;
-                entityPhyics.Impuls = 0;
-                entityPhyics.Gravity = gameSettings.Gravity;
-                entityPhyics.StartPosition = entity.transform.position;
+                entity.SourcePhysics.TimeLive = 0;
+                entity.SourcePhysics.Impuls = 0;
+                entity.SourcePhysics.Gravity = Settings.Gravity;
+                entity.SourcePhysics.StartPosition = entity.transform.position;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        _sequence.Kill();
     }
 }

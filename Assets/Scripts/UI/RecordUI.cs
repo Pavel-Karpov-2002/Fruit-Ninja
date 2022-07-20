@@ -1,36 +1,38 @@
-using UnityEngine.UI;
-using UnityEngine;
 using DG.Tweening;
-using System.Linq;
 using TMPro;
+using UnityEngine;
 
 public class RecordUI : MonoBehaviour
 {
-    private TextMeshProUGUI _record;
+    [SerializeField] private TextMeshProUGUI _record;
 
-    private void Awake()
-    {
-        _record = GetComponent<TextMeshProUGUI>();
+    private float points;
+    private const string recordStr = "Ð‹ÑƒÑ‡ÑˆÐ¸Ð¹: ";
 
-        if (_record == null)
-        {
-            Debug.Log($"{gameObject.name} does not have access to the text");
-        }
-    }
+    private Sequence _sequence;
 
     private void Start()
     {
-        _record.text = "Ëó÷øèé: " + CoreValues.Record;
+        _sequence = DOTween.Sequence();
+
+        _record.text = recordStr + CoreValues.Record;
         UpdateTextRecord();
     }
 
     public void UpdateTextRecord()
     {
-        DOTween.To(ScoringPoints, float.Parse(string.Join("", _record.text.Where(c => char.IsDigit(c)))), CoreValues.Record, 0.3f).SetEase(Ease.Linear);
+        _sequence.Append(DOTween.To(ScoringPoints, points, CoreValues.Record, 0.3f).SetEase(Ease.Linear));
     }
 
     private void ScoringPoints(float point)
     {
-        _record.text = "Ëó÷øèé: " + ((int)point).ToString();
+        points = point;
+
+        _record.text = recordStr + ((int)point);
+    }
+
+    private void OnDestroy()
+    {
+        _sequence.Kill();
     }
 }

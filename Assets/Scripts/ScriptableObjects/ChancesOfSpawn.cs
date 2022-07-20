@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class ChancesOfSpawn
 {
-    [SerializeField] private GameObject spawnObject;
+    [SerializeField] private Unit spawnObjectEntity;
 
     [SerializeField][Range(0, 100)] private float maxChanceOfSpawn;
 
@@ -12,7 +12,7 @@ public class ChancesOfSpawn
 
     [SerializeField][Min(0)] private int minPointsForSpawn;
 
-    public GameObject SpawnObject => spawnObject;
+    public Unit SpawnObjectEntity => spawnObjectEntity;
 
     public float MaxChanceOfSpawn => maxChanceOfSpawn;
 

@@ -7,7 +7,7 @@ using TMPro;
 public class ButtonsScript : MonoBehaviour
 {
     [SerializeField] private GameSettings gameSettings;
-    [SerializeField] private GameObject spriteAttenuation;
+    [SerializeField] private Image spriteAttenuation;
     [SerializeField] private TextMeshProUGUI record;
 
     private void Start()
@@ -17,10 +17,10 @@ public class ButtonsScript : MonoBehaviour
 
     public void StartGame()
     {
-        if(spriteAttenuation.activeSelf != false)
-            spriteAttenuation.SetActive(false);
+        if(spriteAttenuation.gameObject.activeSelf != false)
+            spriteAttenuation.gameObject.SetActive(false);
 
-        spriteAttenuation.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        spriteAttenuation.color = new Color(0, 0, 0, 0);
 
         ChangeFade.AddAttenuation(spriteAttenuation, gameSettings.TimeAttenuation, 1);
 
@@ -30,8 +30,8 @@ public class ButtonsScript : MonoBehaviour
 
     public void MainMenu()
     {
-        if (spriteAttenuation.activeSelf != false)
-            spriteAttenuation.SetActive(false);
+        if (spriteAttenuation.gameObject.activeSelf != false)
+            spriteAttenuation.gameObject.SetActive(false);
         ChangeFade.AddAttenuation(spriteAttenuation, gameSettings.TimeAttenuation, 1);
 
         StartCoroutine(TimeAttenuaton(0));

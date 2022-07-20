@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c625ffcb1e1f654ca05fd3f993a40cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 3555804888102878767, guid: 0ff9ff410b42e3e43a48acedb77b373d, type: 3}
+  backgroundSprite: {fileID: 6805052104948275796}
 --- !u!212 &6805052104948275796
 SpriteRenderer:
   m_ObjectHideFlags: 0

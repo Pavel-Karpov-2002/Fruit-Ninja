@@ -3,14 +3,11 @@ using UnityEngine;
 public class BladeScript : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private TrailRenderer sourceTrailRenderer;
 
     private void Start()
     {
-        if (GetComponent<TrailRenderer>() == null)
-        {
-            Debug.Log($"{gameObject.name} don't have a TrailRenderer");
-        }
-        GetComponent<TrailRenderer>().enabled = false;
+        sourceTrailRenderer.enabled = false;
         Move();
     }
 
@@ -25,10 +22,10 @@ public class BladeScript : MonoBehaviour
         if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && !SliceCheckScript.BlockSlice)
         {
             Move();
-            GetComponent<TrailRenderer>().enabled = true;
+            sourceTrailRenderer.enabled = true;
         }
         else
-            GetComponent<TrailRenderer>().enabled = false;
+            sourceTrailRenderer.enabled = false;
     }
 
     private void Move()

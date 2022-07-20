@@ -1,106 +1,103 @@
-using UnityEngine;
-using System.Collections;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine;
 
-public class BombScript : Entity
+public class BombScript : Unit
 {
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private CutSpriteScript cutObject;
+    [SerializeField] private TextInScreen boomTextInScreen;
+    [SerializeField] private Transform explosionSprites;
 
-    private BombSettigns bombSettings;
+    private BombSettigns _bombSettigns;
+    private Sequence _sequence;
 
     private void Awake()
     {
-        blade = FindObjectOfType<GamePlayEvents>();
-        spawners = FindObjectsOfType<SpawnerEntitys>(); 
+        _sequence = DOTween.Sequence();
 
-        ColliderSphere = GetComponent<ColliderSphere>();
-        Slice = GetComponent<SliceRange>();
+        StartCoroutine(OutOfBounds());
+        _bombSettigns = Settings.BombSettings;
 
-        if (ColliderSphere == null)
-            Debug.Log($"{gameObject.name} don't have a collider");
-
-        if (Slice == null)
-            Debug.Log($"{gameObject.name} don't have a slice script");
-
-        bombSettings = gameSettings.BombSettings;
+        PullObjects.Units.Add(this);
     }
 
     private void FixedUpdate()
     {
-        ScaleChangeScript.ChangeOnWindow(transform, gameSettings.ScaleSettings.MinScaleOnWindow, gameSettings.ScaleSettings.MaxScaleOnWindow);
+        ChangeScaleOnWindow();
 
-        ChageRadiusCollider(bombSettings.RadiusCollider);
+        ChageRadiusCollider(Settings.BombSettings.RadiusCollider);
     }
 
     public override void Destruction()
     {
-        blade.SubstractHealth(bombSettings.Damage);
+        PullObjects.GamePlayer.SubstractHealth(Settings.BombSettings.Damage);
 
-        StartCoroutine(Explosion());
+        Explosion();
     }
 
-    private IEnumerator Explosion()
+    private void Explosion()
     {
-        transform.GetChild(0).localScale = new Vector2(0, 0);
+        explosionSprites.localScale = new Vector2(0, 0);
 
-        ScaleChangeScript.Change(transform.GetChild(0), bombSettings.MaxScaleExplosion, bombSettings.TimeBeforeExplosion);
 
-        DemonstrationPoints.Demonstration(gameObject,
+        SearchNear(PullObjects.Units.ToArray());
+        SearchNear(PullObjects.Halves.ToArray());
+
+        _sequence.Append(explosionSprites.DOScale(_bombSettigns.MaxScaleExplosion, _bombSettigns.TimeExplosion).SetEase(Ease.Linear));
+
+        TextInScreen boom = Instantiate(boomTextInScreen);
+
+        boom.Demonstration(SourceSprite,
             "¡ÛÏ!",
-            gameSettings.TextMeshProSettings.TextPointsStyle,
-            gameSettings.TextMeshProSettings,
             true,
-            new Color(255, 255, 255)    
+            new Color(255, 255, 255)
             );
 
-        StopAllPhysicsEntity();
+        PullObjects.Units.Remove(this);
 
-        yield return new WaitForSeconds(bombSettings.TimeBeforeExplosion);
-
-        StartAllPhysics();
-        CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
-
-        blade.Entitys.Remove(this);
-        Destroy(gameObject);
+        StartCoroutine(DestroyBomb());
     }
 
-    protected override void StartAllPhysics()
+    private void SearchNear(Entity[] entities)
     {
-        SliceCheckScript.BlockSlice = false;
-
-        for (int i = 0; i < blade.Entitys.Count; i++)
+        for (int i = 0; i < entities.Length; i++)
         {
-            if (blade.Entitys[i] == null)
+            if (entities[i] == null)
                 continue;
 
-            if (blade.Entitys[i] != this)
+            if (entities[i] != this)
             {
-                if (GetDistance(blade.Entitys[i].transform.position) <= gameSettings.BombSettings.ExplosionRadius)
+                if (GetDistance(entities[i].transform.position) <= _bombSettigns.ExplosionRadius)
                 {
-                    blade.Entitys[i].GetComponent<Physics>().TimeLive = 0;
-
-                    blade.Entitys[i].Trow(GetAngel(blade.Entitys[i].transform.position),
-                        bombSettings.CenterExplosionImpuls / GetDistance(blade.Entitys[i].transform.position),
-                        gameSettings.Gravity,
-                        blade.Entitys[i].transform.position);
-                }
-                else
-                {
-                    blade.Entitys[i].GetComponent<Physics>().Gravity = gravity[i];
+                    AddExplosionImpuls(entities[i]);
                 }
             }
         }
+    }
 
-        foreach (SpawnerEntitys spawner in spawners)
-        {
-            if (spawner != null)
-                spawner.gameObject.SetActive(true);
-        }
+    private void AddExplosionImpuls(Entity entity)
+    {
+        float percentageOfDistance = 100 / (_bombSettigns.ExplosionRadius / (GetDistance(entity.transform.position) / 2));
+
+        entity.SourcePhysics.TimeLive = 0;
+        entity.Trow(GetAngel(entity.transform.position),
+            _bombSettigns.CenterExplosionImpuls * (percentageOfDistance / 100),
+            Settings.Gravity,
+            entity.transform.position);
+    }
+
+    private IEnumerator DestroyBomb()
+    {
+        yield return new WaitForSeconds(_bombSettigns.TimeExplosion);
+
+        cutObject.CreateTwoHalves();
+
+        Destroy(gameObject);
     }
 
     private float GetAngel(Vector3 pos)
     {
-        if(pos.y > transform.position.y)
+        if (pos.y > transform.position.y)
         {
             return Vector3.Angle(pos, (pos - transform.position));
         }
@@ -116,11 +113,8 @@ public class BombScript : Entity
         return Mathf.Abs(Vector2.Distance(pos, transform.position));
     }
 
-    private void OnBecameInvisible()
+    private void OnDestroy()
     {
-        if (gameObject.activeSelf && transform.position.y < WorldSizeCamera.HalfHeight)
-        {
-            Destroy(gameObject);
-        }
+        _sequence.Kill();
     }
 }

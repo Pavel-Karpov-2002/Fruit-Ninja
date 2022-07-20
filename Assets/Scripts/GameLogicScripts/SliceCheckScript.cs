@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SliceCheckScript : MonoBehaviour
 {
-    [SerializeField] private GamePlayEvents player;
     [SerializeField] private GameSettings gameSettings;
 
     private static bool _blockSlice;
@@ -53,14 +52,14 @@ public class SliceCheckScript : MonoBehaviour
 
     private void OnTriggerCollider()
     {
-        foreach (Entity entity in player.Entitys)
+        foreach (Unit entity in PullObjects.Units)
         {
-            if (!(entity is Halve) && CheckSliceCollider(entity))
+            if (CheckSliceCollider(entity))
                 break;
         }
     }
 
-    private bool CheckSliceCollider(Entity entity)
+    private bool CheckSliceCollider(Unit entity)
     {
         if (entity.ColliderSphere != null)
         {

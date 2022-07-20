@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 4602890417527582763}
   - component: {fileID: 7705269644154180544}
   - component: {fileID: 4602890417527582762}
+  - component: {fileID: -6018883873429839223}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -312,7 +313,7 @@ Transform:
   m_GameObject: {fileID: 4602890417527582765}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 1648470650152304517}
   m_Father: {fileID: 0}
@@ -330,7 +331,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3bc8d7e0060af4ca894937f59bfd00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSettings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
+  slice: {fileID: 7705269644154180544}
+  sourceSprite: {fileID: 4602890417527582762}
+  sourcePhysics: {fileID: 1296051007810879851}
+  blob: {fileID: 8785880201672048513, guid: 80d956488cbbb904abb17fb831a04804, type: 3}
+  settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
+  colliderSphere: {fileID: 4602890417527582763}
+  cutObject: {fileID: -6018883873429839223}
+  boomTextInScreen: {fileID: 8800806624308732789, guid: d8bdaa63eafb1cb47ad62ff9e54ebea1, type: 3}
+  explosionSprites: {fileID: 1648470650152304517}
 --- !u!114 &1296051007810879851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,6 +427,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6018883873429839223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4602890417527582765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7a02e7a55a368489412cb2c158b26e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
+  sourceSprite: {fileID: 4602890417527582762}
+  halve: {fileID: 1565085498202018172, guid: 25a02b46b1410ff428d9957466982e2a, type: 3}
 --- !u!1 &5320227312284847421
 GameObject:
   m_ObjectHideFlags: 0

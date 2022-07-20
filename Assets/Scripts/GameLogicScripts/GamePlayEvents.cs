@@ -1,23 +1,23 @@
-using System.Collections;
-using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class GamePlayEvents : MonoBehaviour
 {
     [SerializeField] private GameSettings settings;
-    [SerializeField] private GameObject loseCanvas;
     [SerializeField] private GameObject mainCanvas;
-    [SerializeField] private GameObject spriteAttenuation;
+    [SerializeField] private Image spriteAttenuation;
+    [SerializeField] private StrikeSeriesScript strikeSeries;
+    [SerializeField] private CanvasGroup loseCanvasGroup;
+    [SerializeField] private TextInScreen pointsInSceen;
 
-    [SerializeField] private GameObject healthPanel;
-    [SerializeField] private List<GameObject> countPointsText;
-    [SerializeField] private List<GameObject> recordText;
+    [SerializeField] private HealthPanelUI healthPanel;
+    [SerializeField] private List<PointsTextUI> countPointsText;
+    [SerializeField] private List<RecordUI> recordText;
 
-    [SerializeField] private GameObject[] spawners;
-
-    private List<Entity> _entitys;
-    private List<GameObject> _halves;
+    private Sequence _sequence;
 
     public GameObject MainCanvas
     {
@@ -25,19 +25,7 @@ public class GamePlayEvents : MonoBehaviour
         set { mainCanvas = value; }
     }
 
-    public List<GameObject> Halves
-    {
-        get { return _halves; }
-        set { _halves = value; }
-    }
-
-    public List<Entity> Entitys
-    {
-        get { return _entitys; }
-        set { _entitys = value; }
-    }
-
-    public GameObject HealthPanel
+    public HealthPanelUI HealthPanel
     {
         get { return healthPanel; }
         set { healthPanel = value; }
@@ -45,24 +33,27 @@ public class GamePlayEvents : MonoBehaviour
 
     private void Awake()
     {
-        _entitys = new List<Entity>();
-        if(spriteAttenuation != null)
-            spriteAttenuation.SetActive(true);
-
-        foreach (GameObject spawner in spawners)
-        {
-            spawner.SetActive(false);
-        }
+        _sequence = DOTween.Sequence();
+        PullObjects.GamePlayer = this;
+        SpeedObject.ChangeSpeed(settings.SpeedObjects);
+        
+        spriteAttenuation.gameObject.SetActive(true);
 
         CoreValues.HealthCount = settings.HealthSettings.StartHealth;
     }
 
     private void Start()
     {
-        if(spriteAttenuation != null)
+        if (spriteAttenuation != null)
             ChangeFade.AddAttenuation(spriteAttenuation, settings.TimeAttenuation, 0);
 
         UpdateRecord();
+
+        foreach (var spawner in PullObjects.Spawners)
+        {
+            if (spawner != null)
+                spawner.enabled = false;
+        }
 
         StartCoroutine(TimeAttenuation());
     }
@@ -71,10 +62,11 @@ public class GamePlayEvents : MonoBehaviour
     {
         yield return new WaitForSeconds(settings.TimeAttenuation);
 
-        spriteAttenuation.SetActive(false);
-        foreach (GameObject spawner in spawners)
+        spriteAttenuation.gameObject.SetActive(false);
+
+        foreach (var spawner in PullObjects.Spawners)
         {
-            spawner.SetActive(true);
+            spawner.enabled = true;
         }
     }
 
@@ -84,14 +76,9 @@ public class GamePlayEvents : MonoBehaviour
         {
             CoreValues.HealthCount -= countHealth;
 
-            if (healthPanel.GetComponent<HeartUI>() != null)
-            {
-                healthPanel.GetComponent<HeartUI>().DestroyHeartImage();
-            }
-            else
-                Debug.Log("HeartPanel not found!");
+            healthPanel.DestroyHeartImage();
 
-            if(CoreValues.HealthCount <= 0)
+            if (CoreValues.HealthCount <= 0)
             {
                 StartCoroutine(RemoveUnnecessaryObjects());
             }
@@ -105,19 +92,18 @@ public class GamePlayEvents : MonoBehaviour
     
     private IEnumerator RemoveUnnecessaryObjects()
     {
-        if(spawners != null)
+        Debug.Log(PullObjects.Spawners.Count);
+        if(PullObjects.Spawners != null)
         {
-            foreach (var spawner in spawners)
+            foreach (var spawner in PullObjects.Spawners)
             {
-                Destroy(spawner);
+                spawner.enabled = false;
             }
         }
 
         yield return new WaitForSeconds(0.5f);
 
-        FruitScript[] fruits = FindObjectsOfType<FruitScript>();
-
-        if (fruits.Length > 0)
+        if (PullObjects.Units.Count > 0)
         {
             StartCoroutine(RemoveUnnecessaryObjects());
         }
@@ -131,39 +117,31 @@ public class GamePlayEvents : MonoBehaviour
 
     private void AnimationUILose()
     {
-        loseCanvas.SetActive(true);
-        DOTween.To(ChangingOpasityLoseCanvas, 0, 1, settings.TimeAttenuation).SetEase(Ease.Linear);
+        _sequence.Append(DOTween.To(ChangingOpasityLoseCanvas, 0, 1, settings.TimeAttenuation).SetEase(Ease.Linear));
     }
 
     private void ChangingOpasityLoseCanvas(float alpha)
     {
-        loseCanvas.GetComponent<CanvasGroup>().alpha = alpha;
+        loseCanvasGroup.alpha = alpha;
     }
 
-    public void AddPoint(int countPoints, GameObject fruit, Color colorPoints)
+    public void AddPoint(int countPoints, SpriteRenderer fruit, Color colorPoints)
     {
-        if (GetComponent<StrikeSeriesScript>() != null)
-        {
-            int count = GetComponent<StrikeSeriesScript>().CountSeries(countPoints);
-            AddPoints.Add(count);
+        int count = strikeSeries.CountSeries(countPoints);
 
-            DemonstrationPoints.Demonstration(fruit,
-                count.ToString(),
-                settings.TextMeshProSettings.TextPointsStyle,
-                settings.TextMeshProSettings,
-                false,
-                colorPoints
-                );
-        }
-        else
-            AddPoints.Add(countPoints);
+        AddPoints.Add(count);
+
+        TextInScreen pointsText = Instantiate(pointsInSceen);
+
+        pointsText.Demonstration(fruit,
+            count.ToString(),
+            false,
+            colorPoints
+            );
 
         foreach (var text in countPointsText)
         {
-            if (text.GetComponent<PointsTextUI>() != null)
-                text.GetComponent<PointsTextUI>().UpdateTextPoints();
-            else
-                Debug.Log("Points Text not found!");
+            text.UpdateTextPoints();
         }
 
         if (CoreValues.NumberOfPoints > CoreValues.Record)
@@ -179,10 +157,7 @@ public class GamePlayEvents : MonoBehaviour
     {
         foreach (var text in recordText)
         {
-            if (text.GetComponent<RecordUI>() != null)
-                text.GetComponent<RecordUI>().UpdateTextRecord();
-            else
-                Debug.Log("Points Text not found!");
+            text.UpdateTextRecord();
         }
     }
 }

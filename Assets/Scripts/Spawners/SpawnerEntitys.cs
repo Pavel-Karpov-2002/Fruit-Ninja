@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -14,6 +14,8 @@ public class SpawnerEntitys : MonoBehaviour
 
     private void Awake()
     {
+        PullObjects.Spawners.Add(this);
+
         if (settings.Spawners.Count == 0)
         {
             Debug.Log("Spawners count is 0");
@@ -44,6 +46,8 @@ public class SpawnerEntitys : MonoBehaviour
 
     private IEnumerator StartCreateFruits()
     {
+        yield return new WaitForSeconds(settings.IntervalBetweenEntitysLoss - _reducingInterval);
+
         int priority = Random.Range(_minPriority, _maxPriority + 1);
 
         foreach(SpawnerSettings spawner in settings.Spawners)
@@ -53,8 +57,6 @@ public class SpawnerEntitys : MonoBehaviour
                 CreateMultipleFruits(spawner, settings.ChancesOfSpawn);
             }
         }
-
-        yield return new WaitForSeconds(settings.IntervalBetweenEntitysLoss - _reducingInterval);
 
         if(settings.MinIntervalBetweenEntitysLoss > settings.IntervalBetweenEntitysLoss - _reducingInterval)
             _reducingInterval -= settings.RedusingInInterval;
@@ -81,7 +83,7 @@ public class SpawnerEntitys : MonoBehaviour
             {
                 if (chancesOfSpawn[j].MinPointsForSpawn <= CoreValues.NumberOfPoints && Random.Range(0, 101) <= chancesOfSpawn[j].MaxChanceOfSpawn)
                 {
-                    if (CoreValues.HealthCount >= settings.HealthSettings.MaxHealth && chancesOfSpawn[j].SpawnObject.GetComponent<BonusHeart>() != null)
+                    if (CoreValues.HealthCount >= settings.HealthSettings.MaxHealth && chancesOfSpawn[j].SpawnObjectEntity is BonusHeart)
                     {
                         continue;
                     }
@@ -90,7 +92,7 @@ public class SpawnerEntitys : MonoBehaviour
                     {
                         countObject[j]++;
 
-                        CreateObject(spawner, chancesOfSpawn[j].SpawnObject);
+                        CreateObject(spawner, chancesOfSpawn[j].SpawnObjectEntity);
                         isCreateObject = true;
                         break;
                     }
@@ -98,11 +100,11 @@ public class SpawnerEntitys : MonoBehaviour
             }
 
             if(!isCreateObject)
-                CreateObject(spawner, chancesOfSpawn[0].SpawnObject);
+                CreateObject(spawner, chancesOfSpawn[0].SpawnObjectEntity);
         }
     }
 
-    private void CreateObject(SpawnerSettings spawner, GameObject typeObject)
+    private void CreateObject(SpawnerSettings spawner, Unit typeObject)
     {
         float halfWidth = WorldSizeCamera.HalfWidth;
         float halfHeight = WorldSizeCamera.HalfHeight;
@@ -118,11 +120,11 @@ public class SpawnerEntitys : MonoBehaviour
         if(position.y > 0)
             position -= new Vector3(1, 0, 0);
 
-        GameObject newObject = Instantiate(typeObject, position, typeObject.transform.rotation);
+        Unit newObject = Instantiate(typeObject, position, typeObject.transform.rotation);
 
         float angle = 0;
 
-        if (!spawner.IsLeft)
+        if (spawner.MinAngle > 0)
             angle = Random.Range(spawner.MinAngle, spawner.MaxAngle + 1);
         else
         {
@@ -131,6 +133,6 @@ public class SpawnerEntitys : MonoBehaviour
                 angle += 360;
         }
 
-        newObject.GetComponent<Entity>().Trow(angle, Random.Range(spawner.MinImpuls, spawner.MaxImpuls), settings.Gravity, position);
+        newObject.Trow(angle, Random.Range(spawner.MinImpuls, spawner.MaxImpuls), settings.Gravity, position);
     }
 }

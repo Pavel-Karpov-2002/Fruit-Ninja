@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   scaleSettings:
-    minScaleOnWindow: 0.85
-    maxScaleOnWindow: 0.6
+    maxScaleOnWindow: 0.25
   fruitSettings:
   - fruitsSprite: {fileID: 21300000, guid: 5700468ff7032294cb82397e633699b0, type: 3}
     blobSprite: {fileID: 21300000, guid: b41df772b5ec59f40af87ba837042d35, type: 3}
@@ -49,96 +48,100 @@ MonoBehaviour:
     colorPoints: {r: 0.7686275, g: 0.1254902, b: 0.1254902, a: 1}
     radiusCollider: 0
   spawners:
-  - bottomStartPosition: 31
-    bottomEndPosition: 84.3
-    heightStartPosition: 0
-    heightEndPosition: 0
-    minAngle: 47
-    maxAngle: 114
+  - bottomStartPosition: 22.2
+    bottomEndPosition: 73.7
+    heightStartPosition: -5
+    heightEndPosition: -5
+    minAngle: 45
+    maxAngle: 135
     minObjects: 1
     maxObjects: 4
-    minImpuls: 3.5
-    maxImpuls: 4
+    minImpuls: 3
+    maxImpuls: 3.8
     priority: 0
-    isLeft: 0
-  - bottomStartPosition: 0
-    bottomEndPosition: 0
-    heightStartPosition: 22.1
-    heightEndPosition: 74.6
-    minAngle: 52
-    maxAngle: 315
+  - bottomStartPosition: -5
+    bottomEndPosition: -5
+    heightStartPosition: 30
+    heightEndPosition: 60
+    minAngle: -345
+    maxAngle: -35
     minObjects: 1
     maxObjects: 3
     minImpuls: 3.5
     maxImpuls: 4
     priority: 1
-    isLeft: 1
+  - bottomStartPosition: 105
+    bottomEndPosition: 105
+    heightStartPosition: 30
+    heightEndPosition: 60
+    minAngle: 120
+    maxAngle: 200
+    minObjects: 1
+    maxObjects: 3
+    minImpuls: 3.5
+    maxImpuls: 4
+    priority: 2
   chancesOfSpawn:
-  - spawnObject: {fileID: 2008021283385391793, guid: 07ac74b5e4cc47c4b97fb412abb42b4a, type: 3}
+  - spawnObjectEntity: {fileID: 3406974882285622916, guid: 07ac74b5e4cc47c4b97fb412abb42b4a, type: 3}
     maxChanceOfSpawn: 10
     maxPercentageInPool: -1
     minPointsForSpawn: 0
-  - spawnObject: {fileID: 4602890417527582765, guid: bca2d180d7a48da49bfca88598e0dd76, type: 3}
-    maxChanceOfSpawn: 50
+  - spawnObjectEntity: {fileID: 4602890417527582760, guid: bca2d180d7a48da49bfca88598e0dd76, type: 3}
+    maxChanceOfSpawn: 20
     maxPercentageInPool: 50
     minPointsForSpawn: 0
-  - spawnObject: {fileID: 1883827419559285849, guid: add2dc336340047439ab98108767ba6f, type: 3}
+  - spawnObjectEntity: {fileID: 1883827419559285846, guid: add2dc336340047439ab98108767ba6f, type: 3}
     maxChanceOfSpawn: 20
     maxPercentageInPool: 20
-    minPointsForSpawn: 100
-  - spawnObject: {fileID: 7565778000188426626, guid: 1534874b7e0adb74f9bce95587b95a59, type: 3}
-    maxChanceOfSpawn: 50
-    maxPercentageInPool: 20
     minPointsForSpawn: 500
-  - spawnObject: {fileID: 4083342933436288600, guid: d3f2deb1c7b1d224cb90bf5b47fc55da, type: 3}
-    maxChanceOfSpawn: 30
+  - spawnObjectEntity: {fileID: 4083342933436288598, guid: d3f2deb1c7b1d224cb90bf5b47fc55da, type: 3}
+    maxChanceOfSpawn: 20
     maxPercentageInPool: 20
-    minPointsForSpawn: 600
-  - spawnObject: {fileID: 8008485571425473762, guid: 68ad43cc9b7600f499203c4a6b64cae0, type: 3}
-    maxChanceOfSpawn: 30
+    minPointsForSpawn: 1000
+  - spawnObjectEntity: {fileID: 7565778000188426637, guid: 1534874b7e0adb74f9bce95587b95a59, type: 3}
+    maxChanceOfSpawn: 20
     maxPercentageInPool: 20
-    minPointsForSpawn: 700
+    minPointsForSpawn: 2000
+  - spawnObjectEntity: {fileID: 3614375557791601127, guid: 68ad43cc9b7600f499203c4a6b64cae0, type: 3}
+    maxChanceOfSpawn: 20
+    maxPercentageInPool: 20
+    minPointsForSpawn: 3000
   healthSettings:
     blobSprite: {fileID: 21300000, guid: 41380b6275e75484daba1d5ac78c7adf, type: 3}
     heartSpriteOnPanel: {fileID: 21300000, guid: 19b39223eb33e7d4c88c935fc929624d, type: 3}
-    maxBlobSize: 0.4
-    minBlobSize: 0
-    startHealth: 10
-    maxHealth: 15
+    startHealth: 3
+    maxHealth: 8
     radiusCollider: 0
-    timeMoveHeartToHeartPanel: 2
+    timeMoveHeartToHeartPanel: 1
     countHealthAdd: 1
     timeBeat: 0.5
     minHeartBeatScale: 1
     maxHeartBeatScale: 1.2
-    heartBeatSpeed: 1
-    increaseImpuls: 0.5
+    heartBeatSpeed: 0.5
+    increaseSpeed: 0.5
   blobSettings:
-    minblobScale: 0
-    maxBlobScale: 0.7
-    blobSpeed: 3
-    blobDelayTime: 2
-    minBlobBackgroundScale: 0.1
-    maxBlobBackgroundScale: 0.4
-    minBlobBackground: 1
-    maxBlobBackground: 5
-    blobBackgroundDelayTime: 4
-    blobBackgroundSpeed: 2
-    layerBlobBackground: 3
-    layerBlob: 0
+    minBlobScale: 0.4
+    maxBlobScale: 0.6
+    minBlobCount: 1
+    maxBlobCount: 4
+    minBlobSpeedDisappearance: 2
+    maxBlobSpeedDisappearance: 4
+    layerBlob: 2
   comboSettings:
     timeDisappearanceComboText: 5
     maxCombo: 5
     timeFadeComboText: 2
+    maxFade: 0.7
   textMeshProSettings:
     textPointsStile: {fileID: 2667768214004378815, guid: d8bdaa63eafb1cb47ad62ff9e54ebea1, type: 3}
     textPointsMaterial: {fileID: 2100000, guid: 7c71c9e8a70259849a1c2300483b6073, type: 2}
+    timeLive: 0
   bombSettings:
-    explosionRadius: 4
-    centerExplosionImpuls: 3
+    explosionRadius: 2
+    centerExplosionImpuls: 5
     radiusCollider: 1
     damage: 1
-    timeBeforeExplosion: 2
+    timeExplosion: 0.1
     maxScaleExplosion: 1
   fruitBagSettings:
     minAngleImpulseFruit: 30
@@ -151,20 +154,21 @@ MonoBehaviour:
   freezingSettings:
     blobSprite: {fileID: 21300000, guid: 759c3d09b155cc9469355a6d319532f6, type: 3}
     radiusCollider: 0
-    timeScale: 0.5
-    timeReduction: 5
-    maxBlobSize: 0.8
-    minBlobSize: 0
-    timeLiveBlob: 1
+    timeReduction: 10
+    speedReduction: 0.6
   magnetSettings:
     blobSprite: {fileID: 21300000, guid: 012cc231f607e23488cd5429c0b1cd3d, type: 3}
     radiusCollider: 0
-    attractionTime: 3
+    attractionTime: 10
     speedAttraction: 1
-    maxBlobSize: 0.8
-    minBlobSize: 0
-    timeLiveBlob: 1
-    radiusAttraction: 8
+    radiusAttraction: 3.5
+  halvesPhysicsSettings:
+    minImpuls: 1.5
+    maxImpuls: 2
+    minAngle: 40
+    maxAngle: 120
+    speed: 1.5
+    timeLive: 3
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
   minFriutsAdd: 1
@@ -176,3 +180,4 @@ MonoBehaviour:
   redusingInInterval: 0.1
   speedSlice: 0.1
   speedRotate: 1.5
+  speedObjects: 1.2

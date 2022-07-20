@@ -1,16 +1,20 @@
+using System;
 using TMPro;
 using UnityEngine;
-using System;
 
 [Serializable]
 public class TextMeshProSettings
 {
 
-    [SerializeField] private GameObject textPointsStile;
+    [SerializeField] private TextMeshPro textPointsStile;
 
     [SerializeField] private Material textPointsMaterial;
 
-    public GameObject TextPointsStyle => textPointsStile;
+    [SerializeField][Min(0)] private float timeLive;
+
+    public TextMeshPro TextPointsStyle => textPointsStile;
 
     public Material TextPointsMaterial => textPointsMaterial;
+
+    public float TimeLive => timeLive;
 }

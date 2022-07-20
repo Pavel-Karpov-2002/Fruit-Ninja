@@ -1,74 +1,79 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
-using DG.Tweening;
 
-public class FreezingBonus : Entity
+public class FreezingBonus : Unit
 {
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private CutSpriteScript cutObject;
+    [SerializeField] private SpriteRenderer shadow;
 
     private FreezingSettings _freezingSettings;
-    private float timeFreezing;
+    private Sequence _sequence;
+    private bool isActive;
 
     private void Awake()
     {
-        blade = FindObjectOfType<GamePlayEvents>();
-        spawners = FindObjectsOfType<SpawnerEntitys>();
+        _sequence = DOTween.Sequence();
 
-        ColliderSphere = GetComponent<ColliderSphere>();
-        Slice = GetComponent<SliceRange>();
+        PullObjects.Units.Add(this);
 
-        if (ColliderSphere == null)
-            Debug.Log($"{gameObject.name} don't have a collider!");
+        _freezingSettings = Settings.FreezingSettings;
 
-        if (Slice == null)
-            Debug.Log($"{gameObject.name} don't have a slice script!");
-
-        _freezingSettings = gameSettings.FreezingSettings;
-
-        timeFreezing = _freezingSettings.TimeReduction;
         transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
 
-        transform.DORotate(new Vector3(0, 0, 180), gameSettings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
+        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.SpeedRotate).SetEase(Ease.Linear));
+        _sequence.SetLoops(-180, LoopType.Incremental);
+
     }
 
     private void FixedUpdate()
     {
-        ScaleChangeScript.ChangeOnWindow(transform, gameSettings.ScaleSettings.MinScaleOnWindow, gameSettings.ScaleSettings.MaxScaleOnWindow);
+        ChangeScaleOnWindow();
 
         ChageRadiusCollider(_freezingSettings.RadiusCollider);
     }
 
-    private void Update()
-    {
-        if (SliceCheckScript.BlockSlice)
-            timeFreezing -= Time.deltaTime;
-    }
-
     public override void Destruction()
     {
+        BlobCreate(_freezingSettings.BlobSprite, 1);
         StartCoroutine(Freezing());
 
-        Destroy(gameObject);
+        PullObjects.Units.Remove(this);
+
+        cutObject.CreateTwoHalves();
+        
+        SourceSprite.sprite = null;
+        shadow.sprite = null;
     }
 
     private IEnumerator Freezing()
     {
-        AddBlob(_freezingSettings.MinBlobSize, _freezingSettings.MaxBlobSize, _freezingSettings.TimeLiveBlob, _freezingSettings.BlobSprite, gameSettings.BlobSettings);
-
-        CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
-
-        Time.timeScale = _freezingSettings.TimeScale;
-
-        yield return null;
+        DownSpeed();
+        isActive = true;
         
-        if(timeFreezing <= 0)
-            Time.timeScale = 1;
+        yield return new WaitForSeconds(_freezingSettings.TimeReduction);
+
+        UpSpeed();
+
+        DOTween.Kill(_sequence);
+        Destroy(gameObject);
+    }
+
+    private void DownSpeed()
+    {
+        SpeedObject.ChangeSpeed(_freezingSettings.SpeedReduction);
+    }
+
+    private void UpSpeed()
+    {
+        SpeedObject.ChangeSpeed(Settings.SpeedObjects);
     }
 
     private void OnBecameInvisible()
     {
-        if (gameObject.activeSelf && transform.position.y < WorldSizeCamera.HalfHeight)
+        if (gameObject.activeSelf && transform.position.y < WorldSizeCamera.HalfHeight && !isActive)
         {
+            DOTween.Kill(_sequence);
             Destroy(gameObject);
         }
     }

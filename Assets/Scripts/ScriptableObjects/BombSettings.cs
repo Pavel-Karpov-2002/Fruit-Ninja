@@ -12,7 +12,7 @@ public class BombSettigns
 
     [SerializeField][Min(0)] private int damage;
 
-    [SerializeField][Min(0)] private float timeBeforeExplosion;
+    [SerializeField][Min(0)] private float timeExplosion;
 
     [SerializeField][Min(0)] private float maxScaleExplosion;
 
@@ -25,7 +25,7 @@ public class BombSettigns
 
     public int Damage => damage;
 
-    public float TimeBeforeExplosion => timeBeforeExplosion;
+    public float TimeExplosion => timeExplosion;
 
     public float MaxScaleExplosion => maxScaleExplosion;
 }

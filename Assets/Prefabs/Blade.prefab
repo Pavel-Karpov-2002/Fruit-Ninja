@@ -49,17 +49,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
-  loseCanvas: {fileID: 3456054205451764472, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
   mainCanvas: {fileID: 8504792680445707066, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
   spriteAttenuation: {fileID: 0}
-  healthPanel: {fileID: 1860540330354281661, guid: 5f69dce56d21a414e875abe75d94c13f, type: 3}
+  strikeSeries: {fileID: 1300233118}
+  loseCanvasGroup: {fileID: 0}
+  pointsInSceen: {fileID: 8800806624308732789, guid: d8bdaa63eafb1cb47ad62ff9e54ebea1, type: 3}
+  healthPanel: {fileID: 0}
   countPointsText:
   - {fileID: 0}
   - {fileID: 0}
   recordText:
   - {fileID: 0}
-  - {fileID: 0}
-  spawners:
   - {fileID: 0}
 --- !u!96 &1300233121
 TrailRenderer:
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
-  comboSeriesUI: {fileID: 0}
+  comboSeriesUI: {fileID: 1401779261918744931, guid: 8e8643c746b3c6b44be4f2e1feb4ce06, type: 3}
 --- !u!114 &1300233119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,7 +194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f570947d7377b547acd62dc33b38c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2802207064313673763}
   gameSettings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
 --- !u!114 &1300233120
 MonoBehaviour:
@@ -220,4 +219,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654f813345a7cd541ae8ccfd78726807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 3555804888102878767, guid: 0ff9ff410b42e3e43a48acedb77b373d, type: 3}
+  sourceTrailRenderer: {fileID: 1300233121}

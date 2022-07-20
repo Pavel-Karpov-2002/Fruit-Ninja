@@ -1,47 +1,41 @@
-using UnityEngine;
 using DG.Tweening;
-using System.Collections.Generic;
+using UnityEngine;
 
-public class FruitScript : Entity
+public class FruitScript : Unit
 {
-    [SerializeField] private GameSettings settings;
+    [SerializeField] private CutSpriteScript cutObject;
 
-    private Transform scaleShadow;
-    private int numFruit;
-    private FruitSettings fruitSettings;
-    private bool onVisible;
-    private Vector3 start;
+    private int _numFruit;
+    private FruitSettings _fruitSettings;
+    private bool _onVisible;
+    private Sequence _sequence;
+    private bool _onSlice;
 
-    public FruitSettings FruitSettings => fruitSettings;
+    public FruitSettings FruitSettings => _fruitSettings;
 
     private void Awake()
     {
-        CreateShadowScript.CreateShadow(gameObject);
-        scaleShadow = gameObject.GetComponentInChildren<CreateShadowScript>().transform;
+        StartCoroutine(OutOfBounds());
 
-        blade = FindObjectOfType<GamePlayEvents>();
-        ColliderSphere = GetComponent<ColliderSphere>();
-        Slice = GetComponent<SliceRange>();
+        _sequence = DOTween.Sequence();
 
-        if (ColliderSphere == null)
-            Debug.Log($"{gameObject.name} don't have a collider");
+        _numFruit = Random.Range(0, Settings.FruitSettings.Count);
 
-        if (Slice == null)
-            Debug.Log($"{gameObject.name} don't have a slice script");
-
-        numFruit = Random.Range(0, settings.FruitSettings.Count);
-        fruitSettings = settings.FruitSettings[numFruit];
-        gameObject.GetComponent<SpriteRenderer>().sprite = fruitSettings.FruitsSprite;
+        _fruitSettings = Settings.FruitSettings[_numFruit];
+        SourceSprite.sprite = _fruitSettings.FruitsSprite;
     }
 
     private void Start()
     {
-        start = transform.position;
-        heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
-        blade.Entitys.Add(this);
+        StartScale = transform.localScale.y;
+
+        HeightSprite = (SourceSprite.sprite.bounds.size.y) / 2;
+
+        PullObjects.Units.Add(this);
         transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
 
-        transform.DORotate(new Vector3(0, 0, 180), settings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear);
+        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.SpeedRotate).SetEase(Ease.Linear));
+        _sequence.SetLoops(-180, LoopType.Incremental);
 
         NormalizeObject();
     }
@@ -49,56 +43,52 @@ public class FruitScript : Entity
     private void FixedUpdate()
     {
         NormalizeObject();
-        if (transform.position.y > 0 && transform.position.x > 0)
-            onVisible = true;
+
+        if (transform.position.y > 0 && (transform.position.x > 0 || transform.position.x < WorldSizeCamera.HalfWidth))
+            _onVisible = true;
     }
 
     private void NormalizeObject()
     {
-        ScaleChangeScript.ChangeOnWindow(transform, settings.ScaleSettings.MinScaleOnWindow, settings.ScaleSettings.MaxScaleOnWindow);
+        ChangeScaleOnWindow();
 
-        scaleShadow.transform.localScale += new Vector3(0.3f, 0.3f);
-        ScaleChangeScript.ChangeOnWindow(scaleShadow.transform, settings.ScaleSettings.MinScaleOnWindow, settings.ScaleSettings.MaxScaleOnWindow);
-
-        ChageRadiusCollider(fruitSettings.RadiusCollider);
+        ChageRadiusCollider(_fruitSettings.RadiusCollider);
     }
 
     public override void Destruction()
     {
-        blade.AddPoint(settings.NumberOfPointsPerFruit, gameObject, fruitSettings.ColorFruit);
-        CutSpriteScript.GetTwoHalves(gameObject.GetComponent<SpriteRenderer>().sprite.texture, gameObject);
+        _onSlice = true;
+        PullObjects.GamePlayer.AddPoint(Settings.NumberOfPointsPerFruit, SourceSprite, _fruitSettings.ColorFruit);
 
-        BlobSettings blobSetting = settings.BlobSettings;
+        cutObject.CreateTwoHalves();
 
-        CreateBlobScript.CreateMoreBlub(gameObject,
-            fruitSettings.BlobSprite,
-            settings);
+        BlobCreate(_fruitSettings.BlobSprite, Random.Range(Settings.BlobSettings.MinBlobCount, Settings.BlobSettings.MaxBlobCount));
 
-        CreateBlobScript.CreateOneBlob(
-            gameObject,
-            fruitSettings.BlobSprite,
-            blobSetting.MinBlobScale,
-            blobSetting.MaxBlobScale,
-            blobSetting.BlobSpeed,
-            blobSetting.BlobDelayTime,
-            blobSetting.LayerBlob);
+        PullObjects.Units.Remove(this);
 
-        blade.Entitys.Remove(this);
-
+        _sequence.Kill();
         Destroy(gameObject);
     }
 
     private void OnBecameInvisible()
     {
         float halfHeight = WorldSizeCamera.HalfHeight;
-        if (gameObject.activeSelf && transform.position.y < halfHeight && onVisible)
+
+        if (!_onSlice && transform.position.y < halfHeight && _onVisible)
         {
-            if (blade != null)
-                blade.SubstractHealth(1);
+            PullObjects.GamePlayer.SubstractHealth(1);
+
+            PullObjects.Units.Remove(this);
+
+            _sequence.Kill();
             Destroy(gameObject);
         }
+        else if (transform.position.y < -5)
+        {
+            PullObjects.Units.Remove(this);
 
-        if (transform.position.y < 5)
+            _sequence.Kill();
             Destroy(gameObject);
+        }
     }
 }

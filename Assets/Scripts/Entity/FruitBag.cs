@@ -1,34 +1,23 @@
 using UnityEngine;
 
-public class FruitBag : Entity
+public class FruitBag : Unit
 {
-    [SerializeField] private GameObject fruit;
-    [SerializeField] private GameSettings gameSettings;
-    [SerializeField] private GameObject fruitsSprite;
+    [SerializeField] private FruitScript fruit;
+    [SerializeField] private SpriteRenderer fruitsSprite;
 
     private FruitBagSettings _fruitBagSettings;
 
     private void Awake()
     {
-        blade = FindObjectOfType<GamePlayEvents>();
-        spawners = FindObjectsOfType<SpawnerEntitys>();
+        StartCoroutine(OutOfBounds());
+        _fruitBagSettings = Settings.FruitBagSettings;
 
-        ColliderSphere = GetComponent<ColliderSphere>();
-        Slice = GetComponent<SliceRange>();
-
-        if (ColliderSphere == null)
-            Debug.Log($"{gameObject.name} don't have a collider!");
-
-        if (Slice == null)
-            Debug.Log($"{gameObject.name} don't have a slice script!");
-
-        _fruitBagSettings = gameSettings.FruitBagSettings;
+        PullObjects.Units.Add(this);
     }
-
 
     private void FixedUpdate()
     {
-        ScaleChangeScript.ChangeOnWindow(transform, gameSettings.ScaleSettings.MinScaleOnWindow, gameSettings.ScaleSettings.MaxScaleOnWindow);
+        ChangeScaleOnWindow();
 
         ChageRadiusCollider(_fruitBagSettings.RadiusCollider);
     }
@@ -43,30 +32,28 @@ public class FruitBag : Entity
         }
 
         RemoveFruitsInBag();
-        blade.Entitys.Remove(this);
+        PullObjects.Units.Remove(this);
     }
 
     private void RemoveFruitsInBag()
     {
-        Destroy(fruitsSprite);
+        fruitsSprite.gameObject.SetActive(false);
     }
 
     private void CreateFruits()
     {
-        GameObject newFruit = Instantiate(fruit);
+        FruitScript newFruit = Instantiate(fruit);
 
-        int angle = Random.Range(_fruitBagSettings.MinAngleImpulseFruit, _fruitBagSettings.MaxAngleImpulseFruit + 1);
+        int angle = Random.Range(_fruitBagSettings.MinAngleImpulseFruit,
+            _fruitBagSettings.MaxAngleImpulseFruit + 1);
 
-        float impulse = Random.Range(_fruitBagSettings.MinImpulsFruit, _fruitBagSettings.MaxImpulsFruit);
+        float impulse = Random.Range(_fruitBagSettings.MinImpulsFruit,
+            _fruitBagSettings.MaxImpulsFruit);
 
-        Vector3 position = new Vector3(Random.Range(transform.position.x - RadiusCollider, transform.position.x + RadiusCollider), transform.position.y, fruitsSprite.transform.position.z  );
+        Vector3 position = new Vector3(Random.Range(transform.position.x - RadiusCollider, 
+            transform.position.x + RadiusCollider), transform.position.y, 
+            fruitsSprite.transform.position.z  );
 
-        newFruit.GetComponent<Physics>().AddImpulse(angle, impulse, gameSettings.Gravity, position);
-    }
-
-    private void OnBecameInvisible()
-    {
-        if (gameObject.activeSelf)
-            Destroy(gameObject);
+        newFruit.Trow(angle, impulse, Settings.Gravity, position);
     }
 }

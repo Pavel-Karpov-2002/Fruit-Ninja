@@ -5,50 +5,29 @@ using UnityEngine;
 public class BlobSettings
 {
 
-    [SerializeField][Min(0)] private float minblobScale;
+    [SerializeField][Min(0)] private float minBlobScale;
 
     [SerializeField][Min(0)] private float maxBlobScale;
 
-    [SerializeField][Min(0)] private float blobSpeed;
+    [SerializeField][Min(0)] private int minBlobCount;
 
-    [SerializeField][Min(0)] private float blobDelayTime;
+    [SerializeField][Min(0)] private int maxBlobCount;
 
-    [SerializeField][Min(0)] private float minBlobBackgroundScale;
+    [SerializeField] private float minBlobSpeedDisappearance;
 
-    [SerializeField][Min(0)] private float maxBlobBackgroundScale;
-
-    [SerializeField][Min(0)] private int minBlobBackground;
-
-    [SerializeField][Min(0)] private int maxBlobBackground;
-
-    [SerializeField][Min(0)] private float blobBackgroundDelayTime;
-
-    [SerializeField] private float blobBackgroundSpeed;
-
-    [SerializeField] private float layerBlobBackground;
+    [SerializeField] private float maxBlobSpeedDisappearance;
 
     [SerializeField] private float layerBlob;
 
-    public float MinBlobScale => minblobScale;
 
+    public float MinBlobScale => minBlobScale;
     public float MaxBlobScale => maxBlobScale;
-    
-    public float BlobSpeed => blobSpeed;
 
-    public float BlobDelayTime => blobDelayTime;
+    public int MinBlobCount => minBlobCount;
+    public int MaxBlobCount => maxBlobCount;
 
-    public float MinBlobBackgroundScale => minBlobBackgroundScale;
-    public float MaxBlobBackgroundScale => maxBlobBackgroundScale;
-
-    public int MinBlobBackground => minBlobBackground;
-
-    public int MaxBlobBackground => maxBlobBackground;
-
-    public float BlobBackgroundDelayTime => blobBackgroundDelayTime;
-
-    public float BlobBackgroundSpeed => blobBackgroundSpeed;
-
-    public float LayerBlobBackground => layerBlobBackground;
+    public float MinBlobSpeedDisappearance => minBlobSpeedDisappearance;
+    public float MaxBlobSpeedDisappearance => maxBlobSpeedDisappearance;
 
     public float LayerBlob => layerBlob;
 }

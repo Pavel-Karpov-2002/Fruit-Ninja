@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7359497038301937744
 Transform:
   m_ObjectHideFlags: 0
@@ -43,7 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa38cf401a3eb2346a402723cf158950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruit: {fileID: 2008021283385391793, guid: 07ac74b5e4cc47c4b97fb412abb42b4a, type: 3}
-  bomb: {fileID: 4602890417527582765, guid: bca2d180d7a48da49bfca88598e0dd76, type: 3}
-  heartBonus: {fileID: 1883827419559285849, guid: add2dc336340047439ab98108767ba6f, type: 3}
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
+  gamePlayer: {fileID: 2802207064313673763, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}

@@ -3,6 +3,8 @@ using UnityEngine;
 public class Background : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private SpriteRenderer backgroundSprite;
+
 
     private void Start()
     {
@@ -11,8 +13,8 @@ public class Background : MonoBehaviour
 
         transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, transform.position.z);
 
-        SpriteRenderer sprRend = gameObject.GetComponent<SpriteRenderer>();
-        sprRend.drawMode = SpriteDrawMode.Sliced;
+        SpriteRenderer sprRend = backgroundSprite;
+
         sprRend.size = new Vector2(halfWidth, halfHeight);
     }
 }

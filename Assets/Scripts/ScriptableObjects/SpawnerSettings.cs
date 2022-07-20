@@ -5,14 +5,14 @@ using UnityEngine;
 public class SpawnerSettings
 {
 
-    [SerializeField][Range(0, 100)] private float bottomStartPosition;
-    [SerializeField][Range(0, 100)] private float bottomEndPosition;
+    [SerializeField][Range(-5, 105)] private float bottomStartPosition;
+    [SerializeField][Range(-5, 105)] private float bottomEndPosition;
 
-    [SerializeField][Range(0, 100)] private float heightStartPosition;
-    [SerializeField][Range(0, 100)] private float heightEndPosition;
+    [SerializeField][Range(-5, 105)] private float heightStartPosition;
+    [SerializeField][Range(-5, 105)] private float heightEndPosition;
 
-    [SerializeField][Range(0, 360)] private float minAngle;
-    [SerializeField][Range(0, 360)] private float maxAngle;
+    [SerializeField][Range(-360, 360)] private float minAngle;
+    [SerializeField][Range(-360, 360)] private float maxAngle;
 
     [SerializeField][Min(0)] private int minObjects;
     [SerializeField][Min(0)] private int maxObjects;
@@ -21,8 +21,6 @@ public class SpawnerSettings
     [SerializeField][Min(0)] private float maxImpuls;
 
     [SerializeField][Min(0)] private int priority;
-
-    [SerializeField] private bool isLeft;
 
 
     public float BottomStartPosition => bottomStartPosition;
@@ -41,6 +39,4 @@ public class SpawnerSettings
     public float MaxImpuls => maxImpuls;
 
     public int Priority => priority;
-
-    public bool IsLeft => isLeft;
 }

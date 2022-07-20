@@ -28,6 +28,8 @@ public class GameSettings : ScriptableObject
 
     [SerializeField] private MagnetSettings magnetSettings;
 
+    [SerializeField] private HalvesPhysicsSettings halvesPhysicsSettings;
+
     [SerializeField][Min(0)] private int numberOfPointsPerFruit;
 
     [SerializeField][Min(0)] private int maxFriutsAdd;
@@ -49,6 +51,9 @@ public class GameSettings : ScriptableObject
     [SerializeField][Min(0)] private float speedSlice;
 
     [SerializeField][Min(0)] private float speedRotate;
+
+    [SerializeField][Min(0)] private float speedObjects;
+
 
     public ScaleOnWindowSettings ScaleSettings => scaleSettings;
 
@@ -74,6 +79,7 @@ public class GameSettings : ScriptableObject
 
     public MagnetSettings MagnetSettings => magnetSettings;
 
+    public HalvesPhysicsSettings HalvesPhysicsSettings => halvesPhysicsSettings;
     public int NumberOfPointsPerFruit => numberOfPointsPerFruit;
 
     public int MaxFriutsAdd => maxFriutsAdd;
@@ -95,4 +101,6 @@ public class GameSettings : ScriptableObject
     public float SpeedSlice => speedSlice;
 
     public float SpeedRotate => speedRotate;
+
+    public float SpeedObjects => speedObjects;
 }

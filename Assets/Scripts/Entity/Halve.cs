@@ -3,16 +3,16 @@ public class Halve : Entity
 {
     private void Start()
     {
-        blade.Entitys.Add(this);
+        PullObjects.Halves.Add(this);
     }
 
-    public override void Destruction()
+    private void OnBecameInvisible()
     {
-        return;
+        Destroy(gameObject);
     }
 
     private void OnDestroy()
     {
-        blade.Entitys.Remove(this);
+        PullObjects.Halves.Remove(this);
     }
 }

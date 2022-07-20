@@ -11,6 +11,16 @@ public class Physics : MonoBehaviour
 
     private Vector3 _startPosition;
 
+    private float _angle;
+
+    private float _speed;
+
+    public float Speed
+    {
+        get { return _speed; }
+        set { _speed = value; }
+    }
+
     public float Impuls
     {
         get { return _impuls; }
@@ -34,47 +44,58 @@ public class Physics : MonoBehaviour
         get { return _startPosition; }
         set { _startPosition = value; }
     }
-
     private void Start()
     {
         _timeLive = 0;
-        
+
     }
 
-    static float ConvertToRadian(float angle)
+    public float Angle
     {
-        return (angle * Mathf.PI) / 180;
+        get { return _angle; }
+        set { _angle = value; }
+    }
+
+    private float ConvertToRadian(float angle)
+    {
+        return angle * Mathf.PI / 180;
     }
     
-   private float CountingPositionX(float angle, float t)
+    private float CountingPositionX()
     {
-        return _impuls * Mathf.Cos(angle) * t;
+        return _impuls * Mathf.Cos(_angle) * _timeLive;
     }
 
-    private float CountingPositionY(float angle, float t)
+    private float CountingPositionY()
     {
-        return _impuls * Mathf.Sin(angle) * t - ((_gravity * t * t) / 2);
+        return _impuls * Mathf.Sin(_angle) * _timeLive - ((_gravity * _timeLive * _timeLive) / 2);
     }
 
-    private Vector3 CalculateVector(GameObject objectGame, float angle, float t)
+    private Vector3 CalculateVector()
     {
-        float x = CountingPositionX(ConvertToRadian(angle), t);
-        float y = CountingPositionY(ConvertToRadian(angle), t);
+        float x = CountingPositionX();
+        float y = CountingPositionY();
 
         return new Vector3(x, y, 0);
     }
 
-    private IEnumerator Cast(float angle)
+    public void ChangeSpeed(float speed)
+    {
+        _speed = speed;
+    }
+
+    private IEnumerator Cast()
     {
         yield return null;
 
         if(_gravity != 0)
         {
-            _timeLive += Time.deltaTime;
-            transform.position = CalculateVector(gameObject, angle, _timeLive) + _startPosition;
+            _timeLive += Time.deltaTime * (SpeedObject.Speed + _speed);
+
+            transform.position = CalculateVector() + _startPosition;
         }
 
-        StartCoroutine(Cast(angle));
+        StartCoroutine(Cast());
     }
 
     public void AddImpulse(float angle, float impuls, float gravity, Vector3 startPosition)
@@ -83,6 +104,8 @@ public class Physics : MonoBehaviour
         _impuls = impuls;
         _startPosition = startPosition;
 
-        StartCoroutine(Cast(angle));
+        _angle = ConvertToRadian(angle);
+
+        StartCoroutine(Cast());
     }
 }

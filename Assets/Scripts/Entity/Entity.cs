@@ -1,134 +1,53 @@
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour
+public class Entity : MonoBehaviour
 {
-    protected GamePlayEvents blade;
-    protected SpawnerEntitys[] spawners;
+    [SerializeField] private SliceRange slice;
+    [SerializeField] private SpriteRenderer sourceSprite;
+    [SerializeField] private Physics sourcePhysics;
 
-    protected float[] gravity;
-    protected float heightSprite;
+    private float _heightSprite;
+    private float _startScale;
 
-    private ColliderSphere _colliderSphere;
-    private SliceRange _slice;
-
-    private float _radiusCollider;
-
-    public float RadiusCollider
+    public SpriteRenderer SourceSprite
     {
-        get { return _radiusCollider; }
-        set { _radiusCollider = value; }
-    }
-
-    public ColliderSphere ColliderSphere
-    {
-        get { return _colliderSphere; }
-        set { _colliderSphere = value; }
+        get { return sourceSprite; }
+        set { sourceSprite = value; }
     }
 
     public SliceRange Slice
     {
-        get { return _slice; }
-        set { _slice = value; }
+        get { return slice; }
+        set { slice = value; }
     }
 
-    private void Awake()
+    public Physics SourcePhysics
     {
-        blade = FindObjectOfType<GamePlayEvents>();
-        spawners = FindObjectsOfType<SpawnerEntitys>();
+        get { return sourcePhysics; }
+        set { sourcePhysics = value; }
+    }
+
+    public float StartScale
+    {
+        get { return _startScale; }
+        set { _startScale = value; }
+    }
+
+    public float HeightSprite
+    {
+        get { return _heightSprite; }
+        set { _heightSprite = value; }
     }
 
     private void Start()
     {
-        if (GetComponent<SpriteRenderer>() != null)
-            heightSprite = (GetComponent<SpriteRenderer>().sprite.bounds.size.y) / 2;
+        _startScale = transform.localScale.y;
 
-        blade.Entitys.Add(this);
+        _heightSprite = (SourceSprite.sprite.bounds.size.y) / 2;
     }
-
-    public abstract void Destruction();
 
     public void Trow(float angle, float impuls, float g, Vector3 startPosition)
     {
-        if (gameObject.GetComponent<Physics>() != null)
-            gameObject.GetComponent<Physics>().AddImpulse(angle, impuls, g, startPosition);
-        else
-            Debug.Log($"{gameObject.name} does not have a Physics class");
-    }
-
-    protected virtual void ChageRadiusCollider(float collider)
-    {
-        if (collider == 0)
-            RadiusCollider = heightSprite * transform.localScale.y;
-        else
-            RadiusCollider = collider * transform.localScale.y;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, RadiusCollider);
-    }
-
-    protected void StopAllPhysicsEntity()
-    {
-        SliceCheckScript.BlockSlice = true;
-
-        int countEntitys = blade.Entitys.Count;
-
-        gravity = new float[countEntitys];
-
-
-        for (int i = 0; i < countEntitys; i++)
-        {
-            if (blade.Entitys[i] == null)
-                continue;
-
-            var physics = blade.Entitys[i].GetComponent<Physics>();
-
-            gravity[i] = physics.Gravity;
-
-            physics.Gravity = 0;
-        }
-
-        SpawnerActive(false);
-    }
-
-    protected virtual void StartAllPhysics()
-    {
-        SliceCheckScript.BlockSlice = false;
-
-        for (int i = 0; i < blade.Entitys.Count; i++)
-        {
-            if (blade.Entitys[i] == null)
-                continue;
-
-            if (blade.Entitys[i] != this)
-            {
-                blade.Entitys[i].GetComponent<Physics>().Gravity = gravity[i];
-            }
-        }
-
-        SpawnerActive(true);
-    }
-
-    protected virtual void AddBlob(float minSize, float maxSize, float timeScale, Sprite spriteBlob, BlobSettings blobSettings)
-    {
-        CreateBlobScript.CreateOneBlob(
-            gameObject,
-            spriteBlob,
-            minSize,
-            maxSize,
-            timeScale,
-            blobSettings.BlobDelayTime,
-            blobSettings.LayerBlob);
-    }
-
-    private void SpawnerActive(bool set)
-    {
-        foreach (SpawnerEntitys spawner in spawners)
-        {
-            if (spawner != null)
-                spawner.gameObject.SetActive(set);
-        }
+        SourcePhysics.AddImpulse(angle, impuls, g, startPosition);
     }
 }

@@ -1,52 +1,56 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 using TMPro;
+using DG.Tweening;
 
 public class ComboSeriesUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI countFruits;
     [SerializeField] private TextMeshProUGUI comboSeries;
     [SerializeField] private GameSettings settings;
+    [SerializeField] private CanvasGroup sourceCanvasGroup;
 
-    private float timeToFade;
-    private float fade;
-    private float alphaCanvasGroup;
+    private Coroutine _fadeCoroutine;
+    private Sequence _sequence;
+    private ComboSettings _comboSettings;
 
     private void Start()
     {
-        alphaCanvasGroup = GetComponent<CanvasGroup>().alpha;
+        _sequence = DOTween.Sequence();
 
-        if (GetComponent<CanvasGroup>() != null)
-            GetComponent<CanvasGroup>().alpha = 0;
-        else
-            Debug.Log("CanvasGroup not found! Add canvasGroup.");
-    }
+        _comboSettings = settings.ComboSettings;
 
-    private void Update()
-    {
-        if (timeToFade < settings.ComboSettings.TimeDisappearanceComboText)
-        {
-            timeToFade += Time.deltaTime;
-        }else if(alphaCanvasGroup > 0)
-        {
-            ChangeFade();
-        }
+        sourceCanvasGroup.alpha = 0;
     }
 
     public void ChangeSeriesText(int countSeries)
     {
-        GetComponent<CanvasGroup>().alpha = 1;
+        if(_sequence != null)
+            _sequence.Kill();
+
+        if (_fadeCoroutine != null)
+            StopCoroutine(_fadeCoroutine);
+
+        sourceCanvasGroup.alpha = _comboSettings.MaxFade;
 
         comboSeries.text = "X" + countSeries.ToString();
-        countFruits.text = countSeries.ToString() + " ôðóêòîâ";
+        countFruits.text = countSeries.ToString() + " Ñ„Ñ€ÑƒÐºÑ‚Ð¾Ð²";
 
-        timeToFade = 0;
-        fade = 1;
+        _fadeCoroutine = StartCoroutine(Fading());
     }
 
-    private void ChangeFade()
+    private IEnumerator Fading()
     {
-        fade -= Time.deltaTime;
-        GetComponent<CanvasGroup>().alpha = fade;
-     }
+        yield return new WaitForSeconds(settings.ComboSettings.TimeDisappearanceComboText);
+
+        if (_sequence == null)
+            _sequence = DOTween.Sequence();
+
+        _sequence.Append(DOTween.To(ChangeFade, sourceCanvasGroup.alpha, 0, _comboSettings.TimeFadeComboText));
+    }
+
+    private void ChangeFade(float alpha)
+    {
+        sourceCanvasGroup.alpha = alpha;
+    }
 }
