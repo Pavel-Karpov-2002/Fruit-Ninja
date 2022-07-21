@@ -5,34 +5,15 @@ public class SliceCheckScript : MonoBehaviour
 {
     [SerializeField] private GameSettings gameSettings;
 
-    private static bool _blockSlice;
     private Vector2 _lastMousePos;
     private float _AxisX;
     private float _AxisY;
 
-    public static bool BlockSlice
-    {
-        get { return _blockSlice; }
-        set { _blockSlice = value; }
-    }
-
     private void Update()
     {
-        /*for (int i = 0; i < Input.touchCount; ++i)
-        {            
-            if ((Input.GetTouch(i).phase == TouchPhase.Began || Input.GetMouseButton(0)) && CoreValues.HealthCount > 0)
-            {
-                float speed = Input.GetTouch(i).deltaPosition.x / Time.deltaTime;
-                if(speed >= gameSettings.SpeedSlice)
-                {
-                    OnTriggerCollider();
-                }
-            }
-        }*/
-
         GetSpeedMouse();
 
-        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && !_blockSlice && (_AxisX > gameSettings.SpeedSlice || _AxisY > gameSettings.SpeedSlice))
+        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && (Mathf.Abs(_AxisX) > gameSettings.SpeedSlice || Mathf.Abs(_AxisY) > gameSettings.SpeedSlice))
             OnTriggerCollider();
     }
 

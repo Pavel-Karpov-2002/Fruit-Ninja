@@ -13,13 +13,7 @@ public class BladeScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /* for (int i = 0; i < Input.touchCount; ++i)
-         {
-             if ((Input.GetTouch(i).phase == TouchPhase.Began || Input.GetMouseButton(0)) && CoreValues.HealthCount > 0 && !SliceCheckScript.BlockSlice)
-                 OnTriggerCollider();
-         }*/
-
-        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && !SliceCheckScript.BlockSlice)
+        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0)
         {
             Move();
             sourceTrailRenderer.enabled = true;

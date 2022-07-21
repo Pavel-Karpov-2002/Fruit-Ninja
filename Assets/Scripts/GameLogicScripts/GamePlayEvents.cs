@@ -44,6 +44,8 @@ public class GamePlayEvents : MonoBehaviour
 
     private void Start()
     {
+        CoreValues.NumberOfPoints = 0;
+
         spriteAttenuation.DOFade(0, settings.TimeAttenuation).SetEase(Ease.Linear);
 
         UpdateRecord();
