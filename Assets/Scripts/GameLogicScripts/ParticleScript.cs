@@ -6,7 +6,7 @@ public class ParticleScript : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, _system.startLifetime);
+        Destroy(gameObject, _system.startLifetime - 0.1f);
     }
 
 }

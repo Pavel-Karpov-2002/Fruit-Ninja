@@ -36,7 +36,7 @@ public class GamePlayEvents : MonoBehaviour
         _sequence = DOTween.Sequence();
         PullObjects.GamePlayer = this;
         SpeedObject.ChangeSpeed(settings.SpeedObjects);
-        
+
         spriteAttenuation.gameObject.SetActive(true);
 
         CoreValues.HealthCount = settings.HealthSettings.StartHealth;
@@ -44,8 +44,7 @@ public class GamePlayEvents : MonoBehaviour
 
     private void Start()
     {
-        if (spriteAttenuation != null)
-            ChangeFade.AddAttenuation(spriteAttenuation, settings.TimeAttenuation, 0);
+        spriteAttenuation.DOFade(0, settings.TimeAttenuation).SetEase(Ease.Linear);
 
         UpdateRecord();
 
@@ -66,7 +65,7 @@ public class GamePlayEvents : MonoBehaviour
 
         foreach (var spawner in PullObjects.Spawners)
         {
-            spawner.enabled = true;
+            spawner.gameObject.SetActive(true);
         }
     }
 
@@ -92,13 +91,9 @@ public class GamePlayEvents : MonoBehaviour
     
     private IEnumerator RemoveUnnecessaryObjects()
     {
-        Debug.Log(PullObjects.Spawners.Count);
-        if(PullObjects.Spawners != null)
+        foreach (var spawner in PullObjects.Spawners)
         {
-            foreach (var spawner in PullObjects.Spawners)
-            {
-                spawner.enabled = false;
-            }
+            spawner.gameObject.SetActive(false);
         }
 
         yield return new WaitForSeconds(0.5f);

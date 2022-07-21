@@ -61,10 +61,10 @@ MonoBehaviour:
     priority: 0
   - bottomStartPosition: -5
     bottomEndPosition: -5
-    heightStartPosition: 30
-    heightEndPosition: 60
+    heightStartPosition: 35
+    heightEndPosition: 65
     minAngle: -345
-    maxAngle: -35
+    maxAngle: -25
     minObjects: 1
     maxObjects: 3
     minImpuls: 3.5
@@ -72,9 +72,9 @@ MonoBehaviour:
     priority: 1
   - bottomStartPosition: 105
     bottomEndPosition: 105
-    heightStartPosition: 30
-    heightEndPosition: 60
-    minAngle: 120
+    heightStartPosition: 35
+    heightEndPosition: 65
+    minAngle: 160
     maxAngle: 200
     minObjects: 1
     maxObjects: 3
@@ -178,6 +178,6 @@ MonoBehaviour:
   intervalBetweenEntitysLoss: 6
   minIntervalBetweenEntitysLoss: 5
   redusingInInterval: 0.1
-  speedSlice: 0.1
+  speedSlice: 0.02
   speedRotate: 1.5
   speedObjects: 1.2

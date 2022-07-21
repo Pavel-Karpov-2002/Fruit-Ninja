@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 387660955, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 988312669051208486, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -2.199997
@@ -684,6 +688,10 @@ PrefabInstance:
       propertyPath: comboSeriesUI
       value: 
       objectReference: {fileID: 1660808689}
+    - target: {fileID: 1300233121, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e940b6caa3c59347870ababd3bc86a7, type: 2}
     - target: {fileID: 1300233122, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}
       propertyPath: mainCamera
       value: 

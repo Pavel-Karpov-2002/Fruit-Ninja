@@ -14,7 +14,6 @@ public class SpawnerEntitys : MonoBehaviour
 
     private void Awake()
     {
-        PullObjects.Spawners.Add(this);
 
         if (settings.Spawners.Count == 0)
         {
@@ -29,6 +28,7 @@ public class SpawnerEntitys : MonoBehaviour
 
     private void Start()
     {
+        PullObjects.Spawners.Add(this);
         _reducingInterval = 0;
     }
 
@@ -134,5 +134,11 @@ public class SpawnerEntitys : MonoBehaviour
         }
 
         newObject.Trow(angle, Random.Range(spawner.MinImpuls, spawner.MaxImpuls), settings.Gravity, position);
+    }
+
+    private void OnDestroy()
+    {
+
+        PullObjects.Spawners.Remove(this);
     }
 }
