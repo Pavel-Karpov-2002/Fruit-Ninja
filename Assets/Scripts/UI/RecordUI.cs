@@ -25,9 +25,8 @@ public class RecordUI : MonoBehaviour
     }
 
     private void ScoringPoints(float point)
-    {
+    {       
         points = point;
-
         _record.text = recordStr + ((int)point);
     }
 

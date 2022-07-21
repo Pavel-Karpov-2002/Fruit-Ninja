@@ -42,7 +42,7 @@ public class BonusHeart : Unit
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
         BlobCreate(_healthSettings.BlobSprite, 1);
-        cutObject.CreateTwoHalves();
+        cutObject.CreateTwoHalves(SourcePhysics.Angle, SourcePhysics.Impuls, SourcePhysics.TimeLive, transform.position);
 
         SourcePhysics.enabled = false;
 

@@ -79,7 +79,7 @@ public class Magnet : Unit
     {
         for (int i = 0; i < entities.Length; i++)
         {
-            if (entities[i] == null)
+            if (entities[i] is null)
                 continue;
 
             if (entities[i] != this)
@@ -102,7 +102,7 @@ public class Magnet : Unit
     {
         yield return null;
 
-        if (entity != null)
+        if (!(entity is null))
         {
             Vector3 delta = entity.transform.position - transform.position;
             delta.Normalize();

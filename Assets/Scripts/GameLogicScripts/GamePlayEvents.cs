@@ -33,6 +33,7 @@ public class GamePlayEvents : MonoBehaviour
 
     private void Awake()
     {
+
         _sequence = DOTween.Sequence();
         PullObjects.GamePlayer = this;
         SpeedObject.ChangeSpeed(settings.SpeedObjects);
@@ -49,12 +50,8 @@ public class GamePlayEvents : MonoBehaviour
         spriteAttenuation.DOFade(0, settings.TimeAttenuation).SetEase(Ease.Linear);
 
         UpdateRecord();
-
-        foreach (var spawner in PullObjects.Spawners)
-        {
-            if (spawner != null)
-                spawner.enabled = false;
-        }
+        CangeSpawners(false);
+        loseCanvasGroup.gameObject.SetActive(false);
 
         StartCoroutine(TimeAttenuation());
     }
@@ -65,9 +62,14 @@ public class GamePlayEvents : MonoBehaviour
 
         spriteAttenuation.gameObject.SetActive(false);
 
+        CangeSpawners(true);
+    }
+
+    private void CangeSpawners(bool onActive)
+    {
         foreach (var spawner in PullObjects.Spawners)
         {
-            spawner.gameObject.SetActive(true);
+            spawner.gameObject.SetActive(onActive);
         }
     }
 
@@ -93,10 +95,7 @@ public class GamePlayEvents : MonoBehaviour
     
     private IEnumerator RemoveUnnecessaryObjects()
     {
-        foreach (var spawner in PullObjects.Spawners)
-        {
-            spawner.gameObject.SetActive(false);
-        }
+        CangeSpawners(false);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -107,6 +106,8 @@ public class GamePlayEvents : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(0.5f);
+
+            loseCanvasGroup.gameObject.SetActive(true);
 
             AnimationUILose();
         }
@@ -143,10 +144,9 @@ public class GamePlayEvents : MonoBehaviour
 
         if (CoreValues.NumberOfPoints > CoreValues.Record)
         {
-            foreach (var text in recordText)
-            {
-                UpdateRecord();
-            }
+            CoreValues.Record = CoreValues.NumberOfPoints;
+            SavingValues.SaveGame();
+            UpdateRecord();
         }
     }
 

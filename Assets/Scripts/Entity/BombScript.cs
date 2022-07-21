@@ -62,7 +62,7 @@ public class BombScript : Unit
     {
         for (int i = 0; i < entities.Length; i++)
         {
-            if (entities[i] == null)
+            if (entities[i] is null)
                 continue;
 
             if (entities[i] != this)
@@ -90,7 +90,7 @@ public class BombScript : Unit
     {
         yield return new WaitForSeconds(_bombSettigns.TimeExplosion);
 
-        cutObject.CreateTwoHalves();
+        cutObject.CreateTwoHalves(SourcePhysics.Angle, SourcePhysics.Impuls, SourcePhysics.TimeLive, transform.position);
 
         Destroy(gameObject);
     }

@@ -19,7 +19,7 @@ public class SliceRange : MonoBehaviour
 
     public bool IsCut(float radius)
     {
-        if (startEntry + endEntry >= radius / 2)
+        if (startEntry + endEntry >= radius)
         {
             return true;
         }

@@ -40,7 +40,8 @@ public class HealthPanelUI : MonoBehaviour
 
     public void DestroyHeartImage()
     {
-        StopCoroutine(_changeHeart);
+        if(!(_changeHeart is null))
+            StopCoroutine(_changeHeart);
 
         for (int i = 0; i < _hearts.Count; i++)
         {

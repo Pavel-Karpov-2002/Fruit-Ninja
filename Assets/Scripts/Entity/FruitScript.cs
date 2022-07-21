@@ -61,7 +61,7 @@ public class FruitScript : Unit
         _onSlice = true;
         PullObjects.GamePlayer.AddPoint(Settings.NumberOfPointsPerFruit, SourceSprite, _fruitSettings.ColorFruit);
 
-        cutObject.CreateTwoHalves();
+        cutObject.CreateTwoHalves(SourcePhysics.Angle, SourcePhysics.Impuls, SourcePhysics.TimeLive, transform.position);
 
         BlobCreate(_fruitSettings.BlobSprite, Random.Range(Settings.BlobSettings.MinBlobCount, Settings.BlobSettings.MaxBlobCount));
 

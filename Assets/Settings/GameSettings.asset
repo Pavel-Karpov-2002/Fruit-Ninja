@@ -48,8 +48,8 @@ MonoBehaviour:
     colorPoints: {r: 0.7686275, g: 0.1254902, b: 0.1254902, a: 1}
     radiusCollider: 0
   spawners:
-  - bottomStartPosition: 22.2
-    bottomEndPosition: 73.7
+  - bottomStartPosition: 30
+    bottomEndPosition: 60
     heightStartPosition: -5
     heightEndPosition: -5
     minAngle: 45
@@ -61,7 +61,7 @@ MonoBehaviour:
     priority: 0
   - bottomStartPosition: -5
     bottomEndPosition: -5
-    heightStartPosition: 35
+    heightStartPosition: 45
     heightEndPosition: 65
     minAngle: -345
     maxAngle: -25
@@ -72,7 +72,7 @@ MonoBehaviour:
     priority: 1
   - bottomStartPosition: 105
     bottomEndPosition: 105
-    heightStartPosition: 35
+    heightStartPosition: 45
     heightEndPosition: 65
     minAngle: 160
     maxAngle: 200
@@ -92,19 +92,19 @@ MonoBehaviour:
     minPointsForSpawn: 0
   - spawnObjectEntity: {fileID: 1883827419559285846, guid: add2dc336340047439ab98108767ba6f, type: 3}
     maxChanceOfSpawn: 40
-    maxPercentageInPool: 20
+    maxPercentageInPool: 35
     minPointsForSpawn: 300
   - spawnObjectEntity: {fileID: 4083342933436288598, guid: d3f2deb1c7b1d224cb90bf5b47fc55da, type: 3}
-    maxChanceOfSpawn: 20
-    maxPercentageInPool: 20
+    maxChanceOfSpawn: 30
+    maxPercentageInPool: 40
     minPointsForSpawn: 500
   - spawnObjectEntity: {fileID: 7565778000188426637, guid: 1534874b7e0adb74f9bce95587b95a59, type: 3}
     maxChanceOfSpawn: 30
-    maxPercentageInPool: 20
+    maxPercentageInPool: 40
     minPointsForSpawn: 1000
   - spawnObjectEntity: {fileID: 3614375557791601127, guid: 68ad43cc9b7600f499203c4a6b64cae0, type: 3}
-    maxChanceOfSpawn: 20
-    maxPercentageInPool: 20
+    maxChanceOfSpawn: 30
+    maxPercentageInPool: 40
     minPointsForSpawn: 2000
   healthSettings:
     blobSprite: {fileID: 21300000, guid: 41380b6275e75484daba1d5ac78c7adf, type: 3}
@@ -135,7 +135,7 @@ MonoBehaviour:
   textMeshProSettings:
     textPointsStile: {fileID: 2667768214004378815, guid: d8bdaa63eafb1cb47ad62ff9e54ebea1, type: 3}
     textPointsMaterial: {fileID: 2100000, guid: 7c71c9e8a70259849a1c2300483b6073, type: 2}
-    timeLive: 0
+    timeLive: 2
   bombSettings:
     explosionRadius: 2
     centerExplosionImpuls: 5
@@ -163,8 +163,8 @@ MonoBehaviour:
     speedAttraction: 1
     radiusAttraction: 3.5
   halvesPhysicsSettings:
-    minImpuls: 1.5
-    maxImpuls: 2
+    minImpuls: 0.2
+    maxImpuls: 0.3
     minAngle: 40
     maxAngle: 120
     speed: 1.5
@@ -174,10 +174,10 @@ MonoBehaviour:
   minFriutsAdd: 1
   addingFruitsForPoints: 10
   gravity: 0.8
-  timeAttenuation: 3
+  timeAttenuation: 1.5
   intervalBetweenEntitysLoss: 4
   minIntervalBetweenEntitysLoss: 3
   redusingInInterval: 0.1
-  speedSlice: 0.8
+  speedSlice: 2
   speedRotate: 1.5
-  speedObjects: 1.5
+  speedObjects: 2

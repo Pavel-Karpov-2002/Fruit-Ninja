@@ -44,16 +44,17 @@ public class Physics : MonoBehaviour
         get { return _startPosition; }
         set { _startPosition = value; }
     }
-    private void Start()
-    {
-        _timeLive = 0;
-
-    }
 
     public float Angle
     {
         get { return _angle; }
         set { _angle = value; }
+    }
+
+    private void Start()
+    {
+        _timeLive = 0;
+
     }
 
     private float ConvertToRadian(float angle)

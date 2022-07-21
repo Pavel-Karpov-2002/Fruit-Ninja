@@ -11,10 +11,18 @@ public class SliceCheckScript : MonoBehaviour
 
     private void Update()
     {
-        GetSpeedMouse();
 
-        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && (Mathf.Abs(_AxisX) > gameSettings.SpeedSlice || Mathf.Abs(_AxisY) > gameSettings.SpeedSlice))
+        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0)
+        {
             OnTriggerCollider();
+        }
+        else
+        {
+            _AxisX = 0;
+            _AxisY = 0;
+        }
+
+        GetSpeedMouse();
     }
 
     private void GetSpeedMouse()
@@ -48,7 +56,7 @@ public class SliceCheckScript : MonoBehaviour
             {
                 entity.Slice.StartEntry = entity.ColliderSphere.GetLengthVector();
             }
-            else if (entity.Slice.StartEntry != 0 && entity.Slice.EndEntry == 0)
+            else if (entity.Slice.StartEntry != 0 && entity.Slice.EndEntry == 0 && (Mathf.Abs(_AxisX) > gameSettings.SpeedSlice || Mathf.Abs(_AxisY) > gameSettings.SpeedSlice))
             {
                 entity.Slice.EndEntry = entity.ColliderSphere.GetLengthVector();
                 if (entity.Slice.IsCut(entity.RadiusCollider))

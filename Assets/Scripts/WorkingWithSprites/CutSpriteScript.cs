@@ -30,7 +30,7 @@ public class CutSpriteScript : MonoBehaviour
         return halves;
     }
 
-    public void CreateTwoHalves()
+    public void CreateTwoHalves(float angle, float impulse, float timeLive, Vector3 position)
     {
         Sprite[] helves = Cut();
 
@@ -42,7 +42,14 @@ public class CutSpriteScript : MonoBehaviour
 
             halves.SourceSprite.sprite = helves[i];
 
-            halves.Trow(Random.Range(_halvesSettings.MinAngle, _halvesSettings.MaxAngle), Random.Range(_halvesSettings.MinImpuls, _halvesSettings.MaxImpuls + 1), gameSettings.Gravity, halves.transform.position);
+            halve.SourcePhysics.TimeLive = timeLive;
+
+            halves.Trow(ConvertAngle(angle), impulse + Random.Range(_halvesSettings.MinImpuls, _halvesSettings.MaxImpuls), gameSettings.Gravity, position);
         }
+    }
+
+    private float ConvertAngle(float angle)
+    {
+        return (angle / Mathf.PI) * 180;
     }
 }

@@ -40,7 +40,7 @@ public class FreezingBonus : Unit
 
         PullObjects.Units.Remove(this);
 
-        cutObject.CreateTwoHalves();
+        cutObject.CreateTwoHalves(SourcePhysics.Angle, SourcePhysics.Impuls, SourcePhysics.TimeLive, transform.position);
         
         SourceSprite.sprite = null;
         shadow.sprite = null;

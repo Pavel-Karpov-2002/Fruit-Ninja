@@ -19,7 +19,10 @@ public class BladeScript : MonoBehaviour
             sourceTrailRenderer.enabled = true;
         }
         else
+        {
+            sourceTrailRenderer.Clear();
             sourceTrailRenderer.enabled = false;
+        }
     }
 
     private void Move()
