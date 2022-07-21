@@ -49,7 +49,7 @@ public class ButtonsScript : MonoBehaviour
     {
         yield return new WaitForSeconds(gameSettings.TimeAttenuation);
 
-        SceneManager.LoadScene(loadSceneNumber);
+        SceneManager.LoadScene("GamePlayScene");
     }
 
     private void GetRecords()
