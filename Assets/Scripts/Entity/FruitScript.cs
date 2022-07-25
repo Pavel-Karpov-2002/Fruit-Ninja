@@ -18,8 +18,6 @@ public class FruitScript : Unit
     {
         StartCoroutine(OutOfBounds());
 
-        _sequence = DOTween.Sequence();
-
         _numFruit = Random.Range(0, Settings.FruitSettings.Count);
 
         _fruitSettings = Settings.FruitSettings[_numFruit];
@@ -34,6 +32,9 @@ public class FruitScript : Unit
 
         PullObjects.Units.Add(this);
         transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
+
+
+        _sequence = DOTween.Sequence();
 
         _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.SpeedRotate).SetEase(Ease.Linear));
         _sequence.SetLoops(-180, LoopType.Incremental);
@@ -73,7 +74,6 @@ public class FruitScript : Unit
 
         colorParticle.startColor = _fruitSettings.ColorFruit;
 
-        _sequence.Kill();
         Destroy(gameObject);
     }
 
@@ -87,15 +87,18 @@ public class FruitScript : Unit
 
             PullObjects.Units.Remove(this);
 
-            _sequence.Kill();
             Destroy(gameObject);
         }
         else if (transform.position.y < -5)
         {
             PullObjects.Units.Remove(this);
 
-            _sequence.Kill();
             Destroy(gameObject);
         }
+    }
+    
+    private void OnDestroy()
+    {
+        _sequence.Kill();
     }
 }

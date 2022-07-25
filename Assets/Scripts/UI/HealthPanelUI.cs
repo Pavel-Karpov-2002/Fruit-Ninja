@@ -12,7 +12,6 @@ public class HealthPanelUI : MonoBehaviour
     private List<HeartUI> _hearts;
     private int _numberHeartChange;
     private Coroutine _changeHeart;
-    private bool _coroutineAllowed;
 
     public int CountHearts
     {
@@ -40,7 +39,7 @@ public class HealthPanelUI : MonoBehaviour
 
     public void DestroyHeartImage()
     {
-        if(!(_changeHeart is null))
+        if(_changeHeart != null)
             StopCoroutine(_changeHeart);
 
         for (int i = 0; i < _hearts.Count; i++)
@@ -75,7 +74,6 @@ public class HealthPanelUI : MonoBehaviour
 
     private IEnumerator Heartbeat()
     {
-        _coroutineAllowed = true;
         if (_hearts.Count > 0)
         {
             if (_numberHeartChange - 1 > 0)

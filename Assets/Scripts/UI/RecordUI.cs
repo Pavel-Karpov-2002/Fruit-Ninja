@@ -21,6 +21,8 @@ public class RecordUI : MonoBehaviour
 
     public void UpdateTextRecord()
     {
+        _sequence = DOTween.Sequence();
+
         _sequence.Append(DOTween.To(ScoringPoints, points, CoreValues.Record, 0.3f).SetEase(Ease.Linear));
     }
 

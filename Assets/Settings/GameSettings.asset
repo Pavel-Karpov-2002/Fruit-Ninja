@@ -57,7 +57,7 @@ MonoBehaviour:
     minObjects: 1
     maxObjects: 4
     minImpuls: 3
-    maxImpuls: 3.8
+    maxImpuls: 3.5
     priority: 0
   - bottomStartPosition: -5
     bottomEndPosition: -5
@@ -93,19 +93,19 @@ MonoBehaviour:
   - spawnObjectEntity: {fileID: 1883827419559285846, guid: add2dc336340047439ab98108767ba6f, type: 3}
     maxChanceOfSpawn: 40
     maxPercentageInPool: 35
-    minPointsForSpawn: 300
+    minPointsForSpawn: 0
   - spawnObjectEntity: {fileID: 4083342933436288598, guid: d3f2deb1c7b1d224cb90bf5b47fc55da, type: 3}
     maxChanceOfSpawn: 30
     maxPercentageInPool: 40
-    minPointsForSpawn: 500
+    minPointsForSpawn: 0
   - spawnObjectEntity: {fileID: 7565778000188426637, guid: 1534874b7e0adb74f9bce95587b95a59, type: 3}
     maxChanceOfSpawn: 30
     maxPercentageInPool: 40
-    minPointsForSpawn: 1000
+    minPointsForSpawn: 0
   - spawnObjectEntity: {fileID: 3614375557791601127, guid: 68ad43cc9b7600f499203c4a6b64cae0, type: 3}
     maxChanceOfSpawn: 30
     maxPercentageInPool: 40
-    minPointsForSpawn: 2000
+    minPointsForSpawn: 0
   healthSettings:
     blobSprite: {fileID: 21300000, guid: 41380b6275e75484daba1d5ac78c7adf, type: 3}
     heartSpriteOnPanel: {fileID: 21300000, guid: 19b39223eb33e7d4c88c935fc929624d, type: 3}

@@ -34,17 +34,20 @@ public class TextInScreen : MonoBehaviour
         transform.position = new Vector3(Random.Range(posObject.x - width, posObject.x + width), Random.Range(posObject.y, posObject.y - height),0);
         sourceTMPro.text = text.ToString();
 
+
         if (!isGradient)
         {
             sourceTMPro.enableVertexGradient = false;
             sourceTMPro.color = color;
         }
+        
+        _sequence = DOTween.Sequence();
 
-        _sequence.Append(transform.DOScale(0f, gameSettings.TextMeshProSettings.TimeLive).SetEase(Ease.Linear));
+        _sequence.Append(transform.DOScale(0f, gameSettings.TextMeshProSettings.TimeLive - 0.1f).SetEase(Ease.Linear));
     }
 
     private void OnDestroy()
     {
-        _sequence.Kill();
+        DOTween.Kill(_sequence);
     }
 }

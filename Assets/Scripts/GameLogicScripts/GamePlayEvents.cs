@@ -33,7 +33,6 @@ public class GamePlayEvents : MonoBehaviour
 
     private void Awake()
     {
-
         _sequence = DOTween.Sequence();
         PullObjects.GamePlayer = this;
         SpeedObject.ChangeSpeed(settings.SpeedObjects);
@@ -115,6 +114,8 @@ public class GamePlayEvents : MonoBehaviour
 
     private void AnimationUILose()
     {
+        _sequence = DOTween.Sequence();
+
         _sequence.Append(DOTween.To(ChangingOpasityLoseCanvas, 0, 1, settings.TimeAttenuation).SetEase(Ease.Linear));
     }
 

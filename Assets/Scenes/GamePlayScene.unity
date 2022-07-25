@@ -397,7 +397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3456054205451764476, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3456054205451764476, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_AnchorMax.x
@@ -476,8 +476,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4478502231312426177, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4478502231312426177, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_fontSize
-      value: 21.3
+      value: 31.7
       objectReference: {fileID: 0}
     - target: {fileID: 7814817676799672980, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -673,7 +677,7 @@ PrefabInstance:
       objectReference: {fileID: 432310978}
     - target: {fileID: 2802207064313673772, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2802207064313673772, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}
       propertyPath: m_LocalPosition.x

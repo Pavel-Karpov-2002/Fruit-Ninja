@@ -55,7 +55,6 @@ public class FreezingBonus : Unit
 
         UpSpeed();
 
-        DOTween.Kill(_sequence);
         Destroy(gameObject);
     }
 
@@ -73,8 +72,12 @@ public class FreezingBonus : Unit
     {
         if (gameObject.activeSelf && transform.position.y < WorldSizeCamera.HalfHeight && !isActive)
         {
-            DOTween.Kill(_sequence);
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        _sequence.Kill();
     }
 }

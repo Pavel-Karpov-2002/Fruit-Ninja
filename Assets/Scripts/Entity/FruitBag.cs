@@ -3,7 +3,6 @@ using UnityEngine;
 public class FruitBag : Unit
 {
     [SerializeField] private FruitScript fruit;
-    [SerializeField] private SpriteRenderer fruitsSprite;
 
     private FruitBagSettings _fruitBagSettings;
 
@@ -37,7 +36,7 @@ public class FruitBag : Unit
 
     private void RemoveFruitsInBag()
     {
-        fruitsSprite.gameObject.SetActive(false);
+        SourceSprite.gameObject.SetActive(false);
     }
 
     private void CreateFruits()
@@ -51,8 +50,8 @@ public class FruitBag : Unit
             _fruitBagSettings.MaxImpulsFruit);
 
         Vector3 position = new Vector3(Random.Range(transform.position.x - RadiusCollider, 
-            transform.position.x + RadiusCollider), transform.position.y, 
-            fruitsSprite.transform.position.z  );
+            transform.position.x + RadiusCollider), transform.position.y,
+            SourceSprite.transform.position.z  );
 
         newFruit.Trow(angle, impulse, Settings.Gravity, position);
     }

@@ -24,6 +24,8 @@ public class HeartFly : MonoBehaviour
 
     public void Move(HealthPanelUI panel)
     {
+        _sequence = DOTween.Sequence();
+
         _sequence.Append(transform.DOMove(
             panel.GetPositionHeartInWorldCoordinates(panel.CountHearts - 2) - new Vector3(0.2f, 0.2f),
             gameSettings.HealthSettings.TimeMoveHeartToHeartPanel));

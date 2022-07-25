@@ -25,31 +25,38 @@ public class ButtonsScript : MonoBehaviour
     {
         StartCoroutine(ChangeActiveAttenuation(true, 0));
 
+        _sequence = DOTween.Sequence();
+
         _sequence.Append(spriteAttenuation.DOFade(1, gameSettings.TimeAttenuation).SetEase(Ease.Linear));
 
-        StartCoroutine(TimeAttenuaton(1));
+        StartCoroutine(TimeAttenuaton("GamePlayScene"));
     }
 
     public void MainMenu()
     {
         StartCoroutine(ChangeActiveAttenuation(true, 0));
+        
+        _sequence = DOTween.Sequence();
 
         _sequence.Append(spriteAttenuation.DOFade(1, gameSettings.TimeAttenuation).SetEase(Ease.Linear));
 
-        StartCoroutine(TimeAttenuaton(0));
+        StartCoroutine(TimeAttenuaton("MainMenuScene"));
     }
 
     public void ExitGame()
     {
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
         Application.Quit();
     }
 
-    private IEnumerator TimeAttenuaton(int loadSceneNumber)
+    private IEnumerator TimeAttenuaton(string loadScene)
     {
         yield return new WaitForSeconds(gameSettings.TimeAttenuation);
 
-        SceneManager.LoadScene("GamePlayScene");
+        SceneManager.LoadScene(loadScene);
     }
 
     private void GetRecords()

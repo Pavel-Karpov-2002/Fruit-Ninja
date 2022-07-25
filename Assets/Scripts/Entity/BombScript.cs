@@ -42,6 +42,8 @@ public class BombScript : Unit
 
         SearchNear(PullObjects.Units.ToArray());
         SearchNear(PullObjects.Halves.ToArray());
+        
+        _sequence = DOTween.Sequence();
 
         _sequence.Append(explosionSprites.DOScale(_bombSettigns.MaxScaleExplosion, _bombSettigns.TimeExplosion).SetEase(Ease.Linear));
 
@@ -62,7 +64,7 @@ public class BombScript : Unit
     {
         for (int i = 0; i < entities.Length; i++)
         {
-            if (entities[i] is null)
+            if (entities[i] == null)
                 continue;
 
             if (entities[i] != this)

@@ -22,12 +22,13 @@ public class BlobScript : MonoBehaviour
         transform.localScale = new Vector3(scale, scale);
 
         sourceSprite.sprite = blobSprite;
+        
+        _sequence = DOTween.Sequence();
 
         _sequence.Append(transform.DOScaleY(scale + gameSettings.BlobSettings.MaxBlobScale, speed));
-        
         _sequence.Append(sourceSprite.material.DOFade(0, speed));
 
-        Destroy(gameObject, speed);
+        Destroy(gameObject, speed + 0.1f);
     }
    
     private void SetTransform(float z, GameObject entity, Sprite source)
@@ -46,5 +47,10 @@ public class BlobScript : MonoBehaviour
 
         transform.localScale = entity.transform.localScale;
         transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    private void OnDestroy()
+    {
+        _sequence.Kill();
     }
 }

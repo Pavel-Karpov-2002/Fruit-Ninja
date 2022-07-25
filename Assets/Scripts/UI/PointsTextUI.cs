@@ -17,6 +17,8 @@ public class PointsTextUI : MonoBehaviour
 
     public void UpdateTextPoints()
     {
+        _sequence = DOTween.Sequence();
+
         _sequence.Append(DOTween.To(ScoringPoints, float.Parse(numberOfPoints.text), CoreValues.NumberOfPoints, 0.3f).SetEase(Ease.Linear));
     }
 

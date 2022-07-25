@@ -25,10 +25,7 @@ public class ComboSeriesUI : MonoBehaviour
 
     public void ChangeSeriesText(int countSeries)
     {
-        if(!(_sequence is null))
-            _sequence.Kill();
-
-        if (!(_fadeCoroutine is null))
+        if (_fadeCoroutine != null)
             StopCoroutine(_fadeCoroutine);
 
         sourceCanvasGroup.alpha = _comboSettings.MaxFade;
@@ -42,9 +39,8 @@ public class ComboSeriesUI : MonoBehaviour
     private IEnumerator Fading()
     {
         yield return new WaitForSeconds(settings.ComboSettings.TimeDisappearanceComboText);
-
-        if (_sequence is null)
-            _sequence = DOTween.Sequence();
+        
+        _sequence = DOTween.Sequence();
 
         _sequence.Append(DOTween.To(ChangeFade, sourceCanvasGroup.alpha, 0, _comboSettings.TimeFadeComboText));
     }
@@ -52,5 +48,10 @@ public class ComboSeriesUI : MonoBehaviour
     private void ChangeFade(float alpha)
     {
         sourceCanvasGroup.alpha = alpha;
+    }
+
+    private void OnDestroy()
+    {
+        _sequence.Kill();
     }
 }

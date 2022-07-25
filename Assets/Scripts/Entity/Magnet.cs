@@ -5,7 +5,7 @@ using UnityEngine;
 public class Magnet : Unit
 {
     private float _timer;
-    private bool _isSlice;
+    private bool _isActive;
     private Coroutine _checkPosition;
     private Sequence _sequence;
     private MagnetSettings _magnetSettings;
@@ -14,8 +14,11 @@ public class Magnet : Unit
     {
         _magnetSettings = Settings.MagnetSettings;
         transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
+        
+        _sequence = DOTween.Sequence();
 
-        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.SpeedRotate).SetLoops(-180, LoopType.Incremental).SetEase(Ease.Linear));
+        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.SpeedRotate).SetEase(Ease.Linear));
+        _sequence.SetLoops(-180, LoopType.Incremental);
     }
 
     private void Start()
@@ -38,7 +41,7 @@ public class Magnet : Unit
 
     private void Update()
     {
-        if(_isSlice)
+        if(_isActive)
             _timer -= Time.deltaTime;
 
         if (_timer <= 0)
@@ -46,7 +49,7 @@ public class Magnet : Unit
             StopCoroutine(_checkPosition);
 
             SourcePhysics.TimeLive = 0;
-            Trow(0, 0, Settings.Gravity, transform.position);
+            Trow(0, SourcePhysics.Impuls, Settings.Gravity, transform.position);
         }
     }
 
@@ -54,16 +57,16 @@ public class Magnet : Unit
     {
         SourcePhysics.Gravity = 0;
 
-        if (!_isSlice)
+        if (!_isActive)
         {
             BlobCreate(_magnetSettings.BlobSprite, 1);
 
-            _isSlice = true;
+            _isActive = true;
         }
 
-        _checkPosition = StartCoroutine(CheckFruitsPosition());
-
         PullObjects.Units.Remove(this);
+
+        _checkPosition = StartCoroutine(CheckFruitsPosition());
     }
 
     private IEnumerator CheckFruitsPosition()
@@ -79,12 +82,12 @@ public class Magnet : Unit
     {
         for (int i = 0; i < entities.Length; i++)
         {
-            if (entities[i] is null)
+            if (entities[i] == null || entities[i] is Magnet )
                 continue;
 
             if (entities[i] != this)
             {
-                if (entities[i].SourcePhysics.Gravity != 0 && GetDistance(entities[i]) <= _magnetSettings.RadiusAttraction)
+                if (entities[i].SourcePhysics.Gravity == 0 && GetDistance(entities[i]) <= _magnetSettings.RadiusAttraction)
                 {
                     entities[i].SourcePhysics.Gravity = 0;
                     StartCoroutine(Step(entities[i]));
@@ -95,14 +98,14 @@ public class Magnet : Unit
 
     private float GetDistance(Entity entity)
     {
-        return Vector3.Distance(transform.position, entity.transform.position);
+        return Mathf.Abs(Vector2.Distance(transform.position, entity.transform.position));
     }
 
     private IEnumerator Step(Entity entity)
     {
         yield return null;
 
-        if (!(entity is null))
+        if (entity != null)
         {
             Vector3 delta = entity.transform.position - transform.position;
             delta.Normalize();

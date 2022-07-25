@@ -29,6 +29,8 @@ public class HeartUI : MonoBehaviour
 
     public void ChangeScaleHeart(float scale)
     {
+        _sequence = DOTween.Sequence();
+
         _sequence.Append(transform.DOScale(scale, gameSettings.HealthSettings.HeartBeatSpeed).SetEase(Ease.Linear));
     }
 
