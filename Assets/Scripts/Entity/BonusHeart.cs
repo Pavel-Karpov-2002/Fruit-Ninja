@@ -46,9 +46,9 @@ public class BonusHeart : Unit
 
         SourcePhysics.enabled = false;
 
-        HeartFly();
-
         PullObjects.Units.Remove(this);
+
+        HeartFly();
 
         Destroy(gameObject);
     }
@@ -61,5 +61,10 @@ public class BonusHeart : Unit
         newHeart.SourceRectTransform.sizeDelta = _panel.GetScaleHeart(0);
 
         newHeart.Move(_panel);
+    }
+
+    private void OnDestroy()
+    {
+        PullObjects.Units.Remove(this);
     }
 }

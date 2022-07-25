@@ -137,8 +137,8 @@ MonoBehaviour:
     textPointsMaterial: {fileID: 2100000, guid: 7c71c9e8a70259849a1c2300483b6073, type: 2}
     timeLive: 2
   bombSettings:
-    explosionRadius: 2
-    centerExplosionImpuls: 5
+    explosionRadius: 3.5
+    centerExplosionImpuls: 6
     radiusCollider: 1
     damage: 1
     timeExplosion: 0.1
@@ -162,13 +162,15 @@ MonoBehaviour:
     attractionTime: 10
     speedAttraction: 1
     radiusAttraction: 3.5
+    minImpulsDown: 1.5
+    maxImpulsDown: 2.5
+    minAngleDown: 120
+    maxAngleDown: 40
   halvesPhysicsSettings:
-    minImpuls: 0.2
-    maxImpuls: 0.3
-    minAngle: 40
-    maxAngle: 120
-    speed: 1.5
-    timeLive: 3
+    minImpuls: 1.5
+    maxImpuls: 2
+    minSpeedDown: 0.5
+    maxSpeedDown: 1
   numberOfPointsPerFruit: 10
   maxFriutsAdd: 4
   minFriutsAdd: 1
@@ -178,6 +180,7 @@ MonoBehaviour:
   intervalBetweenEntitysLoss: 4
   minIntervalBetweenEntitysLoss: 3
   redusingInInterval: 0.1
-  speedSlice: 2
-  speedRotate: 1.5
+  speedSlice: 0.8
+  timeSpeedRotate: 1.5
   speedObjects: 2
+  timeBetweenFruitSpawn: 0.2

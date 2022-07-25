@@ -23,15 +23,17 @@ public class FruitBag : Unit
 
     public override void Destruction()
     {
-        int countFruits = Random.Range(_fruitBagSettings.MinFruitsInBag, _fruitBagSettings.MaxFruitsInBag + 1);
-
-        for(int i = 0; i < countFruits; i++)
+        if (SourceSprite.gameObject.activeSelf)
         {
-            CreateFruits();
-        }
+            int countFruits = Random.Range(_fruitBagSettings.MinFruitsInBag, _fruitBagSettings.MaxFruitsInBag + 1);
 
-        RemoveFruitsInBag();
-        PullObjects.Units.Remove(this);
+            for (int i = 0; i < countFruits; i++)
+            {
+                CreateFruits();
+            }
+
+            RemoveFruitsInBag();
+        }
     }
 
     private void RemoveFruitsInBag()
@@ -54,5 +56,10 @@ public class FruitBag : Unit
             SourceSprite.transform.position.z  );
 
         newFruit.Trow(angle, impulse, Settings.Gravity, position);
+    }
+
+    private void OnDestroy()
+    {
+        PullObjects.Units.Remove(this);
     }
 }

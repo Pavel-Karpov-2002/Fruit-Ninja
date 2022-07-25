@@ -42,9 +42,11 @@ public class CutSpriteScript : MonoBehaviour
 
             halves.SourceSprite.sprite = helves[i];
 
-            halve.SourcePhysics.TimeLive = timeLive;
+            halves.SourcePhysics.TimeLive = timeLive;
 
-            halves.Trow(ConvertAngle(angle), impulse + Random.Range(_halvesSettings.MinImpuls, _halvesSettings.MaxImpuls), gameSettings.Gravity, position);
+            halves.SourcePhysics.Speed += Random.Range(_halvesSettings.MinSpeedDown, _halvesSettings.MaxSpeedDown);
+
+            halves.Trow(ConvertAngle(angle), Random.Range(_halvesSettings.MinImpuls, _halvesSettings.MaxImpuls), gameSettings.Gravity, transform.position);
         }
     }
 

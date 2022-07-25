@@ -36,7 +36,7 @@ public class FruitScript : Unit
 
         _sequence = DOTween.Sequence();
 
-        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.SpeedRotate).SetEase(Ease.Linear));
+        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.TimeSpeedRotate).SetEase(Ease.Linear));
         _sequence.SetLoops(-180, LoopType.Incremental);
 
         NormalizeObject();
@@ -66,8 +66,6 @@ public class FruitScript : Unit
 
         BlobCreate(_fruitSettings.BlobSprite, Random.Range(Settings.BlobSettings.MinBlobCount, Settings.BlobSettings.MaxBlobCount));
 
-        PullObjects.Units.Remove(this);
-
         ParticleSystem newParticle = Instantiate(juiceParticle, transform.position, transform.rotation);
 
         ParticleSystem.MainModule colorParticle = newParticle.main;
@@ -85,13 +83,10 @@ public class FruitScript : Unit
         {
             PullObjects.GamePlayer.SubstractHealth(1);
 
-            PullObjects.Units.Remove(this);
-
             Destroy(gameObject);
         }
         else if (transform.position.y < -5)
         {
-            PullObjects.Units.Remove(this);
 
             Destroy(gameObject);
         }
@@ -99,6 +94,7 @@ public class FruitScript : Unit
     
     private void OnDestroy()
     {
+        PullObjects.Units.Remove(this);
         _sequence.Kill();
     }
 }

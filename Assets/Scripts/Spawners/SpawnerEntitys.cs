@@ -14,6 +14,7 @@ public class SpawnerEntitys : MonoBehaviour
 
     private void Awake()
     {
+        PullObjects.Spawners.Add(this);
 
         if (settings.Spawners.Count == 0)
         {
@@ -28,12 +29,8 @@ public class SpawnerEntitys : MonoBehaviour
 
     private void Start()
     {
-        PullObjects.Spawners.Add(this);
         _reducingInterval = 0;
-    }
 
-    private void OnEnable()
-    {
         if (settings.Spawners.Count == 0)
         {
             Debug.Log("Spawners count is 0");
@@ -44,9 +41,12 @@ public class SpawnerEntitys : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+    }
+
     private IEnumerator StartCreateFruits()
     {
-        yield return new WaitForSeconds(settings.IntervalBetweenEntitysLoss - _reducingInterval);
 
         int priority = Random.Range(_minPriority, _maxPriority + 1);
 
@@ -54,17 +54,19 @@ public class SpawnerEntitys : MonoBehaviour
         {
             if(spawner.Priority == priority)
             {
-                CreateMultipleFruits(spawner, settings.ChancesOfSpawn);
+                StartCoroutine(CreateMultipleFruits(spawner, settings.ChancesOfSpawn));
             }
         }
 
-        if(settings.MinIntervalBetweenEntitysLoss > settings.IntervalBetweenEntitysLoss - _reducingInterval)
+        yield return new WaitForSeconds(settings.IntervalBetweenEntitysLoss - _reducingInterval);
+
+        if (settings.MinIntervalBetweenEntitysLoss > settings.IntervalBetweenEntitysLoss - _reducingInterval)
             _reducingInterval -= settings.RedusingInInterval;
 
         StartCoroutine(StartCreateFruits());
     }
 
-    private void CreateMultipleFruits(SpawnerSettings spawner, List<ChancesOfSpawn> chancesOfSpawn)
+    private IEnumerator CreateMultipleFruits(SpawnerSettings spawner, List<ChancesOfSpawn> chancesOfSpawn)
     {
         int[] countObject = new int[chancesOfSpawn.Count + 1];
 
@@ -101,6 +103,8 @@ public class SpawnerEntitys : MonoBehaviour
 
             if(!isCreateObject)
                 CreateObject(spawner, chancesOfSpawn[0].SpawnObjectEntity);
+
+            yield return new WaitForSeconds(settings.TimeBetweenFruitSpawn);
         }
     }
 

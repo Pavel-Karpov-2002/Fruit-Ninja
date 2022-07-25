@@ -50,9 +50,11 @@ public class GameSettings : ScriptableObject
 
     [SerializeField][Min(0)] private float speedSlice;
 
-    [SerializeField][Min(0)] private float speedRotate;
+    [SerializeField][Min(0)] private float timeSpeedRotate;
 
     [SerializeField][Min(0)] private float speedObjects;
+
+    [SerializeField][Min(0)] private float timeBetweenFruitSpawn;
 
 
     public ScaleOnWindowSettings ScaleSettings => scaleSettings;
@@ -100,7 +102,9 @@ public class GameSettings : ScriptableObject
 
     public float SpeedSlice => speedSlice;
 
-    public float SpeedRotate => speedRotate;
+    public float TimeSpeedRotate => timeSpeedRotate;
 
     public float SpeedObjects => speedObjects;
+
+    public float TimeBetweenFruitSpawn => timeBetweenFruitSpawn;
 }

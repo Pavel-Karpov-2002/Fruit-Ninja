@@ -21,7 +21,7 @@ public class FreezingBonus : Unit
 
         transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 361));
 
-        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.SpeedRotate).SetEase(Ease.Linear));
+        _sequence.Append(transform.DORotate(new Vector3(0, 0, 180), Settings.TimeSpeedRotate).SetEase(Ease.Linear));
         _sequence.SetLoops(-180, LoopType.Incremental);
 
     }
@@ -72,6 +72,7 @@ public class FreezingBonus : Unit
     {
         if (gameObject.activeSelf && transform.position.y < WorldSizeCamera.HalfHeight && !isActive)
         {
+            PullObjects.Units.Remove(this);
             Destroy(gameObject);
         }
     }

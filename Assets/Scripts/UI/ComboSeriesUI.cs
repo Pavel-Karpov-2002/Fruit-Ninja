@@ -38,11 +38,11 @@ public class ComboSeriesUI : MonoBehaviour
 
     private IEnumerator Fading()
     {
-        yield return new WaitForSeconds(settings.ComboSettings.TimeDisappearanceComboText);
+        yield return new WaitForSeconds(settings.ComboSettings.TimeFadeComboText / 2);
         
         _sequence = DOTween.Sequence();
 
-        _sequence.Append(DOTween.To(ChangeFade, sourceCanvasGroup.alpha, 0, _comboSettings.TimeFadeComboText));
+        _sequence.Append(DOTween.To(ChangeFade, sourceCanvasGroup.alpha, 0, _comboSettings.TimeFadeComboText / 2));
     }
 
     private void ChangeFade(float alpha)

@@ -6,18 +6,12 @@ public class HalvesPhysicsSettings
 {
     [SerializeField] private float minImpuls;
     [SerializeField] private float maxImpuls;
-    [SerializeField] private int minAngle;
-    [SerializeField] private int maxAngle;
-    [SerializeField] private float speed;
-    [SerializeField] private float timeLive;
+    [SerializeField][Min(0)] private float minSpeedDown;
+    [SerializeField][Min(0)] private float maxSpeedDown;
 
     public float MinImpuls => minImpuls;
     public float MaxImpuls => maxImpuls;
 
-    public int MinAngle => minAngle;
-    public int MaxAngle => maxAngle;
-
-    public float Speed => speed;
-
-    public float TimeLive => timeLive;
+    public float MinSpeedDown => minSpeedDown;
+    public float MaxSpeedDown => maxSpeedDown;
 }

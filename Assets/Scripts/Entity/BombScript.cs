@@ -50,12 +50,10 @@ public class BombScript : Unit
         TextInScreen boom = Instantiate(boomTextInScreen);
 
         boom.Demonstration(SourceSprite,
-            "¡ÛÏ!",
+            "–ë—É–º!",
             true,
             new Color(255, 255, 255)
             );
-
-        PullObjects.Units.Remove(this);
 
         StartCoroutine(DestroyBomb());
     }
@@ -117,6 +115,7 @@ public class BombScript : Unit
 
     private void OnDestroy()
     {
+        PullObjects.Units.Remove(this);
         _sequence.Kill();
     }
 }

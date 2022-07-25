@@ -36,20 +36,20 @@ public class GamePlayEvents : MonoBehaviour
         _sequence = DOTween.Sequence();
         PullObjects.GamePlayer = this;
         SpeedObject.ChangeSpeed(settings.SpeedObjects);
-
+        CoreValues.NumberOfPoints = 0;
+        SavingValues.SaveGame();
         spriteAttenuation.gameObject.SetActive(true);
+        CangeSpawners(false);
 
         CoreValues.HealthCount = settings.HealthSettings.StartHealth;
     }
 
     private void Start()
     {
-        CoreValues.NumberOfPoints = 0;
-
         spriteAttenuation.DOFade(0, settings.TimeAttenuation).SetEase(Ease.Linear);
 
         UpdateRecord();
-        CangeSpawners(false);
+
         loseCanvasGroup.gameObject.SetActive(false);
 
         StartCoroutine(TimeAttenuation());
@@ -98,7 +98,7 @@ public class GamePlayEvents : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        if (PullObjects.Units.Count > 0)
+        if (PullObjects.Units.Count > 0 || PullObjects.Halves.Count > 0)
         {
             StartCoroutine(RemoveUnnecessaryObjects());
         }
