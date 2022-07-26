@@ -60,6 +60,12 @@ public abstract class Unit : Entity
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, RadiusCollider);
+    }
+
     protected void ChangeScaleOnWindow()
     {
         float scale = ScaleChangeScript.OnWindow(transform, StartScale, StartScale + settings.ScaleSettings.MaxScaleOnWindow);

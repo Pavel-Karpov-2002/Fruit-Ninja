@@ -256,3 +256,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourceSprite: {fileID: 2008021283385391758}
   shadow: {fileID: 4937237388521477619}
+  parentTransform: {fileID: 2008021283385391756}

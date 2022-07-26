@@ -38,7 +38,7 @@ MonoBehaviour:
   - fruitsSprite: {fileID: 21300000, guid: b457925db565258489d8f256761c6748, type: 3}
     blobSprite: {fileID: 21300000, guid: b41df772b5ec59f40af87ba837042d35, type: 3}
     colorPoints: {r: 0.9176471, g: 0.79215693, b: 0.20784315, a: 1}
-    radiusCollider: 0
+    radiusCollider: 1.24
   - fruitsSprite: {fileID: 21300000, guid: 67f26c1a34f40644e9635f30adc2f1d7, type: 3}
     blobSprite: {fileID: 21300000, guid: 687f3f194826f6340a3959cdb9c2a192, type: 3}
     colorPoints: {r: 0.7686275, g: 0.1254902, b: 0.1254902, a: 1}
@@ -46,7 +46,7 @@ MonoBehaviour:
   - fruitsSprite: {fileID: 21300000, guid: ed60f418896fc364d8cbe91e855d5613, type: 3}
     blobSprite: {fileID: 21300000, guid: 687f3f194826f6340a3959cdb9c2a192, type: 3}
     colorPoints: {r: 0.7686275, g: 0.1254902, b: 0.1254902, a: 1}
-    radiusCollider: 0
+    radiusCollider: 1.38
   spawners:
   - bottomStartPosition: 30
     bottomEndPosition: 60

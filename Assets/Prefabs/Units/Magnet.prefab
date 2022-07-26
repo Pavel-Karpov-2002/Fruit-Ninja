@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourceSprite: {fileID: 8008485571425473761}
   shadow: {fileID: 670743764016579069}
+  parentTransform: {fileID: 8008485571425473760}
 --- !u!1 &8008485571425473762
 GameObject:
   m_ObjectHideFlags: 0

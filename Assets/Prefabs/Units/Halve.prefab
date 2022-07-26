@@ -184,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourceSprite: {fileID: 6430777587911825992}
   shadow: {fileID: 4695374223415882130}
+  parentTransform: {fileID: 8386712412873065351}
 --- !u!212 &4695374223415882130
 SpriteRenderer:
   m_ObjectHideFlags: 0

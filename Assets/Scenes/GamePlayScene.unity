@@ -379,6 +379,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1702292958818293872, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3456054205451764472, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_Name
       value: LoseCanvas
