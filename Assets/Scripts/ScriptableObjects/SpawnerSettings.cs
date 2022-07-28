@@ -11,8 +11,8 @@ public class SpawnerSettings
     [SerializeField][Range(-5, 105)] private float heightStartPosition;
     [SerializeField][Range(-5, 105)] private float heightEndPosition;
 
-    [SerializeField][Range(-360, 360)] private float minAngle;
-    [SerializeField][Range(-360, 360)] private float maxAngle;
+    [SerializeField][Range(0, 360)] private float minAngle;
+    [SerializeField][Range(0, 360)] private float maxAngle;
 
     [SerializeField][Min(0)] private int minObjects;
     [SerializeField][Min(0)] private int maxObjects;

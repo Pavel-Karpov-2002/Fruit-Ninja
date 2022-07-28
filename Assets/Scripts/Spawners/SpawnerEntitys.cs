@@ -41,10 +41,6 @@ public class SpawnerEntitys : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-    }
-
     private IEnumerator StartCreateFruits()
     {
 
@@ -128,7 +124,7 @@ public class SpawnerEntitys : MonoBehaviour
 
         float angle = 0;
 
-        if (spawner.MinAngle > 0)
+        if (spawner.MinAngle < spawner.MaxAngle)
             angle = Random.Range(spawner.MinAngle, spawner.MaxAngle + 1);
         else
         {

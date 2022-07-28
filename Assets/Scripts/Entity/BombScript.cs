@@ -77,11 +77,12 @@ public class BombScript : Unit
 
     private void AddExplosionImpuls(Entity entity)
     {
+        
         float percentageOfDistance = 100 / (_bombSettigns.ExplosionRadius / (GetDistance(entity.transform.position) / 2));
 
         entity.SourcePhysics.TimeLive = 0;
         entity.Trow(GetAngel(entity.transform.position),
-            _bombSettigns.CenterExplosionImpuls * (percentageOfDistance / 100),
+            _bombSettigns.CenterExplosionImpuls * ( 1 - (percentageOfDistance / 100)),
             Settings.Gravity,
             entity.transform.position);
     }

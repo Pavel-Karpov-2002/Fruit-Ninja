@@ -36,8 +36,7 @@ public class GamePlayEvents : MonoBehaviour
         _sequence = DOTween.Sequence();
         PullObjects.GamePlayer = this;
         SpeedObject.ChangeSpeed(settings.SpeedObjects);
-        CoreValues.NumberOfPoints = 0;
-        SavingValues.SaveGame();
+
         spriteAttenuation.gameObject.SetActive(true);
         CangeSpawners(false);
 

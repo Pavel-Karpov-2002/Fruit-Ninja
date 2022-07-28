@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class ScaleOnWindowSettings
 {
-    [SerializeField][Min(0)] private float maxScaleOnWindow;
+    [SerializeField][Min(0)] private float minScaleOnWindow;
 
-    public float MaxScaleOnWindow => maxScaleOnWindow;
+    public float MinScaleOnWindow => minScaleOnWindow;
 }

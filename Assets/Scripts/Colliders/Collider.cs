@@ -2,6 +2,15 @@ using UnityEngine;
 
 public abstract class Collider : MonoBehaviour
 {
+    private float onCollision;
+
+    public float OnCollision => onCollision;
+
+    private void Update()
+    {
+        onCollision = GetLengthVector();
+    }
+
     protected Vector3 GetPositionMouse()
     {
         Vector3 mouse = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);

@@ -15,22 +15,62 @@ public class BlobScript : MonoBehaviour
         _sequence = DOTween.Sequence();
     }
 
+    public void CreateSourceBlob(Sprite blobSprite, float scale, float speed, GameObject entity)
+    {
+        SetTransform(gameSettings.BlobSettings.LayerBlob, entity);
+
+        DecreaseObject(blobSprite, scale, speed);
+
+        Destroy(gameObject, speed + 0.1f);
+    }
+
+    private void DecreaseObject(Sprite blobSprite, float scale, float speed)
+    {
+        transform.localScale = new Vector3(scale, scale);
+
+        sourceSprite.sprite = blobSprite;
+
+        _sequence = DOTween.Sequence();
+
+        _sequence.Append(transform.DOScale(0, speed));
+        _sequence.Append(sourceSprite.material.DOFade(0, speed));
+    }
+
     public void CreateOneBlob(Sprite blobSprite, float scale, float speed, GameObject entity, Sprite source)
     {
         SetTransform(gameSettings.BlobSettings.LayerBlob, entity, source);
 
+        SpreadingEffect(blobSprite, scale, speed);
+
+        Destroy(gameObject, speed + 0.1f);
+    }
+
+    private void SpreadingEffect(Sprite blobSprite, float scale, float speed)
+    {
         transform.localScale = new Vector3(scale, scale);
 
         sourceSprite.sprite = blobSprite;
-        
+
         _sequence = DOTween.Sequence();
 
         _sequence.Append(transform.DOScaleY(scale + gameSettings.BlobSettings.MaxBlobScale, speed));
         _sequence.Append(sourceSprite.material.DOFade(0, speed));
-
-        Destroy(gameObject, speed + 0.1f);
     }
-   
+
+    private void SetTransform(float z, GameObject entity)
+    {
+        Vector2 posObject = entity.transform.position;
+
+        transform.position =
+            new Vector3(
+                posObject.x,
+                posObject.y,
+                z);
+
+        transform.localScale = entity.transform.localScale;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
     private void SetTransform(float z, GameObject entity, Sprite source)
     {
         var bounds = source.bounds;

@@ -1,25 +1,23 @@
 using UnityEngine;
-using System.Collections;
 
 public class SliceCheckScript : MonoBehaviour
 {
-    [SerializeField] private GameSettings gameSettings;
+    [SerializeField] private GameSettings settings;
 
     private Vector2 _lastMousePos;
-    private float _AxisX;
-    private float _AxisY;
+    private float _axisX;
+    private float _axisY;
 
     private void Update()
     {
-
         if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0)
         {
             OnTriggerCollider();
         }
         else
         {
-            _AxisX = 0;
-            _AxisY = 0;
+            _axisX = 0;
+            _axisY = 0;
         }
 
         GetSpeedMouse();
@@ -33,45 +31,47 @@ public class SliceCheckScript : MonoBehaviour
         }
         else
         {
-            _AxisX = ((Input.mousePosition.x - _lastMousePos.x) / Time.deltaTime) / Screen.width;
-            _AxisY = ((Input.mousePosition.y - _lastMousePos.y) / Time.deltaTime) / Screen.height;
+            _axisX = ((Input.mousePosition.x - _lastMousePos.x) / Time.deltaTime) / Screen.width;
+            _axisY = ((Input.mousePosition.y - _lastMousePos.y) / Time.deltaTime) / Screen.height;
             _lastMousePos = Input.mousePosition;
         }
     }
 
     private void OnTriggerCollider()
     {
-        foreach (Unit entity in PullObjects.Units)
+        int countUnits = PullObjects.Units.Count;
+        for (int i = 0; i < countUnits; i++)
         {
-            if (CheckSliceCollider(entity))
-                break;
+            if (CheckSliceCollider(PullObjects.Units[i]))
+            {
+                countUnits = PullObjects.Units.Count;
+                i = 0;
+            }
         }
     }
 
-    private bool CheckSliceCollider(Unit entity)
+    protected bool CheckSliceCollider(Unit entity)
     {
-        if (entity.ColliderSphere != null)
+        bool speeding = (Mathf.Abs(_axisX) > settings.SpeedSlice || Mathf.Abs(_axisY) > settings.SpeedSlice);
+
+        if (entity.ColliderSphere.HittingCollider(entity.RadiusCollider) && speeding)
         {
-            if (entity.ColliderSphere.HittingCollider(entity.RadiusCollider))
+            entity.Slice.StartEntry = entity.ColliderSphere.OnCollision;
+        }
+        else if (entity.Slice.StartEntry != 0 && entity.Slice.EndEntry == 0 && speeding)
+        {
+            entity.Slice.EndEntry = entity.ColliderSphere.OnCollision;
+            if (entity.Slice.IsCut(entity.RadiusCollider))
             {
-                entity.Slice.StartEntry = entity.ColliderSphere.GetLengthVector();
-            }
-            else if (entity.Slice.StartEntry != 0 && entity.Slice.EndEntry == 0 && (Mathf.Abs(_AxisX) > gameSettings.SpeedSlice || Mathf.Abs(_AxisY) > gameSettings.SpeedSlice))
-            {
-                entity.Slice.EndEntry = entity.ColliderSphere.GetLengthVector();
-                if (entity.Slice.IsCut(entity.RadiusCollider))
-                {
-                    entity.Destruction();
-                    return true;
-                }
-            }
-            else
-            {
-                entity.Slice.StartEntry = 0;
-                entity.Slice.EndEntry = 0;
+                entity.Destruction();
+                return true;
             }
         }
-
+        else
+        {
+            entity.Slice.StartEntry = 0;
+            entity.Slice.EndEntry = 0;
+        }
         return false;
     }
 }

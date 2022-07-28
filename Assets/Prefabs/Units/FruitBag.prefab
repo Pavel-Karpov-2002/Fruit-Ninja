@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 7565778000188426639}
   - component: {fileID: 7565778000188426638}
   - component: {fileID: 4175597875960611187}
+  - component: {fileID: -6654179492280166671}
   m_Layer: 0
   m_Name: FruitBag
   m_TagString: Untagged
@@ -111,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 7565778000188426626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -35}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children:
   - {fileID: 7565778001943523812}
   - {fileID: 7565778000110481919}
@@ -137,8 +138,11 @@ MonoBehaviour:
   blob: {fileID: 8785880201672048513, guid: 80d956488cbbb904abb17fb831a04804, type: 3}
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
   colliderSphere: {fileID: 7565778000188426639}
+  cutObject: {fileID: -6654179492280166671}
   fruit: {fileID: 3406974882285622916, guid: 07ac74b5e4cc47c4b97fb412abb42b4a, type: 3}
-  fruitsSprite: {fileID: 7565778000110481912}
+  bagSprites:
+  - {fileID: 7565778001943523813}
+  - {fileID: 7565778000967121371}
 --- !u!114 &7565778000188426639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +179,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05133221c8e6744da114522b7d2a377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6654179492280166671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7565778000188426626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7a02e7a55a368489412cb2c158b26e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
+  sourceSprite: {fileID: 7565778000110481912}
+  halve: {fileID: 1565085498202018172, guid: 25a02b46b1410ff428d9957466982e2a, type: 3}
 --- !u!1 &7565778000967121369
 GameObject:
   m_ObjectHideFlags: 0

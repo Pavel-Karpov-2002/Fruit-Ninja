@@ -53,7 +53,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 3555804888102878767, guid: 0ff9ff410b42e3e43a48acedb77b373d, type: 3}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 50
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -62,7 +62,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &8504792680445707068
 MonoBehaviour:
@@ -428,6 +428,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6128506226830447661, guid: 8710e3ca8c9d33e44b87b4af3f8c1d22, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6128506226830447663, guid: 8710e3ca8c9d33e44b87b4af3f8c1d22, type: 3}
       propertyPath: m_Name
       value: SpriteAttenuation
@@ -578,7 +582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2968590860117451683, guid: 8d4ce3581ffe0fc478eb3ba75612f556, type: 3}
       propertyPath: m_text
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2968590860117451683, guid: 8d4ce3581ffe0fc478eb3ba75612f556, type: 3}
       propertyPath: m_fontSize

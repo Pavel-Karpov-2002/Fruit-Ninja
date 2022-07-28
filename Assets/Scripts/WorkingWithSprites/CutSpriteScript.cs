@@ -8,6 +8,12 @@ public class CutSpriteScript : MonoBehaviour
 
     private HalvesPhysicsSettings _halvesSettings;
 
+    public SpriteRenderer SourceSprite
+    {
+        get { return sourceSprite; }
+        set { sourceSprite = value; }
+    }
+
     private void Start()
     {
         _halvesSettings = gameSettings.HalvesPhysicsSettings;

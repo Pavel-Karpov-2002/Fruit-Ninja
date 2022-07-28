@@ -41,23 +41,26 @@ public class Magnet : Unit
 
     private void Update()
     {
-        if(_isActive)
+        if (_isActive)
+        {
             _timer -= Time.deltaTime;
+            if (SourcePhysics.Gravity > 0)
+            {
+                SourcePhysics.Gravity = 0;
+            }
+        }
 
         if (CoreValues.HealthCount <= 0)
             _timer = 0;
 
-        if (_timer <= 0)
+        if (_timer <= 0 && _isActive)
         {
-            if (_isActive)
-            {
-                SourcePhysics.TimeLive = 0;
+            SourcePhysics.TimeLive = 0;
 
-                Trow(Random.Range(_magnetSettings.MinAngleDown, _magnetSettings.MaxAngleDown),
-                    Random.Range(_magnetSettings.MinImpulsDown, _magnetSettings.MaxImpulsDown),
-                    Settings.Gravity,
-                    transform.position);
-            }
+            Trow(Random.Range(_magnetSettings.MinAngleDown, _magnetSettings.MaxAngleDown),
+                Random.Range(_magnetSettings.MinImpulsDown, _magnetSettings.MaxImpulsDown),
+                Settings.Gravity,
+                transform.position);
 
             _isActive = false;
 
@@ -67,11 +70,11 @@ public class Magnet : Unit
 
     public override void Destruction()
     {
-        if (!_isActive)
+        if (!_isActive && _timer > 0)
         {
             SourcePhysics.Gravity = 0;
 
-            BlobCreate(_magnetSettings.BlobSprite, 1);
+            BlobCreate(_magnetSettings.BlobSprite);
 
             _isActive = true;
 
@@ -117,12 +120,14 @@ public class Magnet : Unit
 
         if (entity != null)
         {
-            Vector3 delta = entity.transform.position - transform.position;
-            delta.Normalize();
+            if(GetDistance(entity) > 0.1f)
+            {
+                Vector3 delta = entity.transform.position - transform.position;
+                delta.Normalize();
 
-            float moveSpeed = _magnetSettings.SpeedAttraction * Time.deltaTime * SpeedObject.Speed;
-
-            entity.transform.position = entity.transform.position - (delta * moveSpeed);
+                float moveSpeed = _magnetSettings.SpeedAttraction * Time.deltaTime * SpeedObject.Speed;
+                entity.transform.position = entity.transform.position - (delta * moveSpeed);
+            }
 
             if (_timer > 0)
                 StartCoroutine(Step(entity));

@@ -44,7 +44,20 @@ public abstract class Unit : Entity
             RadiusCollider = collider * transform.localScale.y;
     }
 
-    protected void BlobCreate(Sprite blobSprite, float countBlobs)
+    protected void BlobCreate(Sprite blobSprite)
+    {
+        BlobSettings blobSettings = settings.BlobSettings;
+
+        BlobScript newBlob = Instantiate(blob);
+
+        float scale = Random.Range(blobSettings.MinBlobScale, blobSettings.MaxBlobScale);
+
+        float speed = Random.Range(blobSettings.MinBlobSpeedDisappearance, blobSettings.MaxBlobSpeedDisappearance);
+
+        newBlob.CreateSourceBlob(blobSprite, scale, speed, gameObject);
+    }
+
+    protected void MoreBlobsCreate(Sprite blobSprite, float countBlobs)
     {
         BlobSettings blobSettings = settings.BlobSettings;
 
@@ -68,7 +81,7 @@ public abstract class Unit : Entity
 
     protected void ChangeScaleOnWindow()
     {
-        float scale = ScaleChangeScript.OnWindow(transform, StartScale, StartScale + settings.ScaleSettings.MaxScaleOnWindow);
+        float scale = ScaleChangeScript.OnWindow(transform, StartScale, StartScale - settings.ScaleSettings.MinScaleOnWindow);
 
         transform.localScale = new Vector2(scale, scale);
     }

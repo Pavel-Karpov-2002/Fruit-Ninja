@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2802207064313673763}
   - component: {fileID: 1300233121}
   - component: {fileID: 1300233118}
-  - component: {fileID: 1300233119}
   - component: {fileID: 1300233120}
   - component: {fileID: 1300233122}
+  - component: {fileID: 1751322020}
   m_Layer: 0
   m_Name: Blade
   m_TagString: Untagged
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
-  mainCanvas: {fileID: 8504792680445707066, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
+  mainCanvas: {fileID: 0}
   spriteAttenuation: {fileID: 0}
   strikeSeries: {fileID: 1300233118}
   loseCanvasGroup: {fileID: 0}
@@ -81,7 +81,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 60d9216e4ee7c984ca4a0f2d4238aa17, type: 2}
+  - {fileID: 2100000, guid: 5e940b6caa3c59347870ababd3bc86a7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -181,20 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
-  comboSeriesUI: {fileID: 1401779261918744931, guid: 8e8643c746b3c6b44be4f2e1feb4ce06, type: 3}
---- !u!114 &1300233119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802207064313673773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f570947d7377b547acd62dc33b38c03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameSettings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
+  comboSeriesUI: {fileID: 0}
 --- !u!114 &1300233120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,5 +206,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654f813345a7cd541ae8ccfd78726807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 3555804888102878767, guid: 0ff9ff410b42e3e43a48acedb77b373d, type: 3}
+  mainCamera: {fileID: 0}
   sourceTrailRenderer: {fileID: 1300233121}
+--- !u!114 &1751322020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802207064313673773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f570947d7377b547acd62dc33b38c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 0}

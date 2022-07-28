@@ -64,7 +64,7 @@ public class FruitScript : Unit
 
         cutObject.CreateTwoHalves(SourcePhysics.Angle, SourcePhysics.Impuls, SourcePhysics.TimeLive, transform.position);
 
-        BlobCreate(_fruitSettings.BlobSprite, Random.Range(Settings.BlobSettings.MinBlobCount, Settings.BlobSettings.MaxBlobCount));
+        MoreBlobsCreate(_fruitSettings.BlobSprite, Random.Range(Settings.BlobSettings.MinBlobCount, Settings.BlobSettings.MaxBlobCount));
 
         ParticleSystem newParticle = Instantiate(juiceParticle, transform.position, transform.rotation);
 

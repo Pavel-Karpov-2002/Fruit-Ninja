@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class FruitBag : Unit
 {
+    [SerializeField] private CutSpriteScript cutObject;
     [SerializeField] private FruitScript fruit;
+    [SerializeField] private SpriteRenderer[] bagSprites;
 
     private FruitBagSettings _fruitBagSettings;
 
@@ -23,22 +25,23 @@ public class FruitBag : Unit
 
     public override void Destruction()
     {
-        if (SourceSprite.gameObject.activeSelf)
+        int countFruits = Random.Range(_fruitBagSettings.MinFruitsInBag, _fruitBagSettings.MaxFruitsInBag + 1);
+        for (int i = 0; i < countFruits; i++)
         {
-            int countFruits = Random.Range(_fruitBagSettings.MinFruitsInBag, _fruitBagSettings.MaxFruitsInBag + 1);
-
-            for (int i = 0; i < countFruits; i++)
-            {
-                CreateFruits();
-            }
-
-            RemoveFruitsInBag();
+            CreateFruits();
         }
+        SourceSprite = null;
+        SliceBagSprites();
+        Destroy(gameObject);
     }
 
-    private void RemoveFruitsInBag()
+    private void SliceBagSprites()
     {
-        SourceSprite.gameObject.SetActive(false);
+        foreach (SpriteRenderer sprite in bagSprites)
+        {
+            cutObject.SourceSprite = sprite;
+            cutObject.CreateTwoHalves(SourcePhysics.Angle, SourcePhysics.Impuls, SourcePhysics.TimeLive, transform.position);
+        }
     }
 
     private void CreateFruits()

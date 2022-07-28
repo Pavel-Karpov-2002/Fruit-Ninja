@@ -35,7 +35,7 @@ public class FreezingBonus : Unit
 
     public override void Destruction()
     {
-        BlobCreate(_freezingSettings.BlobSprite, 1);
+        BlobCreate(_freezingSettings.BlobSprite);
         StartCoroutine(Freezing());
 
         PullObjects.Units.Remove(this);
