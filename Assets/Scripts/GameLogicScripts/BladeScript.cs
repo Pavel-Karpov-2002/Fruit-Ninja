@@ -8,14 +8,14 @@ public class BladeScript : MonoBehaviour
     private void Start()
     {
         sourceTrailRenderer.enabled = false;
-        Move();
+        MoveThis();
     }
 
     private void FixedUpdate()
     {
         if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0)
         {
-            Move();
+            MoveThis();
             sourceTrailRenderer.enabled = true;
         }
         else
@@ -25,7 +25,7 @@ public class BladeScript : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void MoveThis()
     {
         transform.position = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);

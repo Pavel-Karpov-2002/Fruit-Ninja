@@ -31,6 +31,7 @@ public class BombScript : Unit
     public override void Destruction()
     {
         PullObjects.GamePlayer.SubstractHealth(Settings.BombSettings.Damage);
+        PullObjects.Units.Remove(this);
 
         Explosion();
     }
@@ -114,9 +115,13 @@ public class BombScript : Unit
         return Mathf.Abs(Vector2.Distance(pos, transform.position));
     }
 
-    private void OnDestroy()
+    private void OnBecameInvisible()
     {
-        PullObjects.Units.Remove(this);
-        _sequence.Kill();
+        if (gameObject.activeSelf && transform.position.y < WorldSizeCamera.HalfHeight)
+        {
+            PullObjects.Units.Remove(this);
+            _sequence.Kill();
+            Destroy(gameObject);
+        }
     }
 }

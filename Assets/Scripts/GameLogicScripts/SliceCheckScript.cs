@@ -44,8 +44,7 @@ public class SliceCheckScript : MonoBehaviour
         {
             if (CheckSliceCollider(PullObjects.Units[i]))
             {
-                countUnits = PullObjects.Units.Count;
-                i = 0;
+                break;
             }
         }
     }
@@ -54,14 +53,14 @@ public class SliceCheckScript : MonoBehaviour
     {
         bool speeding = (Mathf.Abs(_axisX) > settings.SpeedSlice || Mathf.Abs(_axisY) > settings.SpeedSlice);
 
-        if (entity.ColliderSphere.HittingCollider(entity.RadiusCollider) && speeding)
+        if (entity.Slice.StartEntry == Vector2.zero && entity.Slice.EndEntry == Vector2.zero && speeding)
         {
-            entity.Slice.StartEntry = entity.ColliderSphere.OnCollision;
+            entity.Slice.StartEntry = entity.ColliderSphere.GetPositionMouse();
         }
-        else if (entity.Slice.StartEntry != 0 && entity.Slice.EndEntry == 0 && speeding)
+        else if (entity.Slice.StartEntry != Vector2.zero && speeding)
         {
-            entity.Slice.EndEntry = entity.ColliderSphere.OnCollision;
-            if (entity.Slice.IsCut(entity.RadiusCollider))
+            entity.Slice.EndEntry = entity.ColliderSphere.GetPositionMouse();
+            if (entity.ColliderSphere.HittingCollider(entity.RadiusCollider, entity.Slice.StartEntry, entity.Slice.EndEntry))
             {
                 entity.Destruction();
                 return true;
@@ -69,8 +68,8 @@ public class SliceCheckScript : MonoBehaviour
         }
         else
         {
-            entity.Slice.StartEntry = 0;
-            entity.Slice.EndEntry = 0;
+            entity.Slice.StartEntry = Vector2.zero;
+            entity.Slice.EndEntry = Vector2.zero;
         }
         return false;
     }

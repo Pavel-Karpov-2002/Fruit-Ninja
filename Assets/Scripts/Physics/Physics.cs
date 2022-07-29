@@ -57,6 +57,36 @@ public class Physics : MonoBehaviour
 
     }
 
+    public void AddImpulse(float angle, float impuls, float gravity, Vector3 startPosition)
+    {
+        _gravity = gravity;
+        _impuls = impuls;
+        _startPosition = startPosition;
+
+        _angle = ConvertToRadian(angle);
+
+        StartCoroutine(Cast());
+    }
+
+    private IEnumerator Cast()
+    {
+        yield return null;
+
+        if (_gravity != 0)
+        {
+            _timeLive += Time.deltaTime * (SpeedObject.Speed + _speed);
+
+            transform.position = CalculateVector() + _startPosition;
+        }
+
+        StartCoroutine(Cast());
+    }
+
+    public void ChangeSpeed(float speed)
+    {
+        _speed = speed;
+    }
+
     private float ConvertToRadian(float angle)
     {
         return angle * Mathf.PI / 180;
@@ -78,35 +108,5 @@ public class Physics : MonoBehaviour
         float y = CountingPositionY();
 
         return new Vector3(x, y, 0);
-    }
-
-    public void ChangeSpeed(float speed)
-    {
-        _speed = speed;
-    }
-
-    private IEnumerator Cast()
-    {
-        yield return null;
-
-        if(_gravity != 0)
-        {
-            _timeLive += Time.deltaTime * (SpeedObject.Speed + _speed);
-
-            transform.position = CalculateVector() + _startPosition;
-        }
-
-        StartCoroutine(Cast());
-    }
-
-    public void AddImpulse(float angle, float impuls, float gravity, Vector3 startPosition)
-    {
-        _gravity = gravity;
-        _impuls = impuls;
-        _startPosition = startPosition;
-
-        _angle = ConvertToRadian(angle);
-
-        StartCoroutine(Cast());
     }
 }

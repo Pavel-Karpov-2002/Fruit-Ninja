@@ -2,28 +2,18 @@ using UnityEngine;
 
 public class SliceRange : MonoBehaviour
 {
-    private float startEntry;
-    private float endEntry;
+    private Vector2 startEntry = Vector2.zero;
+    private Vector2 endEntry = Vector2.zero;
 
-    public float StartEntry
+    public Vector2 StartEntry
     {
         get { return startEntry; }
         set { startEntry = value; }
     }
 
-    public float EndEntry
+    public Vector2 EndEntry
     {
         get { return endEntry; }
         set { endEntry = value; }
-    }
-
-    public bool IsCut(float radius)
-    {
-        if (startEntry + endEntry >= radius)
-        {
-            return true;
-        }
-
-        return false;
     }
 }

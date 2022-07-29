@@ -87,7 +87,7 @@ MonoBehaviour:
     maxPercentageInPool: -1
     minPointsForSpawn: 0
   - spawnObjectEntity: {fileID: 4602890417527582760, guid: bca2d180d7a48da49bfca88598e0dd76, type: 3}
-    maxChanceOfSpawn: 20
+    maxChanceOfSpawn: 30
     maxPercentageInPool: 50
     minPointsForSpawn: 0
   - spawnObjectEntity: {fileID: 1883827419559285846, guid: add2dc336340047439ab98108767ba6f, type: 3}
@@ -138,7 +138,7 @@ MonoBehaviour:
     timeLive: 2
   bombSettings:
     explosionRadius: 3.5
-    centerExplosionImpuls: 3
+    centerExplosionImpuls: 2.5
     radiusCollider: 1
     damage: 1
     timeExplosion: 0.1
