@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Magnet : Unit
 {
+    [SerializeField] private ParticleSystem particleMagnetization;
+
     private float _timer;
     private bool _isActive;
     private Coroutine _checkPosition;
@@ -62,6 +64,7 @@ public class Magnet : Unit
                 Settings.Gravity,
                 transform.position);
 
+            particleMagnetization.gameObject.SetActive(false);
             _isActive = false;
 
             StopCoroutine(_checkPosition);
@@ -77,6 +80,8 @@ public class Magnet : Unit
             BlobCreate(_magnetSettings.BlobSprite);
 
             _isActive = true;
+            particleMagnetization.gameObject.SetActive(true);
+            PullObjects.Units.Remove(this);
 
             _checkPosition = StartCoroutine(CheckFruitsPosition());
         }

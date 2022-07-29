@@ -130,18 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 387660953, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8058875369269166586, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_ChildControlWidth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8058875369269166586, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_ChildControlHeight
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8504792680445707066, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
       propertyPath: m_Name
       value: GameCanvas
@@ -234,38 +222,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1802677388}
-    - target: {fileID: 8504792680536965015, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504792680536965015, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504792680536965015, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504792680536965015, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504792680536965015, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 500.99988
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504792680536965015, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 47.345062
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504792680536965015, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -278.49988
-      objectReference: {fileID: 0}
-    - target: {fileID: 8504792680536965015, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -41.66748
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
 --- !u!114 &432310978 stripped
@@ -343,6 +299,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1999810575, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1999810577, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3456054205451764472, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_Name
       value: LoseCanvas
@@ -437,6 +401,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3456054205451764476, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159214567883726433, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
+      propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -561,6 +529,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8504792680445707066, guid: 2ca120f9887149246bfe1087315dad39, type: 3}
   m_PrefabInstance: {fileID: 86786223}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1590614633 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3456054205451764472, guid: fec9dac1e393a9c41b8f672e0709b541, type: 3}
+  m_PrefabInstance: {fileID: 509862643}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1590614639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590614633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76533b8528f9fe43a6da0a98f5055ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceCanvasGroup: {fileID: 1329437679}
+  settings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
 --- !u!114 &1660808689 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2174666806471009359, guid: 2ca120f9887149246bfe1087315dad39, type: 3}

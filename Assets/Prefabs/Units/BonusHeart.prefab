@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 4164052433061377194}
   - component: {fileID: 1883827419559285848}
   - component: {fileID: 4402771888610376720}
+  - component: {fileID: 513235546}
   m_Layer: 0
   m_Name: BonusHeart
   m_TagString: Untagged
@@ -257,3 +258,22 @@ MonoBehaviour:
   gameSettings: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
   sourceSprite: {fileID: 1883827419559285848}
   halve: {fileID: 1565085498202018172, guid: 25a02b46b1410ff428d9957466982e2a, type: 3}
+--- !u!95 &513235546
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883827419559285849}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 534d7ac2f7902c74190b0efd8534370a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -6,6 +6,8 @@ public class FreezingBonus : Unit
 {
     [SerializeField] private CutSpriteScript cutObject;
     [SerializeField] private SpriteRenderer shadow;
+    [SerializeField] private GameObject[] childGameObjects;
+    [SerializeField] private ParticleSystem freezingParticle;
 
     private FreezingSettings _freezingSettings;
     private Sequence _sequence;
@@ -41,7 +43,14 @@ public class FreezingBonus : Unit
         PullObjects.Units.Remove(this);
 
         cutObject.CreateTwoHalves(SourcePhysics.Angle, SourcePhysics.Impuls, SourcePhysics.TimeLive, transform.position);
-        
+
+        Instantiate(freezingParticle, transform.position, transform.rotation);
+
+        foreach (var offObject in childGameObjects)
+        {
+            offObject.SetActive(false);
+        }
+
         SourceSprite.sprite = null;
         shadow.sprite = null;
     }

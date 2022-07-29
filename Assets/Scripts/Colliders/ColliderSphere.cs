@@ -9,11 +9,16 @@ public class ColliderSphere : Collider
 
 
 
-        if (GetLengthVector() >= radius && (transform.position.x >= posX.x) && (transform.position.x <= posX.y) &&
-             (transform.position.y >= posY.x && transform.position.y <= posY.y))
+        if (GetLengthVector() >= radius && 
+            transform.position.x >= posX.x && transform.position.x <= posX.y &&
+             transform.position.y >= posY.x && transform.position.y <= posY.y)
+        {
             return true;
-        else if (GetLengthVector() <= radius && Vector2.Distance(posStart, posFinish) >= radius)
+        }
+        else if (GetLengthVector() <= (radius / 2) && Vector2.Distance(posStart, posFinish) >= radius)
+        {
             return true;
+        }
 
         return false;
     }
