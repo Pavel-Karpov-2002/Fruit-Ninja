@@ -5,7 +5,7 @@ public abstract class Unit : Entity
 {
     [SerializeField] private BlobScript blob;
     [SerializeField] private GameSettings settings;
-    [SerializeField] private ColliderSphere colliderSphere;
+    [SerializeField] private ColliderCircle colliderSphere;
 
     private float _radiusCollider;
 
@@ -15,7 +15,7 @@ public abstract class Unit : Entity
         set { _radiusCollider = value; }
     }
 
-    public ColliderSphere ColliderSphere
+    public ColliderCircle ColliderSphere
     {
         get { return colliderSphere; }
         set { colliderSphere = value; }

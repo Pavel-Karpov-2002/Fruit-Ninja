@@ -56,7 +56,6 @@ public class GameSettings : ScriptableObject
 
     [SerializeField][Min(0)] private float timeBetweenFruitSpawn;
 
-
     public ScaleOnWindowSettings ScaleSettings => scaleSettings;
 
     public HealthSettings HealthSettings => healthSettings;
@@ -82,6 +81,7 @@ public class GameSettings : ScriptableObject
     public MagnetSettings MagnetSettings => magnetSettings;
 
     public HalvesPhysicsSettings HalvesPhysicsSettings => halvesPhysicsSettings;
+
     public int NumberOfPointsPerFruit => numberOfPointsPerFruit;
 
     public int MaxFriutsAdd => maxFriutsAdd;

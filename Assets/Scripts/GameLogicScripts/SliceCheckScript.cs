@@ -5,19 +5,18 @@ public class SliceCheckScript : MonoBehaviour
     [SerializeField] private GameSettings settings;
 
     private Vector2 _lastMousePos;
-    private float _axisX;
-    private float _axisY;
+    private float _velocity;
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0)
+        if(Input.GetMouseButton(0) && CoreValues.HealthCount > 0)
+            _velocity = (GetPositionMouseOnWorld() - _lastMousePos).magnitude * Time.deltaTime;
+        else
+            _velocity = -1;
+
+        if (_velocity * 10000 >= settings.SpeedSlice)
         {
             OnTriggerCollider();
-        }
-        else
-        {
-            _axisX = 0;
-            _axisY = 0;
         }
 
         GetSpeedMouse();
@@ -25,16 +24,12 @@ public class SliceCheckScript : MonoBehaviour
 
     private void GetSpeedMouse()
     {
-        if (_lastMousePos == Vector2.zero)
-        {
-            _lastMousePos = Input.mousePosition;
-        }
-        else
-        {
-            _axisX = ((Input.mousePosition.x - _lastMousePos.x) / Time.deltaTime) / Screen.width;
-            _axisY = ((Input.mousePosition.y - _lastMousePos.y) / Time.deltaTime) / Screen.height;
-            _lastMousePos = Input.mousePosition;
-        }
+        _lastMousePos = GetPositionMouseOnWorld();
+    }
+
+    private Vector2 GetPositionMouseOnWorld()
+    {
+        return ScreenCoordinatesToWorld.ScreenToWorld(Input.mousePosition);
     }
 
     private void OnTriggerCollider()
@@ -51,26 +46,12 @@ public class SliceCheckScript : MonoBehaviour
 
     protected bool CheckSliceCollider(Unit entity)
     {
-        bool speeding = (Mathf.Abs(_axisX) > settings.SpeedSlice || Mathf.Abs(_axisY) > settings.SpeedSlice);
+        if (entity.ColliderSphere.HittingCollider(entity.RadiusCollider))
+        {
+            entity.Destruction();
+            return true;
+        }
 
-        if (entity.Slice.StartEntry == Vector2.zero && entity.Slice.EndEntry == Vector2.zero && speeding)
-        {
-            entity.Slice.StartEntry = entity.ColliderSphere.GetPositionMouse();
-        }
-        else if (entity.Slice.StartEntry != Vector2.zero && speeding)
-        {
-            entity.Slice.EndEntry = entity.ColliderSphere.GetPositionMouse();
-            if (entity.ColliderSphere.HittingCollider(entity.RadiusCollider, entity.Slice.StartEntry, entity.Slice.EndEntry))
-            {
-                entity.Destruction();
-                return true;
-            }
-        }
-        else
-        {
-            entity.Slice.StartEntry = Vector2.zero;
-            entity.Slice.EndEntry = Vector2.zero;
-        }
         return false;
     }
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] private SliceRange slice;
     [SerializeField] private SpriteRenderer sourceSprite;
     [SerializeField] private Physics sourcePhysics;
 
@@ -13,12 +12,6 @@ public class Entity : MonoBehaviour
     {
         get { return sourceSprite; }
         set { sourceSprite = value; }
-    }
-
-    public SliceRange Slice
-    {
-        get { return slice; }
-        set { slice = value; }
     }
 
     public Physics SourcePhysics

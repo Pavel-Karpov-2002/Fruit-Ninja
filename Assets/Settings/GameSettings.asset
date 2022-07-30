@@ -91,7 +91,7 @@ MonoBehaviour:
     maxPercentageInPool: 50
     minPointsForSpawn: 0
   - spawnObjectEntity: {fileID: 1883827419559285846, guid: add2dc336340047439ab98108767ba6f, type: 3}
-    maxChanceOfSpawn: 40
+    maxChanceOfSpawn: 25
     maxPercentageInPool: 35
     minPointsForSpawn: 0
   - spawnObjectEntity: {fileID: 4083342933436288598, guid: d3f2deb1c7b1d224cb90bf5b47fc55da, type: 3}
@@ -180,7 +180,7 @@ MonoBehaviour:
   intervalBetweenEntitysLoss: 4
   minIntervalBetweenEntitysLoss: 3
   redusingInInterval: 0.1
-  speedSlice: 0.8
+  speedSlice: 15
   timeSpeedRotate: 1.5
   speedObjects: 2
   timeBetweenFruitSpawn: 0.2
