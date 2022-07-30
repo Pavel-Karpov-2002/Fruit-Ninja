@@ -180,7 +180,7 @@ MonoBehaviour:
   intervalBetweenEntitysLoss: 4
   minIntervalBetweenEntitysLoss: 3
   redusingInInterval: 0.1
-  speedSlice: 15
+  speedSlice: 20
   timeSpeedRotate: 1.5
   speedObjects: 2
   timeBetweenFruitSpawn: 0.2

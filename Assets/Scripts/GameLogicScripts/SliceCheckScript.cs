@@ -9,16 +9,17 @@ public class SliceCheckScript : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButton(0) && CoreValues.HealthCount > 0)
-            _velocity = (GetPositionMouseOnWorld() - _lastMousePos).magnitude * Time.deltaTime;
-        else
-            _velocity = -1;
+        if(Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && _lastMousePos.x > 0 && _lastMousePos.y > 0)
+        {
+            _velocity = Vector2.Distance(GetPositionMouseOnWorld(), _lastMousePos) * Time.deltaTime;
+        }
 
         if (_velocity * 10000 >= settings.SpeedSlice)
         {
             OnTriggerCollider();
         }
 
+        _velocity = -1;
         GetSpeedMouse();
     }
 
