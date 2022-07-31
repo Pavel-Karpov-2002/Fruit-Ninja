@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SliceCheckScript : MonoBehaviour
 {
@@ -9,28 +10,23 @@ public class SliceCheckScript : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && _lastMousePos.x > 0 && _lastMousePos.y > 0)
+
+        if (Input.GetMouseButtonUp(0))
         {
-            _velocity = Vector2.Distance(GetPositionMouseOnWorld(), _lastMousePos) * Time.deltaTime;
+            _velocity = -1;
         }
 
-        if (_velocity * 10000 >= settings.SpeedSlice)
+        if (_velocity * 10000 >= settings.SpeedSlice && Vector2.Distance(GetPositionMouseOnWorld(), _lastMousePos) >= settings.LengthSlice)
         {
             OnTriggerCollider();
         }
 
-        _velocity = -1;
+        if (Input.GetMouseButton(0) && CoreValues.HealthCount > 0 && _lastMousePos.x > 0 && _lastMousePos.y > 0)
+        {
+            _velocity = Vector2.Distance(GetPositionMouseOnWorld(), _lastMousePos) * Time.deltaTime * 0.05f;
+        }
+
         GetSpeedMouse();
-    }
-
-    private void GetSpeedMouse()
-    {
-        _lastMousePos = GetPositionMouseOnWorld();
-    }
-
-    private Vector2 GetPositionMouseOnWorld()
-    {
-        return ScreenCoordinatesToWorld.ScreenToWorld(Input.mousePosition);
     }
 
     private void OnTriggerCollider()
@@ -54,5 +50,15 @@ public class SliceCheckScript : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void GetSpeedMouse()
+    {
+        _lastMousePos = GetPositionMouseOnWorld();
+    }
+
+    private Vector2 GetPositionMouseOnWorld()
+    {
+        return ScreenCoordinatesToWorld.ScreenToWorld(Input.mousePosition);
     }
 }

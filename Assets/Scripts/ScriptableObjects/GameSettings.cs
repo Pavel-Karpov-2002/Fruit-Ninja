@@ -48,13 +48,15 @@ public class GameSettings : ScriptableObject
 
     [SerializeField][Min(0)] private float redusingInInterval;
 
-    [SerializeField][Min(0)] private float speedSlice;
-
     [SerializeField][Min(0)] private float timeSpeedRotate;
 
     [SerializeField][Min(0)] private float speedObjects;
 
     [SerializeField][Min(0)] private float timeBetweenFruitSpawn;
+
+    [SerializeField][Min(0)] private float lengthSlice;
+
+    [SerializeField][Min(0)] private float speedSlice;
 
     public ScaleOnWindowSettings ScaleSettings => scaleSettings;
 
@@ -107,4 +109,6 @@ public class GameSettings : ScriptableObject
     public float SpeedObjects => speedObjects;
 
     public float TimeBetweenFruitSpawn => timeBetweenFruitSpawn;
+
+    public float LengthSlice => lengthSlice;
 }

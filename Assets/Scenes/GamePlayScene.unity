@@ -578,6 +578,10 @@ PrefabInstance:
       propertyPath: settings
       value: 
       objectReference: {fileID: 11400000, guid: e1c6319ae3ca33f47bc331c9b4972e29, type: 2}
+    - target: {fileID: 1751322020, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}
+      propertyPath: velocity
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2802207064313673763, guid: 6ab550d06e73580408e039bdab9cd865, type: 3}
       propertyPath: mainCanvas
       value: 
